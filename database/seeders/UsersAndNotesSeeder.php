@@ -104,7 +104,8 @@ class UsersAndNotesSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
-            'menuroles' => 'user,admin' 
+            'menuroles' => 'admin' ,
+            'status' => 1
         ]);
         $user->assignRole('admin');
         $user->assignRole('user');
@@ -115,7 +116,8 @@ class UsersAndNotesSeeder extends Seeder
                 'email_verified_at' => now(),
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
                 'remember_token' => Str::random(10),
-                'menuroles' => 'user'
+                'menuroles' => 'user',
+                'status' => 1
             ]);
             $user->assignRole('user');
             array_push($usersIds, $user->id);

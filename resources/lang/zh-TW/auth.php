@@ -17,15 +17,16 @@ return [
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
     'roles' => [
-        'admin' => 'admin',
-        'mywayAdmin' => 'mywayAdmin',
-        'schoolAdmin' => 'schoolAdmin',
-        'principal' => 'principal',
-        'teacher' => 'teacher',
-        'assistant' => 'assistant',
-        'parent' => 'parent',
-        'student' => 'student',
-        'user' => 'user',
-        'guest' => 'guest',
+        'admin' => '最高管理員',
+        'mywayAdmin' => '邁威管理員',
+        'schoolAdmin' => '學校管理員',
+        'principal' => '校長',
+        'teacher' => '教師',
+        'assistant' => '助教',
+        'parent' => '家長',
+        'student' => '學生',
+        'user' => '註冊使用者',
+        'guest' => '訪客',
     ]
+
 ];

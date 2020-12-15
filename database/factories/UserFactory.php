@@ -36,7 +36,7 @@ class UserFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'menuroles' => 'user,admin',
+                'menuroles' => 'admin',
             ];
         });
     }

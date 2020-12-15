@@ -10,6 +10,9 @@
                     <div class="card-header">
                       <i class="fa fa-align-justify"></i>{{ __('Users') }}</div>
                     <div class="card-body">
+                        <div class="row"> 
+                          <a href="{{ route('users.create') }}" class="btn btn-primary m-2">{{ __('建立使用者') }}</a>
+                        </div>
                         <table class="table table-responsive-sm table-striped">
                         <thead>
                           <tr>
@@ -33,7 +36,9 @@
                                 <a href="{{ url('/users/' . $user->id) }}" class="btn btn-block btn-primary">View</a>
                               </td>
                               <td>
+                                @if( $user->menuroles !== 'admin' )
                                 <a href="{{ url('/users/' . $user->id . '/edit') }}" class="btn btn-block btn-primary">Edit</a>
+                                @endif
                               </td>
                               <td>
                                 @if( $you->id !== $user->id )
