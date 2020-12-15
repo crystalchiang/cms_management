@@ -29,7 +29,32 @@ class UsersController extends Controller
     public function index()
     {
         $you = auth()->user();
-        $users = User::all();
+        $user_role = auth()->user()->menuroles;
+  
+        $role_id = DB::table('users')
+        ->join('roles', 'users.menuroles', '=', 'roles.name')
+        ->where('users.menuroles', '=', $user_role)
+        ->value('roles.id');
+
+        $tempUsers = DB::table('users')
+            ->join('roles', 'users.menuroles', '=', 'roles.name')
+            ->select('roles.id as role_id', 'users.*')
+            ->get()
+            ->toArray();
+
+        $users = [];
+        foreach($tempUsers as $user){
+            if($role_id == 2){
+                if($user->role_id >= $role_id){
+                    $users[] = $user;
+                }
+            }else{
+                if($user->role_id > $role_id){
+                    $users[] = $user;
+                }
+            } 
+        }
+
         return view('dashboard.admin.usersList', compact('users', 'you'));
     }
 
