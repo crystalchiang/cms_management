@@ -77,7 +77,7 @@
                             <input type="hidden" name="parent_id" id="form-field-1" value="{{ $userInfo['base']->id }}" class="form-control" required />
                             <div class="form-group">
                                 <label>姓名</label>
-                                <input class="form-control" type="text" placeholder="{{ __('姓名') }}" value="{{ $userInfo['base']->name }}" name="line">
+                                <input class="form-control" type="text" placeholder="{{ __('姓名') }}" value="{{ $userInfo['base']->name }}" name="name">
                             </div>
                             <div class="form-group">
                                 <label>Line</label>
@@ -101,12 +101,12 @@
                             </div>
                             @endif
                             @if($user->menuroles === 'student')
-                            <input type="hidden" name="parent_a_user_id" id="form-field-1" value="{{ $userInfo['parents'][0]->user_id }}" class="form-control" required />
-                            <input type="hidden" name="parent_a_id" id="form-field-1" value="{{ $userInfo['parents'][0]->id }}" class="form-control" required />
-                            <input type="hidden" name="parent_b_user_id" id="form-field-1" value="{{ $userInfo['parents'][1]->user_id }}" class="form-control" required />
-                            <input type="hidden" name="parent_b_id" id="form-field-1" value="{{ $userInfo['parents'][1]->id }}" class="form-control" required />
-                            <input type="hidden" name="student_id" id="form-field-1" value="{{ $userInfo['student']->id }}" class="form-control" required />
-                            <input type="hidden" name="student_user_id" id="form-field-1" value="{{ $userInfo['student']->user_id }}" class="form-control" required />
+                            <input type="hidden" name="parent_a_user_id" id="form-field-1" value="{{ $userInfo['parent'][0]->user_id }}" class="form-control" required />
+                            <input type="hidden" name="parent_a_id" id="form-field-1" value="{{ $userInfo['parent'][0]->id }}" class="form-control" required />
+                            <input type="hidden" name="parent_b_user_id" id="form-field-1" value="{{ $userInfo['parent'][1]->user_id }}" class="form-control" required />
+                            <input type="hidden" name="parent_b_id" id="form-field-1" value="{{ $userInfo['parent'][1]->id }}" class="form-control" required />
+                            <input type="hidden" name="student_id" id="form-field-1" value="{{ $userInfo['base']->id }}" class="form-control" required />
+                            <input type="hidden" name="student_user_id" id="form-field-1" value="{{ $userInfo['base']->user_id }}" class="form-control" required />
                             <div class="form-group">
                               <label>家長姓名1</label>
                               <input class="form-control" type="text" placeholder="{{ __('家長姓名') }}" value="{{ $userInfo['parent'][0]->name }}" name="parent_a_name" required>
@@ -124,7 +124,7 @@
 
                             <div class="form-group">
                               <label>密碼1</label>
-                              <input class="form-control" type="password" placeholder="{{ __('密碼') }}" value="{{ $userInfo['parent'][0]->password }}" name="parent_a_password">
+                              <input class="form-control" type="password" placeholder="{{ __('密碼') }}" name="parent_a_password">
                             </div>
 
                             <div class="form-group">
@@ -154,7 +154,7 @@
 
                             <div class="form-group">
                               <label>密碼2</label>
-                              <input class="form-control" type="password" placeholder="{{ __('密碼') }}" value="{{ $userInfo['parent'][1]->password }}" name="parent_b_password">
+                              <input class="form-control" type="password" placeholder="{{ __('密碼') }}" name="parent_b_password">
                             </div>
 
                             <div class="form-group">
@@ -169,17 +169,17 @@
 
                             <div class="form-group">
                               <label>入學日</label>
-                              <input class="form-control" type="date" placeholder="{{ __('入學日') }}" value="{{ $userInfo['student']->start_date }}" name="start_date" required>
+                              <input class="form-control" type="date" placeholder="{{ __('入學日') }}" value="{{ $userInfo['base']->start_date }}" name="start_date" required>
                             </div>
 
                             <div class="form-group">
                               <label>退學日</label>
-                              <input class="form-control" type="date" placeholder="{{ __('退學日') }}" value="{{ $userInfo['student']->expire_date }}" name="expire_date" required>
+                              <input class="form-control" type="date" placeholder="{{ __('退學日') }}" value="{{ $userInfo['base']->expire_date }}" name="expire_date" required>
                             </div>
 
                             <div class="form-group">
                                 <label>備註</label>
-                                <input class="form-control" type="text" placeholder="{{ __('備註') }}" value="{{ $userInfo['student']->other }}" name="other">
+                                <input class="form-control" type="text" placeholder="{{ __('備註') }}" value="{{ $userInfo['base']->other }}" name="other">
                             </div>
                             @endif
 

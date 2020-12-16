@@ -1,7 +1,6 @@
 @extends('dashboard.base')
 
 @section('content')
-
         <div class="container-fluid">
           <div class="animated fadeIn">
             <div class="row">

@@ -272,17 +272,18 @@ class UsersController extends Controller
             ->select('u.email', 'u.name', 's.*')
             ->get()
             ->first();
+            
 
             $userInfo['parent'][0] = DB::table('users_parent_infos as s')
             ->join('users as u', 'u.id', '=', 's.user_id')
-            ->where('u.id', $userInfo['base']->parent_1_id)
+            ->where('s.id', $userInfo['base']->parent_1_id)
             ->select('u.email', 'u.name as account', 's.*')
             ->get()
             ->first();
 
             $userInfo['parent'][1] = DB::table('users_parent_infos as s')
             ->join('users as u', 'u.id', '=', 's.user_id')
-            ->where('u.id', $userInfo['base']->parent_2_id)
+            ->where('s.id', $userInfo['base']->parent_2_id)
             ->select('u.email', 'u.name as account', 's.*')
             ->get()
             ->first();
@@ -327,21 +328,21 @@ class UsersController extends Controller
             $userInfo['base'] = DB::table('users_student_infos as s')
             ->join('users as u', 'u.id', '=', 's.user_id')
             ->where('u.id', $id)
-            ->select('u.email', 'u.name', 's.*')
+            ->select('u.email', 'u.id as user_id', 'u.name', 's.*')
             ->get()
             ->first();
 
             $userInfo['parent'][0] = DB::table('users_parent_infos as s')
             ->join('users as u', 'u.id', '=', 's.user_id')
-            ->where('u.id', $userInfo['base']->parent_1_id)
-            ->select('u.email', 'u.name as account', 's.*')
+            ->where('s.id', $userInfo['base']->parent_1_id)
+            ->select('u.email', 'u.id as user_id', 'u.name as account', 's.*')
             ->get()
             ->first();
 
             $userInfo['parent'][1] = DB::table('users_parent_infos as s')
             ->join('users as u', 'u.id', '=', 's.user_id')
-            ->where('u.id', $userInfo['base']->parent_2_id)
-            ->select('u.email', 'u.name as account', 's.*')
+            ->where('s.id', $userInfo['base']->parent_2_id)
+            ->select('u.email', 'u.id as user_id', 'u.name as account', 's.*')
             ->get()
             ->first();
         }
@@ -431,7 +432,7 @@ class UsersController extends Controller
                 'line'       => 'required|string|max:100',
                 'telephone'  => 'required|numeric'
             ]);
-            
+
             $user = User::find($id);
 
             if($request->input('password')){

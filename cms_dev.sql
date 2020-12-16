@@ -11,7 +11,7 @@
  Target Server Version : 80022
  File Encoding         : 65001
 
- Date: 15/12/2020 19:37:50
+ Date: 17/12/2020 00:27:27
 */
 
 SET NAMES utf8mb4;
@@ -258,15 +258,12 @@ CREATE TABLE `menu_role` (
   `role_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `menus_id` int unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=129 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=136 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of menu_role
 -- ----------------------------
 BEGIN;
-INSERT INTO `menu_role` VALUES (1, 'guest', 1);
-INSERT INTO `menu_role` VALUES (2, 'user', 1);
-INSERT INTO `menu_role` VALUES (3, 'admin', 1);
 INSERT INTO `menu_role` VALUES (4, 'admin', 2);
 INSERT INTO `menu_role` VALUES (5, 'admin', 3);
 INSERT INTO `menu_role` VALUES (6, 'admin', 4);
@@ -276,8 +273,6 @@ INSERT INTO `menu_role` VALUES (9, 'admin', 7);
 INSERT INTO `menu_role` VALUES (10, 'admin', 8);
 INSERT INTO `menu_role` VALUES (11, 'admin', 9);
 INSERT INTO `menu_role` VALUES (12, 'admin', 10);
-INSERT INTO `menu_role` VALUES (13, 'guest', 11);
-INSERT INTO `menu_role` VALUES (14, 'guest', 12);
 INSERT INTO `menu_role` VALUES (15, 'user', 13);
 INSERT INTO `menu_role` VALUES (16, 'admin', 13);
 INSERT INTO `menu_role` VALUES (17, 'user', 14);
@@ -352,23 +347,10 @@ INSERT INTO `menu_role` VALUES (85, 'user', 48);
 INSERT INTO `menu_role` VALUES (86, 'admin', 48);
 INSERT INTO `menu_role` VALUES (87, 'user', 49);
 INSERT INTO `menu_role` VALUES (88, 'admin', 49);
-INSERT INTO `menu_role` VALUES (89, 'user', 50);
-INSERT INTO `menu_role` VALUES (90, 'admin', 50);
-INSERT INTO `menu_role` VALUES (91, 'user', 51);
-INSERT INTO `menu_role` VALUES (92, 'admin', 51);
 INSERT INTO `menu_role` VALUES (93, 'user', 52);
 INSERT INTO `menu_role` VALUES (94, 'admin', 52);
 INSERT INTO `menu_role` VALUES (95, 'user', 53);
 INSERT INTO `menu_role` VALUES (96, 'admin', 53);
-INSERT INTO `menu_role` VALUES (97, 'guest', 54);
-INSERT INTO `menu_role` VALUES (98, 'user', 54);
-INSERT INTO `menu_role` VALUES (99, 'admin', 54);
-INSERT INTO `menu_role` VALUES (100, 'guest', 55);
-INSERT INTO `menu_role` VALUES (101, 'user', 55);
-INSERT INTO `menu_role` VALUES (102, 'admin', 55);
-INSERT INTO `menu_role` VALUES (103, 'guest', 56);
-INSERT INTO `menu_role` VALUES (104, 'user', 56);
-INSERT INTO `menu_role` VALUES (105, 'admin', 56);
 INSERT INTO `menu_role` VALUES (106, 'guest', 57);
 INSERT INTO `menu_role` VALUES (107, 'user', 57);
 INSERT INTO `menu_role` VALUES (108, 'admin', 57);
@@ -390,6 +372,8 @@ INSERT INTO `menu_role` VALUES (125, 'schoolAdmin', 67);
 INSERT INTO `menu_role` VALUES (126, 'admin', 68);
 INSERT INTO `menu_role` VALUES (127, 'mywayAdmin', 68);
 INSERT INTO `menu_role` VALUES (128, 'schoolAdmin', 68);
+INSERT INTO `menu_role` VALUES (132, 'admin', 56);
+INSERT INTO `menu_role` VALUES (133, 'admin', 1);
 COMMIT;
 
 -- ----------------------------
@@ -441,8 +425,6 @@ INSERT INTO `menus` VALUES (7, 'Edit roles', '/roles', NULL, 'link', 2, 1, 7);
 INSERT INTO `menus` VALUES (8, 'Media', '/media', NULL, 'link', 2, 1, 8);
 INSERT INTO `menus` VALUES (9, 'BREAD', '/bread', NULL, 'link', 2, 1, 9);
 INSERT INTO `menus` VALUES (10, 'Email', '/mail', NULL, 'link', 2, 1, 10);
-INSERT INTO `menus` VALUES (11, 'Login', '/login', 'cil-account-logout', 'link', NULL, 1, 11);
-INSERT INTO `menus` VALUES (12, 'Register', '/register', 'cil-account-logout', 'link', NULL, 1, 12);
 INSERT INTO `menus` VALUES (13, 'Theme', NULL, NULL, 'title', NULL, 1, 13);
 INSERT INTO `menus` VALUES (14, 'Colors', '/colors', 'cil-drop1', 'link', NULL, 1, 14);
 INSERT INTO `menus` VALUES (15, 'Typography', '/typography', 'cil-pencil', 'link', NULL, 1, 15);
@@ -480,13 +462,9 @@ INSERT INTO `menus` VALUES (46, 'Modals', '/notifications/modals', NULL, 'link',
 INSERT INTO `menus` VALUES (47, 'Widgets', '/widgets', 'cil-calculator', 'link', NULL, 1, 47);
 INSERT INTO `menus` VALUES (48, 'Extras', NULL, NULL, 'title', NULL, 1, 48);
 INSERT INTO `menus` VALUES (49, 'Pages', NULL, 'cil-star', 'dropdown', NULL, 1, 49);
-INSERT INTO `menus` VALUES (50, 'Login', '/login', NULL, 'link', 49, 1, 50);
-INSERT INTO `menus` VALUES (51, 'Register', '/register', NULL, 'link', 49, 1, 51);
 INSERT INTO `menus` VALUES (52, 'Error 404', '/404', NULL, 'link', 49, 1, 52);
 INSERT INTO `menus` VALUES (53, 'Error 500', '/500', NULL, 'link', 49, 1, 53);
-INSERT INTO `menus` VALUES (54, 'Download CoreUI', 'https://coreui.io', 'cil-cloud-download', 'link', NULL, 1, 54);
-INSERT INTO `menus` VALUES (55, 'Try CoreUI PRO', 'https://coreui.io/pro/', 'cil-layers', 'link', NULL, 1, 55);
-INSERT INTO `menus` VALUES (56, 'Pages', NULL, '', 'dropdown', NULL, 2, 56);
+INSERT INTO `menus` VALUES (56, 'Pages', NULL, NULL, 'dropdown', NULL, 2, 56);
 INSERT INTO `menus` VALUES (57, 'Dashboard', '/', NULL, 'link', 56, 2, 57);
 INSERT INTO `menus` VALUES (58, 'Notes', '/notes', NULL, 'link', 56, 2, 58);
 INSERT INTO `menus` VALUES (59, 'Users', '/users', NULL, 'link', 56, 2, 59);
@@ -857,14 +835,18 @@ CREATE TABLE `users` (
   `status` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
 BEGIN;
-INSERT INTO `users` VALUES (1, 'admin', 'admin@admin.com', '2020-12-15 03:38:21', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', 'ajFwS6rb7t', '2020-12-15 03:38:21', '2020-12-15 03:38:21', NULL, 1);
+INSERT INTO `users` VALUES (1, 'admin', 'admin@admin.com', '2020-12-15 03:38:21', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', 'j0qbKXmiI6FFMr1q5DtX8BPoKS2ASimjPXcHM7OBI0aPICvttlZstbs0vXAE', '2020-12-15 03:38:21', '2020-12-15 03:38:21', NULL, 1);
 INSERT INTO `users` VALUES (6, 'test', 'tophet0929@gmail.com', NULL, '$2y$10$2zdhLPnCTLn0K/zihJBiz.1A5xHnlFCu07wrpuJLIlNB4g5F5SD5W', 'mywayAdmin', NULL, '2020-12-15 10:34:21', '2020-12-15 10:34:21', NULL, 1);
+INSERT INTO `users` VALUES (19, 'teachera', 'test@gmail.com', NULL, '$2y$10$ApZ2vlv1bixjyb9180oMHefnKt1fF7SQRjZLObJuhVHZA/zR6bDIW', 'teacher', NULL, NULL, '2020-12-16 15:09:08', NULL, 1);
+INSERT INTO `users` VALUES (23, 'linba', 'linba@gmail.com', NULL, '$2y$10$RzpGqnPx3ipAQJmhhx451.27j6VhoCUSpBuXz/Zm0jxm7jcuyeTSS', 'parent', NULL, '2020-12-16 16:26:04', NULL, NULL, 1);
+INSERT INTO `users` VALUES (24, 'linma', 'linma@gmail.com', NULL, '$2y$10$d9uz1Z5HNK/5oyYhLiTrxe/.S/VMoi9LGB1993coxPTaKx4UzEQD2', 'parent', NULL, '2020-12-16 16:26:04', NULL, NULL, 1);
+INSERT INTO `users` VALUES (25, 'linbo', 'linbo@gmail.com', NULL, '$2y$10$xkJc3fqvsIwejWr3fRNnLOpExLh4eddWAY2dzTr2CMdhvWetGQz9e', 'student', NULL, '2020-12-16 16:26:04', NULL, NULL, 1);
 COMMIT;
 
 -- ----------------------------
@@ -879,17 +861,16 @@ CREATE TABLE `users_parent_infos` (
   `telephone` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '電話',
   `created_at` timestamp NULL DEFAULT NULL COMMENT '建立日期',
   `update_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '最後更新日期',
-  `status` int DEFAULT '1' COMMENT '狀態:1啟用2關閉',
   `email` varchar(255) DEFAULT NULL COMMENT '家長信箱_1',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of users_parent_infos
 -- ----------------------------
 BEGIN;
-INSERT INTO `users_parent_infos` VALUES (15, 26, '林爸Yo', 'linbaLine', '0912345678', NULL, '2020-12-13 21:39:06', 1, 'linba2@gmail.com');
-INSERT INTO `users_parent_infos` VALUES (16, 27, '林媽Yo', 'linmaLine', '0987654321', NULL, '2020-12-13 21:39:06', 1, 'linma2@gmail.com');
+INSERT INTO `users_parent_infos` VALUES (19, 23, '林爸', 'linba', '0912345678', '2020-12-16 16:26:04', NULL, 'linba@gmail.com');
+INSERT INTO `users_parent_infos` VALUES (20, 24, '林媽', 'linma', '0987654321', '2020-12-16 16:26:04', NULL, 'linma@gmail.com');
 COMMIT;
 
 -- ----------------------------
@@ -910,22 +891,21 @@ CREATE TABLE `users_student_infos` (
   `expire_date` date DEFAULT NULL COMMENT '退學日',
   `created_at` timestamp NULL DEFAULT NULL COMMENT '建立日期',
   `update_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '最後更新日期',
-  `status` int DEFAULT '1' COMMENT '狀態:1啟用2關閉',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of users_student_infos
 -- ----------------------------
 BEGIN;
-INSERT INTO `users_student_infos` VALUES (2, 28, NULL, '林學生', 'Linbo', 'linboLine', 15, 16, 'p', '2020-12-14', '2020-12-31', NULL, '2020-12-13 21:39:06', 1);
+INSERT INTO `users_student_infos` VALUES (4, 25, NULL, '林學生', 'Linbo', 'linbo', 19, 20, 'otherdd', '2020-12-18', '2020-12-31', '2020-12-16 16:26:04', '2020-12-17 00:26:32');
 COMMIT;
 
 -- ----------------------------
--- Table structure for users_teacher_info
+-- Table structure for users_teacher_infos
 -- ----------------------------
-DROP TABLE IF EXISTS `users_teacher_info`;
-CREATE TABLE `users_teacher_info` (
+DROP TABLE IF EXISTS `users_teacher_infos`;
+CREATE TABLE `users_teacher_infos` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int DEFAULT NULL COMMENT '使用者ID',
   `chinese_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '中文名字',
@@ -933,16 +913,16 @@ CREATE TABLE `users_teacher_info` (
   `address` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '地址',
   `telephone` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '電話',
   `line` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Line',
-  `created_at` timestamp NULL DEFAULT NULL COMMENT '建立日期',
+  `created_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '建立日期',
   `update_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '最後更新日期',
-  `status` int DEFAULT '1' COMMENT '狀態:1啟用2關閉',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of users_teacher_info
+-- Records of users_teacher_infos
 -- ----------------------------
 BEGIN;
+INSERT INTO `users_teacher_infos` VALUES (2, 19, '老老師', 'Teacher', 'aaa', '0912345678', 'teacheryo', '2020-12-16 23:09:08', '2020-12-16 15:09:08');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
