@@ -5,7 +5,7 @@
         <div class="container-fluid">
           <div class="animated fadeIn">
             <div class="row">
-              <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8">
+              <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <div class="card">
                     <div class="card-header">
                       <i class="fa fa-align-justify"></i>{{ __('Users') }}</div>
@@ -16,10 +16,10 @@
                         <table class="table table-responsive-sm table-striped">
                         <thead>
                           <tr>
-                            <th>Username</th>
-                            <th>E-mail</th>
-                            <th>Roles</th>
-                            <th>Email verified at</th>
+                            <th>使用者名稱</th>
+                            <th>電子信箱</th>
+                            <th>角色</th>
+                            <th>建立日期</th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -31,13 +31,13 @@
                               <td>{{ $user->name }}</td>
                               <td>{{ $user->email }}</td>
                               <td>{{ $user->menuroles }}</td>
-                              <td>{{ $user->email_verified_at }}</td>
+                              <td>{{ $user->created_at }}</td>
                               <td>
-                                <a href="{{ url('/users/' . $user->id) }}" class="btn btn-block btn-primary">View</a>
+                                <a href="{{ url('/users/' . $user->id) }}" class="btn btn-block btn-primary">檢視</a>
                               </td>
                               <td>
                                 @if( $user->menuroles !== 'admin' )
-                                <a href="{{ url('/users/' . $user->id . '/edit') }}" class="btn btn-block btn-primary">Edit</a>
+                                <a href="{{ url('/users/' . $user->id . '/edit') }}" class="btn btn-block btn-primary">編輯</a>
                                 @endif
                               </td>
                               <td>
@@ -45,7 +45,7 @@
                                 <form action="{{ route('users.destroy', $user->id ) }}" method="POST">
                                     @method('DELETE')
                                     @csrf
-                                    <button class="btn btn-block btn-danger">Delete User</button>
+                                    <button class="btn btn-block btn-danger">刪除</button>
                                 </form>
                                 @endif
                               </td>
