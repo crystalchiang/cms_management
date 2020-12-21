@@ -13,13 +13,18 @@
                     <template id="app"> 
                         <form method="POST" action="{{ route('users.store') }}">
                             @csrf
-                            <div class="form-group" v-if="role !== 'student'">
-                                <label>使用者名稱</label>
-                                <input class="form-control" type="text" placeholder="{{ __('使用者名稱') }}" name="name" required autofocus>
+                            <div class="form-group">
+                                <label>中文姓名</label>
+                                <input class="form-control" type="text" placeholder="{{ __('姓名') }}" name="name" required autofocus>
                             </div>
-                            <div class="form-group" v-else>
-                                <label>學生帳號</label>
-                                <input class="form-control" type="text" placeholder="{{ __('學生帳號') }}" name="name" autofocus>
+                            <div class="form-group">
+                                <label>英文姓名</label>
+                                <input class="form-control" type="text" placeholder="{{ __('英文姓名') }}" name="english_name" required autofocus>
+                            </div>
+
+                            <div class="form-group">
+                                <label>帳號/電子信箱</label>
+                                <input class="form-control" type="email" placeholder="{{ __('帳號/電子信箱') }}" name="email" required>
                             </div>
 
                             <div class="form-group">
@@ -33,11 +38,6 @@
                             </div>
 
                             <div class="form-group">
-                                <label>電子信箱</label>
-                                <input class="form-control" type="email" placeholder="{{ __('電子信箱') }}" name="email" required>
-                            </div>
-
-                            <div class="form-group">
                                 <label>角色</label>
                                 <select class="form-control" name="menuroles" v-model="role" placeholder="請選擇">
                                     @foreach($roles as $role)
@@ -45,44 +45,37 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="form-group" v-if="role === 'teacher' || role === 'assistant' || role === 'student'">
-                                <label>中文姓名</label>
-                                <input class="form-control" type="text" placeholder="{{ __('中文姓名') }}" name="chinese_name" required>
-                            </div>
-                            <div class="form-group" v-if="role === 'teacher' || role === 'assistant' || role === 'student'">
-                                <label>英文姓名</label>
-                                <input class="form-control" type="text" placeholder="{{ __('英文姓名') }}" name="english_name" required>
-                            </div>
-                            <div class="form-group" v-if="role === 'teacher' || role === 'assistant'">
+
+                            <div class="form-group">
                                 <label>電話</label>
                                 <input class="form-control" type="tel" placeholder="{{ __('電話') }}" name="telephone" required>
                             </div>
-                            <div class="form-group" v-if="role === 'teacher' || role === 'assistant' || role === 'student'">
+                            <div class="form-group">
                                 <label>Line</label>
                                 <input class="form-control" type="text" placeholder="{{ __('Line') }}" name="line">
                             </div>
-                            <div class="form-group" v-if="role === 'teacher' || role === 'assistant'">
+                            <div class="form-group">
                                 <label>地址</label>
                                 <input class="form-control" type="text" placeholder="{{ __('地址') }}" name="address">
                             </div>
+
                             <template v-if="role === 'student'">
                               <div class="form-group">
                                 <label>家長姓名1</label>
                                 <input class="form-control" type="text" placeholder="{{ __('家長姓名') }}" name="parent_a_name" required>
                               </div>
-
                               <div class="form-group">
-                                <label>家長信箱1</label>
-                                <input class="form-control" type="text" placeholder="{{ __('家長信箱') }}" name="parent_a_email" required>
+                                <label>家長英文姓名1</label>
+                                <input class="form-control" type="text" placeholder="{{ __('家長英文姓名') }}" name="parent_a_english_name">
                               </div>
 
                               <div class="form-group">
-                                <label>家長帳號1</label>
-                                <input class="form-control" type="text" placeholder="{{ __('家長帳號') }}" name="parent_a_username" required>
+                                <label>家長帳號/電子信箱1</label>
+                                <input class="form-control" type="text" placeholder="{{ __('家長帳號/電子信箱') }}" name="parent_a_email" required>
                               </div>
 
                               <div class="form-group">
-                                <label>密碼1</label>
+                                <label>家長密碼1</label>
                                 <input class="form-control" type="password" placeholder="{{ __('密碼') }}" name="parent_a_password" required>
                               </div>
 
@@ -93,7 +86,7 @@
 
                               <div class="form-group">
                                 <label>家長Line1</label>
-                                <input class="form-control" type="text" placeholder="{{ __('家長Line') }}" name="parent_a_line" required>
+                                <input class="form-control" type="text" placeholder="{{ __('家長Line') }}" name="parent_a_line">
                               </div>
 
                               <div class="form-group">
@@ -102,17 +95,17 @@
                               </div>
 
                               <div class="form-group">
-                                <label>家長信箱2</label>
-                                <input class="form-control" type="text" placeholder="{{ __('家長信箱') }}" name="parent_b_email" required>
+                                <label>家長英文姓名2</label>
+                                <input class="form-control" type="text" placeholder="{{ __('家長英文姓名') }}" name="parent_b_english_name">
                               </div>
 
                               <div class="form-group">
-                                <label>家長帳號2</label>
-                                <input class="form-control" type="text" placeholder="{{ __('家長帳號') }}" name="parent_b_username" required>
+                                <label>家長帳號/電子信箱2</label>
+                                <input class="form-control" type="text" placeholder="{{ __('家長帳號/電子信箱') }}" name="parent_b_email" required>
                               </div>
 
                               <div class="form-group">
-                                <label>密碼2</label>
+                                <label>家長密碼2</label>
                                 <input class="form-control" type="password" placeholder="{{ __('密碼') }}" name="parent_b_password" required>
                               </div>
 
@@ -123,7 +116,7 @@
 
                               <div class="form-group">
                                 <label>家長Line2</label>
-                                <input class="form-control" type="text" placeholder="{{ __('家長Line') }}" name="parent_b_line" required>
+                                <input class="form-control" type="text" placeholder="{{ __('家長Line') }}" name="parent_b_line">
                               </div>
 
                               <div class="form-group">
