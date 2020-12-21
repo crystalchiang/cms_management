@@ -187,44 +187,6 @@ class UsersController extends Controller
             }
         }
 
-        if($userRole === 'teacher' || $userRole === 'assistant'){
-            $validatedData = $request->validate([
-                'chinese_name' => 'required|string|max:100',
-                'english_name' => 'required|string|max:100',
-                'line' => 'required|string|max:100',
-                'telephone' => 'required'
-            ]);
-
-            try {
-                DB::beginTransaction();
-                
-                $teacherId = DB::table('users')->insertGetId([ 
-                    'name' => $request->name,
-                    'email' => $request->email,
-                    'password' => bcrypt($request->password), 
-                    'menuroles' => $userRole,
-                    'created_at' => date('Y-m-d H:i:s'),
-                    'status' => 1
-                ]);
-
-                $teacherInfoId = DB::table('users_teacher_infos')->insertGetId([ 
-                    'user_id' => $teacherId,
-                    'chinese_name' => $request->chinese_name,
-                    'english_name' => $request->english_name,
-                    'telephone' => $request->telephone,
-                    'line' => $request->line,
-                    'address' => $request->address,
-                    'created_at' => date('Y-m-d H:i:s'),
-                ]);
- 
-                DB::commit();
-    
-            } catch(\Exception $e) {
-                DB::rollBack();
-            }
-        }
-
-
         return redirect()->route('users.index');
     }
 
