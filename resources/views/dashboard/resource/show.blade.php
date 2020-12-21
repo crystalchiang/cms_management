@@ -12,7 +12,7 @@
     <div class="row">
       <div class="col-sm-12">
         <div class="card">
-          <div class="card-header"><h4>Show {{ $form->name }}</h4></div>
+          <div class="card-header"><h4>檢視 {{ $form->name }}</h4></div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-6">
@@ -44,7 +44,7 @@
                             href="{{ route('resource.index', $form->id) }}"
                             class="btn btn-primary"
                         >
-                            Return
+                            返回
                         </a>
                     </div>
                 </div>

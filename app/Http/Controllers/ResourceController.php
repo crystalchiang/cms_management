@@ -22,23 +22,23 @@ class ResourceController extends Controller
      */
     public function index($table, Request $request)
     {
-        $role = Role::where('name', '=', 'guest')->first();
-        try {
-            if($role->hasPermissionTo('browse bread ' . $table)){
-                $guestHasPermission = true;
-            }
-        } catch (\Throwable $e) {
-            $guestHasPermission = false;
-        }       
-        if(!$guestHasPermission){
-            if(empty(Auth::user())){
-                abort('401');
-            }else{
-                if(!Auth::user()->can('browse bread ' . $table)){
-                    abort('401');
-                }
-            }
-        }
+        // $role = Role::where('name', '=', 'guest')->first();
+        // try {
+        //     if($role->hasPermissionTo('browse bread ' . $table)){
+        //         $guestHasPermission = true;
+        //     }
+        // } catch (\Throwable $e) {
+        //     $guestHasPermission = false;
+        // }       
+        // if(!$guestHasPermission){
+        //     if(empty(Auth::user())){
+        //         abort('401');
+        //     }else{
+        //         if(!Auth::user()->can('browse bread ' . $table)){
+        //             abort('401');
+        //         }
+        //     }
+        // }
         $form = Form::find( $table );
         $resourceService = new ResourceService();
         $data = $resourceService->getIndexDatas( $table );
@@ -59,23 +59,23 @@ class ResourceController extends Controller
      */
     public function create($table, Request $request)
     {
-        $role = Role::where('name', '=', 'guest')->first();
-        try {
-            if($role->hasPermissionTo('add bread ' . $table)){
-                $guestHasPermission = true;
-            }
-        } catch (\Throwable $e) {
-            $guestHasPermission = false;
-        }       
-        if(!$guestHasPermission){
-            if(empty(Auth::user())){
-                abort('401');
-            }else{
-                if(!Auth::user()->can('add bread ' . $table)){
-                    abort('401');
-                }
-            }
-        }        
+        // $role = Role::where('name', '=', 'guest')->first();
+        // try {
+        //     if($role->hasPermissionTo('add bread ' . $table)){
+        //         $guestHasPermission = true;
+        //     }
+        // } catch (\Throwable $e) {
+        //     $guestHasPermission = false;
+        // }       
+        // if(!$guestHasPermission){
+        //     if(empty(Auth::user())){
+        //         abort('401');
+        //     }else{
+        //         if(!Auth::user()->can('add bread ' . $table)){
+        //             abort('401');
+        //         }
+        //     }
+        // }        
         $form = Form::find( $table );
         if($form->add == 1){
             $resourceService = new ResourceService();
@@ -101,23 +101,23 @@ class ResourceController extends Controller
      */
     public function store($table, Request $request)
     {
-        $role = Role::where('name', '=', 'guest')->first();
-        try {
-            if($role->hasPermissionTo('add bread ' . $table)){
-                $guestHasPermission = true;
-            }
-        } catch (\Throwable $e) {
-            $guestHasPermission = false;
-        }       
-        if(!$guestHasPermission){
-            if(empty(Auth::user())){
-                abort('401');
-            }else{
-                if(!Auth::user()->can('add bread ' . $table)){
-                    abort('401');
-                }
-            }
-        } 
+        // $role = Role::where('name', '=', 'guest')->first();
+        // try {
+        //     if($role->hasPermissionTo('add bread ' . $table)){
+        //         $guestHasPermission = true;
+        //     }
+        // } catch (\Throwable $e) {
+        //     $guestHasPermission = false;
+        // }       
+        // if(!$guestHasPermission){
+        //     if(empty(Auth::user())){
+        //         abort('401');
+        //     }else{
+        //         if(!Auth::user()->can('add bread ' . $table)){
+        //             abort('401');
+        //         }
+        //     }
+        // } 
         $toValidate = array();
         $form = Form::find( $table );
         $formFields = FormField::where('form_id', '=', $table)->where('add', '=', '1')->get();
@@ -128,7 +128,7 @@ class ResourceController extends Controller
         if($form->add == 1){
             $resourceService = new ResourceService();
             $resourceService->add($form->id, $form->table_name, $request->all() );
-            $request->session()->flash('message', 'Successfully added to ' . $form->name);
+            $request->session()->flash('message', '成功新增');
             return redirect()->route('resource.index', $table );
         }else{
             abort('401');
@@ -143,23 +143,23 @@ class ResourceController extends Controller
      */
     public function show($table, $id, Request $request)
     {
-        $role = Role::where('name', '=', 'guest')->first();
-        try {
-            if($role->hasPermissionTo('read bread ' . $table)){
-                $guestHasPermission = true;
-            }
-        } catch (\Throwable $e) {
-            $guestHasPermission = false;
-        }       
-        if(!$guestHasPermission){
-            if(empty(Auth::user())){
-                abort('401');
-            }else{
-                if(!Auth::user()->can('read bread ' . $table)){
-                    abort('401');
-                }
-            }
-        } 
+        // $role = Role::where('name', '=', 'guest')->first();
+        // try {
+        //     if($role->hasPermissionTo('read bread ' . $table)){
+        //         $guestHasPermission = true;
+        //     }
+        // } catch (\Throwable $e) {
+        //     $guestHasPermission = false;
+        // }       
+        // if(!$guestHasPermission){
+        //     if(empty(Auth::user())){
+        //         abort('401');
+        //     }else{
+        //         if(!Auth::user()->can('read bread ' . $table)){
+        //             abort('401');
+        //         }
+        //     }
+        // } 
         $form = Form::find( $table );
         if($form->read == 1){
             $resourceService = new ResourceService();
@@ -180,23 +180,23 @@ class ResourceController extends Controller
      */
     public function edit($table, $id)
     {
-        $role = Role::where('name', '=', 'guest')->first();
-        try {
-            if($role->hasPermissionTo('edit bread ' . $table)){
-                $guestHasPermission = true;
-            }
-        } catch (\Throwable $e) {
-            $guestHasPermission = false;
-        }       
-        if(!$guestHasPermission){
-            if(empty(Auth::user())){
-                abort('401');
-            }else{
-                if(!Auth::user()->can('edit bread ' . $table)){
-                    abort('401');
-                }
-            }
-        }
+        // $role = Role::where('name', '=', 'guest')->first();
+        // try {
+        //     if($role->hasPermissionTo('edit bread ' . $table)){
+        //         $guestHasPermission = true;
+        //     }
+        // } catch (\Throwable $e) {
+        //     $guestHasPermission = false;
+        // }       
+        // if(!$guestHasPermission){
+        //     if(empty(Auth::user())){
+        //         abort('401');
+        //     }else{
+        //         if(!Auth::user()->can('edit bread ' . $table)){
+        //             abort('401');
+        //         }
+        //     }
+        // }
         $form = Form::find( $table );
         if($form->edit == 1){
             $resourceService = new ResourceService();
@@ -222,23 +222,23 @@ class ResourceController extends Controller
      */
     public function update($table, $id, Request $request)
     {
-        $role = Role::where('name', '=', 'guest')->first();
-        try {
-            if($role->hasPermissionTo('edit bread ' . $table)){
-                $guestHasPermission = true;
-            }
-        } catch (\Throwable $e) {
-            $guestHasPermission = false;
-        }       
-        if(!$guestHasPermission){
-            if(empty(Auth::user())){
-                abort('401');
-            }else{
-                if(!Auth::user()->can('edit bread ' . $table)){
-                    abort('401');
-                }
-            }
-        }
+        // $role = Role::where('name', '=', 'guest')->first();
+        // try {
+        //     if($role->hasPermissionTo('edit bread ' . $table)){
+        //         $guestHasPermission = true;
+        //     }
+        // } catch (\Throwable $e) {
+        //     $guestHasPermission = false;
+        // }       
+        // if(!$guestHasPermission){
+        //     if(empty(Auth::user())){
+        //         abort('401');
+        //     }else{
+        //         if(!Auth::user()->can('edit bread ' . $table)){
+        //             abort('401');
+        //         }
+        //     }
+        // }
         $toValidate = array();
         $form = Form::find( $table );
         $formFields = FormField::where('form_id', '=', $table)->where('add', '=', '1')->get();
@@ -249,7 +249,7 @@ class ResourceController extends Controller
         if($form->edit == 1){
             $resourceService = new ResourceService();
             $resourceService->update($form->table_name, $table, $id, $request->all() );
-            $request->session()->flash('message', 'Successfully edited ' . $form->name);
+            $request->session()->flash('message', '成功編輯 ' . $form->name);
             return redirect()->route('resource.index', $table );
         }else{
             abort('401');
@@ -264,28 +264,28 @@ class ResourceController extends Controller
      */
     public function destroy($table, Request $request, $id)
     {
-        $role = Role::where('name', '=', 'guest')->first();
-        try {
-            if($role->hasPermissionTo('delete bread ' . $table)){
-                $guestHasPermission = true;
-            }
-        } catch (\Throwable $e) {
-            $guestHasPermission = false;
-        }       
-        if(!$guestHasPermission){
-            if(empty(Auth::user())){
-                abort('401');
-            }else{
-                if(!Auth::user()->can('delete bread ' . $table)){
-                    abort('401');
-                }
-            }
-        }
+        // $role = Role::where('name', '=', 'guest')->first();
+        // try {
+        //     if($role->hasPermissionTo('delete bread ' . $table)){
+        //         $guestHasPermission = true;
+        //     }
+        // } catch (\Throwable $e) {
+        //     $guestHasPermission = false;
+        // }       
+        // if(!$guestHasPermission){
+        //     if(empty(Auth::user())){
+        //         abort('401');
+        //     }else{
+        //         if(!Auth::user()->can('delete bread ' . $table)){
+        //             abort('401');
+        //         }
+        //     }
+        // }
         $form = Form::find( $table );
         if($form->delete == 1){
             if($request->has('marker')){
                 DB::table($form->table_name)->where('id', '=', $id)->delete();
-                $request->session()->flash('message', 'Successfully deleted element from: ' . $form->name);
+                $request->session()->flash('message', '成功刪除');
                 return redirect()->route('resource.index', $table);
             }else{
                 return view('dashboard.resource.delete', ['table' => $table, 'id' => $id, 'formName' => $form->name]);

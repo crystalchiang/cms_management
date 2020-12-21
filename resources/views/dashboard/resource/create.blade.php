@@ -12,7 +12,7 @@
     <div class="row">
       <div class="col-sm-12">
         <div class="card">
-          <div class="card-header"><h4>Add {{ $form->name }}</h4></div>
+          <div class="card-header"><h4>新增 {{ $form->name }}</h4></div>
             <div class="card-body">
                 @if(Session::has('message'))
                     <div class="row">
@@ -84,7 +84,7 @@
                                     echo $column->name . ' <input type="file" name="' . $column->column_name . '">';
                                     echo '</label>';
                                 }elseif($column->type == 'text_area'){
-                                    echo '<div class="form-group row">';
+                                    echo '<div class="form-group">';
                                     echo '<label class="col-form-label">' . $column->name . '</label>';
                                     echo '<textarea class="form-control" name="' . $column->column_name . '" rows="9"></textarea>';
                                     echo '</div>';
@@ -97,13 +97,13 @@
                                 type="submit"
                                 class="btn btn-primary mt-3"
                             >
-                                Save
+                                儲存
                             </button>
                             <a 
                                 href="{{ route('resource.index', $form->id) }}"
                                 class="btn btn-primary mt-3"
                             >
-                                Return
+                                返回
                             </a>
                         </form>
                     </div>

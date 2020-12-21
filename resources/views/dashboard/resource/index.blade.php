@@ -27,7 +27,7 @@
                             href="{{ route('resource.create', $form->id ) }}"
                             class="btn btn-primary mb-3"
                         >
-                        Add new
+                        新增
                         </a>
                     </div>
                 @endif
@@ -65,12 +65,12 @@
                                         }
                                         if($enableButtons['read'] == 1){
                                             echo '<td>';
-                                            echo '<a href="' . route("resource.show", ['table' => $form->id, 'resource' => $data['id'] ] ) . '" class="btn btn-primary">Show</a>';
+                                            echo '<a href="' . route("resource.show", ['table' => $form->id, 'resource' => $data['id'] ] ) . '" class="btn btn-primary">檢視</a>';
                                             echo '</td>';
                                         }
                                         if($enableButtons['edit'] == 1){
                                             echo '<td>';
-                                            echo '<a href="' . route("resource.edit", ['table' => $form->id, 'resource' => $data['id'] ] ) . '" class="btn btn-primary">Edit</a>';
+                                            echo '<a href="' . route("resource.edit", ['table' => $form->id, 'resource' => $data['id'] ] ) . '" class="btn btn-primary">編輯</a>';
                                             echo '</td>';
                                         }
                                         if($enableButtons['delete'] == 1){
@@ -80,7 +80,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                 <?php
-                                            echo '<button class="btn btn-danger">Delete</button>';
+                                            echo '<button class="btn btn-danger">刪除</button>';
                                             echo '</form>';
                                             echo '</td>';
                                         }

@@ -11,6 +11,7 @@ use App\Models\Form;
 use App\Models\Models;
 use App\Models\Folder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class ResourceService{
 
@@ -208,6 +209,10 @@ class ResourceService{
                     }
                 }else{
                     $updateArray[$column] = $data->$column;
+                }
+                // 更新時間 修改
+                if (Schema::hasColumn($tableName, 'updated_at')){
+                    $updateArray['updated_at'] = date('Y-m-d H:i:s');
                 }
             }
         }

@@ -7,8 +7,7 @@
             <div class="row">
               <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <div class="card">
-                    <div class="card-header">
-                      <i class="fa fa-align-justify"></i>{{ __('Users') }}</div>
+                    <div class="card-header"><h4>使用者列表</h4></div>
                     <div class="card-body">
                         <div class="row"> 
                           <a href="{{ route('users.create') }}" class="btn btn-primary m-2">{{ __('建立使用者') }}</a>

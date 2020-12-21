@@ -11,7 +11,7 @@
  Target Server Version : 80022
  File Encoding         : 65001
 
- Date: 21/12/2020 19:57:46
+ Date: 21/12/2020 22:04:25
 */
 
 SET NAMES utf8mb4;
@@ -70,51 +70,6 @@ CREATE TABLE `email_template` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `email_template` VALUES (1, NULL, NULL, '<!DOCTYPE html>\n                <html lang=\"en\">\n                <head>\n                    <meta charset=\"utf-8\">\n                    <meta name=\"viewport\" content=\"width=device-width\">\n                    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"> \n                    <meta name=\"x-apple-disable-message-reformatting\">\n                    <title>Example</title>\n                    <style>\n                        body {\n                            background-color:#fff;\n                            color:#222222;\n                            margin: 0px auto;\n                            padding: 0px;\n                            height: 100%;\n                            width: 100%;\n                            font-weight: 400;\n                            font-size: 15px;\n                            line-height: 1.8;\n                        }\n                        .continer{\n                            width:400px;\n                            margin-left:auto;\n                            margin-right:auto;\n                            background-color:#efefef;\n                            padding:30px;\n                        }\n                        .btn{\n                            padding: 5px 15px;\n                            display: inline-block;\n                        }\n                        .btn-primary{\n                            border-radius: 3px;\n                            background: #0b3c7c;\n                            color: #fff;\n                            text-decoration: none;\n                        }\n                        .btn-primary:hover{\n                            border-radius: 3px;\n                            background: #4673ad;\n                            color: #fff;\n                            text-decoration: none;\n                        }\n                    </style>\n                </head>\n                <body>\n                    <div class=\"continer\">\n                        <h1>Lorem ipsum dolor</h1>\n                        <h4>Ipsum dolor cet emit amet</h4>\n                        <p>\n                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea <strong>commodo consequat</strong>. \n                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. \n                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n                        </p>\n                        <h4>Ipsum dolor cet emit amet</h4>\n                        <p>\n                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod <a href=\"#\">tempor incididunt ut labore</a> et dolore magna aliqua.\n                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. \n                        </p>\n                        <h4>Ipsum dolor cet emit amet</h4>\n                        <p>\n                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. \n                        </p>\n                        <a href=\"#\" class=\"btn btn-primary\">Lorem ipsum dolor</a>\n                        <h4>Ipsum dolor cet emit amet</h4>\n                        <p>\n                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n                            Ut enim ad minim veniam, quis nostrud exercitation <a href=\"#\">ullamco</a> laboris nisi ut aliquip ex ea commodo consequat. \n                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. \n                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n                        </p>\n                    </div>\n                </body>\n                </html>', 'Example E-mail', 'Example E-mail');
-COMMIT;
-
--- ----------------------------
--- Table structure for example
--- ----------------------------
-DROP TABLE IF EXISTS `example`;
-CREATE TABLE `example` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status_id` int unsigned NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ----------------------------
--- Records of example
--- ----------------------------
-BEGIN;
-INSERT INTO `example` VALUES (1, NULL, NULL, 'Distinctio voluptatem non.', 'Et consequatur quod et molestias.', 3);
-INSERT INTO `example` VALUES (2, NULL, NULL, 'Accusamus ipsam ut eveniet ipsa iusto.', 'Eligendi sed possimus magnam repudiandae. Libero voluptates amet aut sunt qui.', 2);
-INSERT INTO `example` VALUES (3, NULL, NULL, 'Dolores ullam quasi nemo excepturi.', 'Cum voluptatum libero quibusdam tempora mollitia facere omnis.', 2);
-INSERT INTO `example` VALUES (4, NULL, NULL, 'Eveniet quo iure incidunt aspernatur.', 'Omnis qui enim corrupti.', 3);
-INSERT INTO `example` VALUES (5, NULL, NULL, 'Aliquid doloremque officia placeat.', 'Dolores laborum consequatur hic ex. Et occaecati distinctio aut explicabo totam ut quo iusto.', 1);
-INSERT INTO `example` VALUES (6, NULL, NULL, 'Impedit repellendus dolor totam.', 'Fugit inventore ullam consequatur consectetur. Sequi quaerat sed omnis ut.', 3);
-INSERT INTO `example` VALUES (7, NULL, NULL, 'Molestiae repellendus quam aut qui autem.', 'Quia distinctio assumenda error aut.', 3);
-INSERT INTO `example` VALUES (8, NULL, NULL, 'Alias ea est hic.', 'Ut consequatur aut ab at. Maiores eveniet dolorem et architecto vel.', 4);
-INSERT INTO `example` VALUES (9, NULL, NULL, 'Aut velit quos in.', 'Sequi id est magni aut in. Expedita sunt dolor animi incidunt.', 3);
-INSERT INTO `example` VALUES (10, NULL, NULL, 'Voluptas quidem ratione quidem ipsam.', 'Maxime sequi ipsam autem quaerat pariatur omnis.', 4);
-INSERT INTO `example` VALUES (11, NULL, NULL, 'Modi possimus quia.', 'Quisquam commodi aut ad ea consequuntur.', 2);
-INSERT INTO `example` VALUES (12, NULL, NULL, 'Veritatis consequatur quia.', 'Temporibus nihil dolorum dolore fugit.', 4);
-INSERT INTO `example` VALUES (13, NULL, NULL, 'Nulla suscipit laborum provident et.', 'Iure voluptas impedit provident earum voluptates eligendi repellendus.', 1);
-INSERT INTO `example` VALUES (14, NULL, NULL, 'Facilis et consequatur eum iure quo.', 'Fuga rem et velit at eos et. Sapiente sed facere quos esse quia aut inventore.', 1);
-INSERT INTO `example` VALUES (15, NULL, NULL, 'Qui non dolores dolor earum recusandae.', 'Corrupti possimus expedita dolores error esse rerum iure fugiat.', 1);
-INSERT INTO `example` VALUES (16, NULL, NULL, 'Laboriosam nostrum praesentium ad aut.', 'Libero consequatur ut aliquam nihil voluptatem aut alias.', 4);
-INSERT INTO `example` VALUES (17, NULL, NULL, 'Dolorem saepe saepe.', 'Est cum suscipit qui odit earum.', 1);
-INSERT INTO `example` VALUES (18, NULL, NULL, 'In voluptatem ipsa distinctio molestias.', 'Ex vel ullam id.', 3);
-INSERT INTO `example` VALUES (19, NULL, NULL, 'Quas dolore cupiditate.', 'Et aut qui animi labore. Non perspiciatis eveniet et repellat.', 3);
-INSERT INTO `example` VALUES (20, NULL, NULL, 'Molestiae nisi qui.', 'Cumque rem corrupti magni laboriosam consequuntur et. Rerum iure qui dolore dolores.', 3);
-INSERT INTO `example` VALUES (21, NULL, NULL, 'Necessitatibus aliquid modi non reprehenderit dolores.', 'Ipsum laborum et accusantium veniam non soluta consequatur. Recusandae tempore error occaecati magni omnis.', 1);
-INSERT INTO `example` VALUES (22, NULL, NULL, 'Quis qui necessitatibus quo.', 'Reprehenderit molestiae aut labore totam.', 3);
-INSERT INTO `example` VALUES (23, NULL, NULL, 'Atque et officiis exercitationem.', 'At repellendus distinctio molestias magnam alias sequi.', 1);
-INSERT INTO `example` VALUES (24, NULL, NULL, 'Sed ab reprehenderit voluptas enim.', 'Est ab laudantium voluptatem velit.', 3);
-INSERT INTO `example` VALUES (25, NULL, NULL, 'Fugiat autem quaerat omnis dolor eos.', 'Quo expedita eum est vitae sit aut pariatur pariatur.', 1);
 COMMIT;
 
 -- ----------------------------
@@ -178,13 +133,13 @@ CREATE TABLE `form` (
   `delete` tinyint(1) NOT NULL,
   `pagination` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of form
 -- ----------------------------
 BEGIN;
-INSERT INTO `form` VALUES (1, NULL, NULL, 'Example', 'example', 1, 1, 1, 1, 5);
+INSERT INTO `form` VALUES (3, '2020-12-21 12:53:24', '2020-12-21 13:47:08', '總校屬性分類', 'school_category', 1, 1, 1, 1, 10);
 COMMIT;
 
 -- ----------------------------
@@ -206,15 +161,17 @@ CREATE TABLE `form_field` (
   `form_id` int unsigned NOT NULL,
   `column_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of form_field
 -- ----------------------------
 BEGIN;
-INSERT INTO `form_field` VALUES (1, NULL, NULL, 'Title', 'text', 1, 1, 1, 1, NULL, NULL, 1, 'name');
-INSERT INTO `form_field` VALUES (2, NULL, NULL, 'Description', 'text_area', 1, 1, 1, 1, NULL, NULL, 1, 'description');
-INSERT INTO `form_field` VALUES (3, NULL, NULL, 'Status', 'relation_select', 1, 1, 1, 1, 'status', 'name', 1, 'status_id');
+INSERT INTO `form_field` VALUES (13, '2020-12-21 12:53:24', '2020-12-21 12:53:24', '分類名稱', 'text', 1, 1, 1, 1, NULL, NULL, 3, 'name');
+INSERT INTO `form_field` VALUES (14, '2020-12-21 12:53:24', '2020-12-21 12:59:53', '分類說明', 'text_area', 1, 1, 1, 1, NULL, NULL, 3, 'description');
+INSERT INTO `form_field` VALUES (15, '2020-12-21 12:53:24', '2020-12-21 13:03:05', '建立時間', 'datetime-local', 1, 1, 0, 0, NULL, NULL, 3, 'created_at');
+INSERT INTO `form_field` VALUES (16, '2020-12-21 12:53:24', '2020-12-21 13:33:01', '最後更新時間', 'datetime-local', 1, 1, 0, 0, NULL, NULL, 3, 'updated_at');
+INSERT INTO `form_field` VALUES (17, '2020-12-21 12:53:24', '2020-12-21 13:02:35', 'deleted_at', 'datetime-local', 0, 0, 0, 0, NULL, NULL, 3, 'deleted_at');
 COMMIT;
 
 -- ----------------------------
@@ -258,7 +215,7 @@ CREATE TABLE `menu_role` (
   `role_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `menus_id` int unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=136 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=140 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of menu_role
@@ -374,6 +331,10 @@ INSERT INTO `menu_role` VALUES (127, 'mywayAdmin', 68);
 INSERT INTO `menu_role` VALUES (128, 'schoolAdmin', 68);
 INSERT INTO `menu_role` VALUES (132, 'admin', 56);
 INSERT INTO `menu_role` VALUES (133, 'admin', 1);
+INSERT INTO `menu_role` VALUES (136, 'admin', 69);
+INSERT INTO `menu_role` VALUES (137, 'mywayAdmin', 69);
+INSERT INTO `menu_role` VALUES (138, 'admin', 70);
+INSERT INTO `menu_role` VALUES (139, 'mywayAdmin', 70);
 COMMIT;
 
 -- ----------------------------
@@ -409,7 +370,7 @@ CREATE TABLE `menus` (
   `menu_id` int unsigned NOT NULL,
   `sequence` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of menus
@@ -477,6 +438,8 @@ INSERT INTO `menus` VALUES (65, 'BREAD', '/bread', NULL, 'link', 60, 2, 65);
 INSERT INTO `menus` VALUES (66, '使用者設定', NULL, 'cil-user', 'dropdown', NULL, 3, 1);
 INSERT INTO `menus` VALUES (67, '新增使用者', '/users/create', NULL, 'link', 66, 3, 2);
 INSERT INTO `menus` VALUES (68, '使用者列表', '/users', NULL, 'link', 66, 3, 3);
+INSERT INTO `menus` VALUES (69, '總校設定', NULL, 'cil-school', 'dropdown', NULL, 3, 4);
+INSERT INTO `menus` VALUES (70, '屬性分類建置', '/resource/3/resource', NULL, 'link', 69, 3, 5);
 COMMIT;
 
 -- ----------------------------
@@ -611,7 +574,7 @@ CREATE TABLE `permissions` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of permissions
@@ -627,6 +590,11 @@ INSERT INTO `permissions` VALUES (7, 'read bread 2', 'web', '2020-12-15 06:51:07
 INSERT INTO `permissions` VALUES (8, 'edit bread 2', 'web', '2020-12-15 06:51:07', '2020-12-15 06:51:07');
 INSERT INTO `permissions` VALUES (9, 'add bread 2', 'web', '2020-12-15 06:51:07', '2020-12-15 06:51:07');
 INSERT INTO `permissions` VALUES (10, 'delete bread 2', 'web', '2020-12-15 06:51:07', '2020-12-15 06:51:07');
+INSERT INTO `permissions` VALUES (11, 'browse bread 3', 'web', '2020-12-21 12:53:24', '2020-12-21 12:53:24');
+INSERT INTO `permissions` VALUES (12, 'read bread 3', 'web', '2020-12-21 12:53:24', '2020-12-21 12:53:24');
+INSERT INTO `permissions` VALUES (13, 'edit bread 3', 'web', '2020-12-21 12:53:24', '2020-12-21 12:53:24');
+INSERT INTO `permissions` VALUES (14, 'add bread 3', 'web', '2020-12-21 12:53:24', '2020-12-21 12:53:24');
+INSERT INTO `permissions` VALUES (15, 'delete bread 3', 'web', '2020-12-21 12:53:24', '2020-12-21 12:53:24');
 COMMIT;
 
 -- ----------------------------
@@ -651,11 +619,21 @@ INSERT INTO `role_has_permissions` VALUES (7, 1);
 INSERT INTO `role_has_permissions` VALUES (8, 1);
 INSERT INTO `role_has_permissions` VALUES (9, 1);
 INSERT INTO `role_has_permissions` VALUES (10, 1);
+INSERT INTO `role_has_permissions` VALUES (11, 1);
+INSERT INTO `role_has_permissions` VALUES (12, 1);
+INSERT INTO `role_has_permissions` VALUES (13, 1);
+INSERT INTO `role_has_permissions` VALUES (14, 1);
+INSERT INTO `role_has_permissions` VALUES (15, 1);
 INSERT INTO `role_has_permissions` VALUES (6, 2);
 INSERT INTO `role_has_permissions` VALUES (7, 2);
 INSERT INTO `role_has_permissions` VALUES (8, 2);
 INSERT INTO `role_has_permissions` VALUES (9, 2);
 INSERT INTO `role_has_permissions` VALUES (10, 2);
+INSERT INTO `role_has_permissions` VALUES (11, 2);
+INSERT INTO `role_has_permissions` VALUES (12, 2);
+INSERT INTO `role_has_permissions` VALUES (13, 2);
+INSERT INTO `role_has_permissions` VALUES (14, 2);
+INSERT INTO `role_has_permissions` VALUES (15, 2);
 INSERT INTO `role_has_permissions` VALUES (6, 3);
 INSERT INTO `role_has_permissions` VALUES (7, 3);
 INSERT INTO `role_has_permissions` VALUES (8, 3);
@@ -722,6 +700,26 @@ INSERT INTO `roles` VALUES (7, 'parent', 'web', '2020-12-15 03:38:21', '2020-12-
 INSERT INTO `roles` VALUES (8, 'student', 'web', '2020-12-15 03:38:21', '2020-12-15 03:38:21');
 INSERT INTO `roles` VALUES (9, 'user', 'web', '2020-12-15 03:38:21', '2020-12-15 03:38:21');
 INSERT INTO `roles` VALUES (10, 'guest', 'web', '2020-12-15 03:38:21', '2020-12-15 03:38:21');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for school_category
+-- ----------------------------
+DROP TABLE IF EXISTS `school_category`;
+CREATE TABLE `school_category` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL COMMENT '分類名稱',
+  `description` varchar(255) DEFAULT NULL COMMENT '分類描述',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of school_category
+-- ----------------------------
+BEGIN;
+INSERT INTO `school_category` VALUES (3, '分類1測試', '這是分類說明', '2020-12-21 21:43:29', '2020-12-21 21:43:29');
 COMMIT;
 
 -- ----------------------------
@@ -839,18 +837,21 @@ CREATE TABLE `users` (
   `status` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
 BEGIN;
-INSERT INTO `users` VALUES (1, 'admin', NULL, NULL, NULL, NULL, 'admin@admin.com', '2020-12-15 03:38:21', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', 'j0qbKXmiI6FFMr1q5DtX8BPoKS2ASimjPXcHM7OBI0aPICvttlZstbs0vXAE', '2020-12-15 03:38:21', '2020-12-15 03:38:21', NULL, 1);
+INSERT INTO `users` VALUES (1, 'admin', NULL, NULL, NULL, NULL, 'admin@admin.com', '2020-12-15 03:38:21', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', 'lEdUO1CN8Y1SkqBgksk3hoBfLJ6CCYNYHOUSRW9ZsgYFY2yjY7qxivUPfNrK', '2020-12-15 03:38:21', '2020-12-15 03:38:21', NULL, 1);
 INSERT INTO `users` VALUES (6, 'test', NULL, NULL, NULL, NULL, 'tophet0929@gmail.com', NULL, '$2y$10$2zdhLPnCTLn0K/zihJBiz.1A5xHnlFCu07wrpuJLIlNB4g5F5SD5W', 'mywayAdmin', NULL, '2020-12-15 10:34:21', '2020-12-15 10:34:21', NULL, 1);
 INSERT INTO `users` VALUES (19, 'teachera', NULL, NULL, NULL, NULL, 'test@gmail.com', NULL, '$2y$10$ApZ2vlv1bixjyb9180oMHefnKt1fF7SQRjZLObJuhVHZA/zR6bDIW', 'teacher', NULL, NULL, '2020-12-16 15:09:08', NULL, 1);
 INSERT INTO `users` VALUES (23, 'linba', NULL, '0912345678', 'linba', NULL, 'linba@gmail.com', NULL, '$2y$10$RzpGqnPx3ipAQJmhhx451.27j6VhoCUSpBuXz/Zm0jxm7jcuyeTSS', 'parent', NULL, '2020-12-16 16:26:04', NULL, NULL, 1);
 INSERT INTO `users` VALUES (24, 'linma', 'linma', '0912345678', 'linma', 'ss', 'linma@gmail.com', NULL, '$2y$10$d9uz1Z5HNK/5oyYhLiTrxe/.S/VMoi9LGB1993coxPTaKx4UzEQD2', 'parent', NULL, '2020-12-16 16:26:04', '2020-12-21 11:33:58', NULL, 1);
-INSERT INTO `users` VALUES (25, '林寶', 'linbo', '0912345678', 'linbo', 'sss', 'linbo@gmail.com', NULL, '$2y$10$xkJc3fqvsIwejWr3fRNnLOpExLh4eddWAY2dzTr2CMdhvWetGQz9e', 'student', NULL, '2020-12-16 16:26:04', '2020-12-21 11:51:44', NULL, 1);
+INSERT INTO `users` VALUES (25, '林寶', 'linbo', NULL, 'linbo', NULL, 'linbo@gmail.com', NULL, '$2y$10$xkJc3fqvsIwejWr3fRNnLOpExLh4eddWAY2dzTr2CMdhvWetGQz9e', 'student', NULL, '2020-12-16 16:26:04', '2020-12-21 11:51:44', NULL, 1);
+INSERT INTO `users` VALUES (26, 'Q爸', NULL, '0912345678', 'qba', NULL, 'qba@gmail.com', NULL, '$2y$10$r6a55yCQJumWUtyabVMwsO.L6tZir1iHak/DnMIeD6CJBxfKUUlni', 'parent', NULL, '2020-12-21 12:31:53', NULL, NULL, 1);
+INSERT INTO `users` VALUES (27, 'Q媽', NULL, '0987654321', 'qma', NULL, 'qma@gmail.com', NULL, '$2y$10$jvT43le9mr8zJA3SVONJ1ObVVKR3/bKBcWTf1XNfzf4dKwE38ouQy', 'parent', NULL, '2020-12-21 12:31:53', NULL, NULL, 1);
+INSERT INTO `users` VALUES (28, 'Q寶', 'QQ', NULL, 'qbo', NULL, 'qbo@gmail.com', NULL, '$2y$10$iAuDWo1ogI9/0lQdcHHvOO3kcajlKNX4RpXaYz/MncaWEqf0AKWpO', 'student', NULL, '2020-12-21 12:31:53', NULL, NULL, 1);
 COMMIT;
 
 -- ----------------------------
@@ -869,13 +870,14 @@ CREATE TABLE `users_student_infos` (
   `created_at` timestamp NULL DEFAULT NULL COMMENT '建立日期',
   `update_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '最後更新日期',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of users_student_infos
 -- ----------------------------
 BEGIN;
-INSERT INTO `users_student_infos` VALUES (4, 25, NULL, 23, 24, 'other', '2020-12-18', '2020-12-31', '2020-12-16 16:26:04', '2020-12-21 19:55:59');
+INSERT INTO `users_student_infos` VALUES (4, 25, NULL, 23, 24, 'otherss', '2020-12-18', '2020-12-31', '2020-12-16 16:26:04', '2020-12-21 20:25:41');
+INSERT INTO `users_student_infos` VALUES (5, 28, NULL, 26, 27, 'p', '2020-12-22', '2020-12-31', '2020-12-21 12:31:53', NULL);
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

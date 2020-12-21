@@ -8,7 +8,7 @@
               <div class="col-sm-12 col-md-10 col-lg-8 col-xl-6">
                 <div class="card">
                     <div class="card-header">
-                      <i class="fa fa-align-justify"></i> {{ __('編輯') }} {{ $user->name }}</div>
+                      <div class="card-header"><h4>編輯使用者</h4></div>
                     <div class="card-body">
                         <br>
                         <form method="POST" action="/users/{{ $user->id }}">
