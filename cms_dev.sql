@@ -11,7 +11,7 @@
  Target Server Version : 80022
  File Encoding         : 65001
 
- Date: 21/12/2020 22:04:25
+ Date: 28/12/2020 01:45:04
 */
 
 SET NAMES utf8mb4;
@@ -215,7 +215,7 @@ CREATE TABLE `menu_role` (
   `role_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `menus_id` int unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=140 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=142 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of menu_role
@@ -335,6 +335,8 @@ INSERT INTO `menu_role` VALUES (136, 'admin', 69);
 INSERT INTO `menu_role` VALUES (137, 'mywayAdmin', 69);
 INSERT INTO `menu_role` VALUES (138, 'admin', 70);
 INSERT INTO `menu_role` VALUES (139, 'mywayAdmin', 70);
+INSERT INTO `menu_role` VALUES (140, 'admin', 71);
+INSERT INTO `menu_role` VALUES (141, 'mywayAdmin', 71);
 COMMIT;
 
 -- ----------------------------
@@ -370,7 +372,7 @@ CREATE TABLE `menus` (
   `menu_id` int unsigned NOT NULL,
   `sequence` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of menus
@@ -440,6 +442,7 @@ INSERT INTO `menus` VALUES (67, '新增使用者', '/users/create', NULL, 'link'
 INSERT INTO `menus` VALUES (68, '使用者列表', '/users', NULL, 'link', 66, 3, 3);
 INSERT INTO `menus` VALUES (69, '總校設定', NULL, 'cil-school', 'dropdown', NULL, 3, 4);
 INSERT INTO `menus` VALUES (70, '屬性分類建置', '/resource/3/resource', NULL, 'link', 69, 3, 5);
+INSERT INTO `menus` VALUES (71, '總校列表', '/schools', NULL, 'link', 69, 3, 6);
 COMMIT;
 
 -- ----------------------------
@@ -752,20 +755,29 @@ COMMIT;
 DROP TABLE IF EXISTS `schools_main_info`;
 CREATE TABLE `schools_main_info` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL COMMENT '學校名稱',
-  `address` varchar(255) DEFAULT NULL COMMENT '學校地址',
-  `telephone` varchar(255) DEFAULT NULL COMMENT '學校電話',
-  `created_at` timestamp NULL DEFAULT NULL COMMENT '建立日期',
-  `expired_at` timestamp NULL DEFAULT NULL COMMENT '到期日期',
-  `update_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '最後更新日期',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '總校名稱',
+  `alias` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '總校簡稱',
+  `address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '總校地址',
+  `telephone` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '總校電話',
+  `website` varchar(255) DEFAULT NULL COMMENT '總校網址',
+  `identity_id` varchar(255) DEFAULT NULL COMMENT '立案字號',
+  `category_id` int DEFAULT NULL COMMENT '總校分類',
+  `code` varchar(255) DEFAULT NULL COMMENT '總校編號',
+  `city` varchar(255) DEFAULT NULL COMMENT '總校縣市',
+  `area` varchar(255) DEFAULT NULL COMMENT '總校鄉鎮市區',
+  `principal_id` int DEFAULT NULL COMMENT '總校負責人',
+  `created_at` timestamp NOT NULL COMMENT '建立日期',
+  `expired_at` date DEFAULT NULL COMMENT '到期日期',
+  `updated_at` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '最後更新日期',
   `status` int DEFAULT '1' COMMENT '狀態:1啟用2關閉',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of schools_main_info
 -- ----------------------------
 BEGIN;
+INSERT INTO `schools_main_info` VALUES (1, '狀元補習班', '狀元', '南陽街', '0212345678', '', 'AE12345678', 3, '19WQR1OXWB4', NULL, NULL, 37, '2020-12-28 01:41:42', '2020-12-31', '2020-12-27 17:42:13', 1);
 COMMIT;
 
 -- ----------------------------
@@ -837,14 +849,14 @@ CREATE TABLE `users` (
   `status` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
 BEGIN;
 INSERT INTO `users` VALUES (1, 'admin', NULL, NULL, NULL, NULL, 'admin@admin.com', '2020-12-15 03:38:21', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', 'lEdUO1CN8Y1SkqBgksk3hoBfLJ6CCYNYHOUSRW9ZsgYFY2yjY7qxivUPfNrK', '2020-12-15 03:38:21', '2020-12-15 03:38:21', NULL, 1);
-INSERT INTO `users` VALUES (6, 'test', NULL, NULL, NULL, NULL, 'tophet0929@gmail.com', NULL, '$2y$10$2zdhLPnCTLn0K/zihJBiz.1A5xHnlFCu07wrpuJLIlNB4g5F5SD5W', 'mywayAdmin', NULL, '2020-12-15 10:34:21', '2020-12-15 10:34:21', NULL, 1);
+INSERT INTO `users` VALUES (6, 'test', NULL, NULL, NULL, NULL, 'admin@myway.com', NULL, '$2y$10$2zdhLPnCTLn0K/zihJBiz.1A5xHnlFCu07wrpuJLIlNB4g5F5SD5W', 'mywayAdmin', NULL, '2020-12-15 10:34:21', '2020-12-15 10:34:21', NULL, 1);
 INSERT INTO `users` VALUES (19, 'teachera', NULL, NULL, NULL, NULL, 'test@gmail.com', NULL, '$2y$10$ApZ2vlv1bixjyb9180oMHefnKt1fF7SQRjZLObJuhVHZA/zR6bDIW', 'teacher', NULL, NULL, '2020-12-16 15:09:08', NULL, 1);
 INSERT INTO `users` VALUES (23, 'linba', NULL, '0912345678', 'linba', NULL, 'linba@gmail.com', NULL, '$2y$10$RzpGqnPx3ipAQJmhhx451.27j6VhoCUSpBuXz/Zm0jxm7jcuyeTSS', 'parent', NULL, '2020-12-16 16:26:04', NULL, NULL, 1);
 INSERT INTO `users` VALUES (24, 'linma', 'linma', '0912345678', 'linma', 'ss', 'linma@gmail.com', NULL, '$2y$10$d9uz1Z5HNK/5oyYhLiTrxe/.S/VMoi9LGB1993coxPTaKx4UzEQD2', 'parent', NULL, '2020-12-16 16:26:04', '2020-12-21 11:33:58', NULL, 1);
@@ -852,6 +864,7 @@ INSERT INTO `users` VALUES (25, '林寶', 'linbo', NULL, 'linbo', NULL, 'linbo@g
 INSERT INTO `users` VALUES (26, 'Q爸', NULL, '0912345678', 'qba', NULL, 'qba@gmail.com', NULL, '$2y$10$r6a55yCQJumWUtyabVMwsO.L6tZir1iHak/DnMIeD6CJBxfKUUlni', 'parent', NULL, '2020-12-21 12:31:53', NULL, NULL, 1);
 INSERT INTO `users` VALUES (27, 'Q媽', NULL, '0987654321', 'qma', NULL, 'qma@gmail.com', NULL, '$2y$10$jvT43le9mr8zJA3SVONJ1ObVVKR3/bKBcWTf1XNfzf4dKwE38ouQy', 'parent', NULL, '2020-12-21 12:31:53', NULL, NULL, 1);
 INSERT INTO `users` VALUES (28, 'Q寶', 'QQ', NULL, 'qbo', NULL, 'qbo@gmail.com', NULL, '$2y$10$iAuDWo1ogI9/0lQdcHHvOO3kcajlKNX4RpXaYz/MncaWEqf0AKWpO', 'student', NULL, '2020-12-21 12:31:53', NULL, NULL, 1);
+INSERT INTO `users` VALUES (37, '林總校長', NULL, '0912222332', 'linprincipal', NULL, 'admin@testschool.com', NULL, '$2y$10$Oyg0ib6u9m5lYgKYzbx/1.Rddm4AzCH3/iBukv8lTrDqDlqy8CPfS', 'schoolAdmin', NULL, '2020-12-27 16:10:39', '2020-12-27 17:42:13', NULL, 1);
 COMMIT;
 
 -- ----------------------------
