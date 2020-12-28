@@ -11,7 +11,7 @@
  Target Server Version : 80022
  File Encoding         : 65001
 
- Date: 28/12/2020 01:45:04
+ Date: 28/12/2020 23:41:35
 */
 
 SET NAMES utf8mb4;
@@ -133,7 +133,7 @@ CREATE TABLE `form` (
   `delete` tinyint(1) NOT NULL,
   `pagination` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of form
@@ -161,7 +161,7 @@ CREATE TABLE `form_field` (
   `form_id` int unsigned NOT NULL,
   `column_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of form_field
@@ -215,7 +215,7 @@ CREATE TABLE `menu_role` (
   `role_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `menus_id` int unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=142 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=164 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of menu_role
@@ -337,6 +337,14 @@ INSERT INTO `menu_role` VALUES (138, 'admin', 70);
 INSERT INTO `menu_role` VALUES (139, 'mywayAdmin', 70);
 INSERT INTO `menu_role` VALUES (140, 'admin', 71);
 INSERT INTO `menu_role` VALUES (141, 'mywayAdmin', 71);
+INSERT INTO `menu_role` VALUES (150, 'admin', 72);
+INSERT INTO `menu_role` VALUES (151, 'mywayAdmin', 72);
+INSERT INTO `menu_role` VALUES (158, 'admin', 73);
+INSERT INTO `menu_role` VALUES (159, 'mywayAdmin', 73);
+INSERT INTO `menu_role` VALUES (160, 'admin', 74);
+INSERT INTO `menu_role` VALUES (161, 'mywayAdmin', 74);
+INSERT INTO `menu_role` VALUES (162, 'admin', 75);
+INSERT INTO `menu_role` VALUES (163, 'mywayAdmin', 75);
 COMMIT;
 
 -- ----------------------------
@@ -372,7 +380,7 @@ CREATE TABLE `menus` (
   `menu_id` int unsigned NOT NULL,
   `sequence` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of menus
@@ -443,6 +451,10 @@ INSERT INTO `menus` VALUES (68, '使用者列表', '/users', NULL, 'link', 66, 3
 INSERT INTO `menus` VALUES (69, '總校設定', NULL, 'cil-school', 'dropdown', NULL, 3, 4);
 INSERT INTO `menus` VALUES (70, '屬性分類建置', '/resource/3/resource', NULL, 'link', 69, 3, 5);
 INSERT INTO `menus` VALUES (71, '總校列表', '/schools', NULL, 'link', 69, 3, 6);
+INSERT INTO `menus` VALUES (72, '分類設定', NULL, 'cil-folder', 'dropdown', NULL, 3, 7);
+INSERT INTO `menus` VALUES (73, '大分類', '/firstCategory', NULL, 'link', 72, 3, 8);
+INSERT INTO `menus` VALUES (74, '中分類', '/secondCategory', NULL, 'link', 72, 3, 9);
+INSERT INTO `menus` VALUES (75, '小分類', '/thirdCategory', NULL, 'link', 72, 3, 10);
 COMMIT;
 
 -- ----------------------------
@@ -522,6 +534,77 @@ INSERT INTO `model_has_roles` VALUES (9, 'App\\Models\\User', 3);
 COMMIT;
 
 -- ----------------------------
+-- Table structure for myway_first_category
+-- ----------------------------
+DROP TABLE IF EXISTS `myway_first_category`;
+CREATE TABLE `myway_first_category` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL COMMENT '大類別名稱',
+  `description` text CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '說明',
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `status` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of myway_first_category
+-- ----------------------------
+BEGIN;
+INSERT INTO `myway_first_category` VALUES (1, '課程', NULL, '2020-12-28 08:20:58', '2020-12-28 08:28:54', 1);
+INSERT INTO `myway_first_category` VALUES (2, '大型考試', NULL, '2020-12-28 08:29:08', '2020-12-28 08:29:08', 1);
+INSERT INTO `myway_first_category` VALUES (3, '活動', NULL, '2020-12-28 08:29:15', '2020-12-28 08:29:15', 1);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for myway_second_category
+-- ----------------------------
+DROP TABLE IF EXISTS `myway_second_category`;
+CREATE TABLE `myway_second_category` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `first_cat_id` int DEFAULT NULL COMMENT '大分類ID',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '中類別名稱',
+  `alias` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '中類別簡稱',
+  `description` text CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '說明',
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `status` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of myway_second_category
+-- ----------------------------
+BEGIN;
+INSERT INTO `myway_second_category` VALUES (2, 3, '英語劇場', 'RT', NULL, '2020-12-28 09:54:58', '2020-12-28 09:54:58', 1);
+INSERT INTO `myway_second_category` VALUES (3, 1, 'Fun English', 'Fun', NULL, '2020-12-28 09:55:21', '2020-12-28 09:55:21', 1);
+INSERT INTO `myway_second_category` VALUES (4, 2, 'Phonics', 'Phonics', NULL, '2020-12-28 09:55:46', '2020-12-28 09:55:56', 1);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for myway_third_category
+-- ----------------------------
+DROP TABLE IF EXISTS `myway_third_category`;
+CREATE TABLE `myway_third_category` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `first_cat_id` int DEFAULT NULL COMMENT '大分類ID',
+  `second_cat_id` int DEFAULT NULL COMMENT '中分類ID',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '小類別名稱',
+  `description` text CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '說明',
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `status` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of myway_third_category
+-- ----------------------------
+BEGIN;
+INSERT INTO `myway_third_category` VALUES (1, 1, 3, 'Fun-01', NULL, '2020-12-28 11:36:39', '2020-12-28 15:40:33', 1);
+COMMIT;
+
+-- ----------------------------
 -- Table structure for notes
 -- ----------------------------
 DROP TABLE IF EXISTS `notes`;
@@ -577,7 +660,7 @@ CREATE TABLE `permissions` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of permissions
@@ -598,6 +681,21 @@ INSERT INTO `permissions` VALUES (12, 'read bread 3', 'web', '2020-12-21 12:53:2
 INSERT INTO `permissions` VALUES (13, 'edit bread 3', 'web', '2020-12-21 12:53:24', '2020-12-21 12:53:24');
 INSERT INTO `permissions` VALUES (14, 'add bread 3', 'web', '2020-12-21 12:53:24', '2020-12-21 12:53:24');
 INSERT INTO `permissions` VALUES (15, 'delete bread 3', 'web', '2020-12-21 12:53:24', '2020-12-21 12:53:24');
+INSERT INTO `permissions` VALUES (16, 'browse bread 4', 'web', '2020-12-28 07:25:07', '2020-12-28 07:25:07');
+INSERT INTO `permissions` VALUES (17, 'read bread 4', 'web', '2020-12-28 07:25:07', '2020-12-28 07:25:07');
+INSERT INTO `permissions` VALUES (18, 'edit bread 4', 'web', '2020-12-28 07:25:07', '2020-12-28 07:25:07');
+INSERT INTO `permissions` VALUES (19, 'add bread 4', 'web', '2020-12-28 07:25:07', '2020-12-28 07:25:07');
+INSERT INTO `permissions` VALUES (20, 'delete bread 4', 'web', '2020-12-28 07:25:07', '2020-12-28 07:25:07');
+INSERT INTO `permissions` VALUES (21, 'browse bread 5', 'web', '2020-12-28 07:27:28', '2020-12-28 07:27:28');
+INSERT INTO `permissions` VALUES (22, 'read bread 5', 'web', '2020-12-28 07:27:28', '2020-12-28 07:27:28');
+INSERT INTO `permissions` VALUES (23, 'edit bread 5', 'web', '2020-12-28 07:27:28', '2020-12-28 07:27:28');
+INSERT INTO `permissions` VALUES (24, 'add bread 5', 'web', '2020-12-28 07:27:28', '2020-12-28 07:27:28');
+INSERT INTO `permissions` VALUES (25, 'delete bread 5', 'web', '2020-12-28 07:27:28', '2020-12-28 07:27:28');
+INSERT INTO `permissions` VALUES (26, 'browse bread 6', 'web', '2020-12-28 07:28:58', '2020-12-28 07:28:58');
+INSERT INTO `permissions` VALUES (27, 'read bread 6', 'web', '2020-12-28 07:28:58', '2020-12-28 07:28:58');
+INSERT INTO `permissions` VALUES (28, 'edit bread 6', 'web', '2020-12-28 07:28:58', '2020-12-28 07:28:58');
+INSERT INTO `permissions` VALUES (29, 'add bread 6', 'web', '2020-12-28 07:28:58', '2020-12-28 07:28:58');
+INSERT INTO `permissions` VALUES (30, 'delete bread 6', 'web', '2020-12-28 07:28:58', '2020-12-28 07:28:58');
 COMMIT;
 
 -- ----------------------------
@@ -627,6 +725,21 @@ INSERT INTO `role_has_permissions` VALUES (12, 1);
 INSERT INTO `role_has_permissions` VALUES (13, 1);
 INSERT INTO `role_has_permissions` VALUES (14, 1);
 INSERT INTO `role_has_permissions` VALUES (15, 1);
+INSERT INTO `role_has_permissions` VALUES (16, 1);
+INSERT INTO `role_has_permissions` VALUES (17, 1);
+INSERT INTO `role_has_permissions` VALUES (18, 1);
+INSERT INTO `role_has_permissions` VALUES (19, 1);
+INSERT INTO `role_has_permissions` VALUES (20, 1);
+INSERT INTO `role_has_permissions` VALUES (21, 1);
+INSERT INTO `role_has_permissions` VALUES (22, 1);
+INSERT INTO `role_has_permissions` VALUES (23, 1);
+INSERT INTO `role_has_permissions` VALUES (24, 1);
+INSERT INTO `role_has_permissions` VALUES (25, 1);
+INSERT INTO `role_has_permissions` VALUES (26, 1);
+INSERT INTO `role_has_permissions` VALUES (27, 1);
+INSERT INTO `role_has_permissions` VALUES (28, 1);
+INSERT INTO `role_has_permissions` VALUES (29, 1);
+INSERT INTO `role_has_permissions` VALUES (30, 1);
 INSERT INTO `role_has_permissions` VALUES (6, 2);
 INSERT INTO `role_has_permissions` VALUES (7, 2);
 INSERT INTO `role_has_permissions` VALUES (8, 2);
@@ -637,6 +750,21 @@ INSERT INTO `role_has_permissions` VALUES (12, 2);
 INSERT INTO `role_has_permissions` VALUES (13, 2);
 INSERT INTO `role_has_permissions` VALUES (14, 2);
 INSERT INTO `role_has_permissions` VALUES (15, 2);
+INSERT INTO `role_has_permissions` VALUES (16, 2);
+INSERT INTO `role_has_permissions` VALUES (17, 2);
+INSERT INTO `role_has_permissions` VALUES (18, 2);
+INSERT INTO `role_has_permissions` VALUES (19, 2);
+INSERT INTO `role_has_permissions` VALUES (20, 2);
+INSERT INTO `role_has_permissions` VALUES (21, 2);
+INSERT INTO `role_has_permissions` VALUES (22, 2);
+INSERT INTO `role_has_permissions` VALUES (23, 2);
+INSERT INTO `role_has_permissions` VALUES (24, 2);
+INSERT INTO `role_has_permissions` VALUES (25, 2);
+INSERT INTO `role_has_permissions` VALUES (26, 2);
+INSERT INTO `role_has_permissions` VALUES (27, 2);
+INSERT INTO `role_has_permissions` VALUES (28, 2);
+INSERT INTO `role_has_permissions` VALUES (29, 2);
+INSERT INTO `role_has_permissions` VALUES (30, 2);
 INSERT INTO `role_has_permissions` VALUES (6, 3);
 INSERT INTO `role_has_permissions` VALUES (7, 3);
 INSERT INTO `role_has_permissions` VALUES (8, 3);

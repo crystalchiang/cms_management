@@ -73,9 +73,12 @@ Route::group(['middleware' => ['get.menu']], function () {
     ]);
 
     Route::group(['middleware' => ['get.menu']], function () {
-        Route::resource('bread',  'BreadController');   //create BREAD (resource)
-        Route::resource('users',  'UsersController');
+        Route::resource('bread',  'BreadController');  
+        Route::resource('users',  'UsersController'); 
         Route::resource('schools', 'SchoolsController');
+        Route::resource('firstCategory', 'FirstCategoryController');
+        Route::resource('secondCategory', 'SecondCategoryController');
+        Route::resource('thirdCategory', 'ThirdCategoryController');
         Route::resource('roles',  'RolesController');
         Route::resource('mail',   'MailController');
         Route::get('prepareSend/{id}',        'MailController@prepareSend')->name('prepareSend');

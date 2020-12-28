@@ -1,0 +1,177 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use App\Models\SecondCategory;
+use App\Models\FirstCategory;
+
+class SecondCategoryController extends Controller
+{
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('admin');
+    }
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $categories = DB::table('myway_second_category as second_cat')
+            ->join('myway_first_category as first_cat', 'first_cat.id', '=', 'second_cat.first_cat_id')
+            ->select('second_cat.*', 'first_cat.name as first_cat_name')
+            ->paginate(20);
+
+        return view('dashboard.categories.secondCategoryList', compact('categories'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $first_categories = FirstCategory::all();
+        return view('dashboard.categories.secondCategoryCreate', compact('first_categories'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|between:2,100',
+            'alias' => 'required|string|between:2,100',
+            'first_cat_id' =>'required'
+        ]);
+
+        try {
+            DB::beginTransaction();
+            
+            $category = new SecondCategory();
+            $category->first_cat_id = $request->input('first_cat_id');
+            $category->name         = $request->input('name');
+            $category->alias        = $request->input('alias');
+            $category->description  = $request->input('description');
+            $category->status       = 1;
+            $category->created_at   = date('Y-m-d H:i:s');
+            $category->updated_at   = date('Y-m-d H:i:s');
+            $category->save();
+
+            DB::commit();
+
+        } catch(\Exception $e) {
+            DB::rollBack();
+        }
+
+        $request->session()->flash('message', '成功新增');
+
+        return redirect()->route('secondCategory.index');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $category = DB::table('myway_second_category as second_cat')
+            ->join('myway_first_category as first_cat', 'first_cat.id', '=', 'second_cat.first_cat_id')
+            ->select('second_cat.*', 'first_cat.name as first_cat_name')
+            ->where('second_cat.id', $id)
+            ->get()
+            ->first();
+
+        return view('dashboard.categories.secondCategoryShow', compact( 'category' ));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $first_categories = FirstCategory::all();
+
+        $category = DB::table('myway_second_category')
+            ->where('id', $id)
+            ->get()
+            ->first();
+
+        return view('dashboard.categories.secondCategoryEditForm', compact('category', 'first_categories'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+
+        $validatedData = $request->validate([
+            'name' => 'required|string|between:2,100',
+            'alias' => 'required|string|between:2,100',
+            'first_cat_id' =>'required'
+        ]);
+
+        $category = SecondCategory::find($id);
+        try {
+            DB::beginTransaction();
+    
+            $category->first_cat_id = $request->input('first_cat_id');
+            $category->name         = $request->input('name');
+            $category->alias        = $request->input('alias');
+            $category->description = $request->input('description');
+            $category->updated_at  = date('Y-m-d H:i:s');
+            $category->save();
+
+            DB::commit();
+            $request->session()->flash('message', '成功修改');
+            
+        } catch(\Exception $e) {
+            DB::rollBack();
+        }
+
+        return redirect()->route('secondCategory.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $category = SecondCategory::find($id);
+
+        if($category){
+            $category->delete();
+        }
+        return redirect()->route('secondCategory.index');
+    }
+}
