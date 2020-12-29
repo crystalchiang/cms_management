@@ -7,7 +7,7 @@
             <div class="row">
               <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <div class="card">
-                    <div class="card-header"><h4>小分類列表</h4></div>
+                    <div class="card-header"><h4>課別列表</h4></div>
                     <div class="card-body">
                         @if(Session::has('message'))
                             <div class="row">
@@ -26,14 +26,17 @@
                             </div>
                         @endif
                         <div class="col-12">
-                          <a href="{{ route('thirdCategory.create') }}" class="btn btn-primary mb-3">{{ __('建立小分類') }}</a>
+                          <a href="{{ route('thirdCategory.create') }}" class="btn btn-primary mb-3">{{ __('建立課別') }}</a>
                         </div>
                         <table class="table table-responsive-sm table-striped">
                         <thead>
                           <tr>
-                            <th>大分類名稱</th>
-                            <th>中分類名稱</th>
-                            <th>小分類名稱</th>
+                            <th>系列代碼</th>
+                            <th>系列名稱</th>
+                            <th>冊別代碼</th>
+                            <th>冊別名稱</th>
+                            <th>課別代碼</th>
+                            <th>課別名稱</th>
                             <th>說明</th>
                             <th>建立日期</th>
                             <th>最後更新時間</th>
@@ -45,8 +48,11 @@
                         <tbody>
                           @foreach($categories as $category)
                             <tr>
+                              <td>{{ $category->first_cat_alias }}</td>
                               <td>{{ $category->first_cat_name }}</td>
+                              <td>{{ $category->second_cat_alias }}</td>
                               <td>{{ $category->second_cat_name }}</td>
+                              <td>{{ $category->alias }}</td>
                               <td>{{ $category->name }}</td>
                               <td>{{ $category->description }}</td>
                               <td>{{ $category->created_at }}</td>

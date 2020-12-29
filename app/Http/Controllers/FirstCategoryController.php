@@ -52,7 +52,8 @@ class FirstCategoryController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|string|between:2,100'
+            'name' => 'required|string|between:2,100',
+            'alias' => 'required|string|between:2,100'
         ]);
 
         try {
@@ -60,6 +61,7 @@ class FirstCategoryController extends Controller
             
             $category = new FirstCategory();
             $category->name         = $request->input('name');
+            $category->alias        = $request->input('alias');
             $category->description  = $request->input('description');
             $category->status       = 1;
             $category->created_at   = date('Y-m-d H:i:s');
@@ -120,7 +122,8 @@ class FirstCategoryController extends Controller
     {
 
         $validatedData = $request->validate([
-            'name' => 'required|string|between:2,100'
+            'name' => 'required|string|between:2,100',
+            'alias' => 'required|string|between:2,100'
         ]);
 
         $category = FirstCategory::find($id);
@@ -128,6 +131,7 @@ class FirstCategoryController extends Controller
             DB::beginTransaction();
     
             $category->name        = $request->input('name');
+            $category->alias       = $request->input('alias');
             $category->description = $request->input('description');
             $category->updated_at  = date('Y-m-d H:i:s');
             $category->save();

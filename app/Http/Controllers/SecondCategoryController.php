@@ -31,7 +31,8 @@ class SecondCategoryController extends Controller
     {
         $categories = DB::table('myway_second_category as second_cat')
             ->join('myway_first_category as first_cat', 'first_cat.id', '=', 'second_cat.first_cat_id')
-            ->select('second_cat.*', 'first_cat.name as first_cat_name')
+            ->select('second_cat.*', 'first_cat.name as first_cat_name', 'first_cat.alias as first_cat_alias')
+            ->orderBy('alias', 'ASC')
             ->paginate(20);
 
         return view('dashboard.categories.secondCategoryList', compact('categories'));
@@ -57,8 +58,8 @@ class SecondCategoryController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|string|between:2,100',
-            'alias' => 'required|string|between:2,100',
+            'name' => 'required|string',
+            'alias' => 'required|string|unique:myway_second_category,alias',
             'first_cat_id' =>'required'
         ]);
 
@@ -96,7 +97,7 @@ class SecondCategoryController extends Controller
     {
         $category = DB::table('myway_second_category as second_cat')
             ->join('myway_first_category as first_cat', 'first_cat.id', '=', 'second_cat.first_cat_id')
-            ->select('second_cat.*', 'first_cat.name as first_cat_name')
+            ->select('second_cat.*', 'first_cat.name as first_cat_name', 'first_cat.alias as first_cat_alias')
             ->where('second_cat.id', $id)
             ->get()
             ->first();
@@ -114,8 +115,10 @@ class SecondCategoryController extends Controller
     {
         $first_categories = FirstCategory::all();
 
-        $category = DB::table('myway_second_category')
-            ->where('id', $id)
+        $category = DB::table('myway_second_category as second_cat')
+            ->join('myway_first_category as first_cat', 'first_cat.id', '=', 'second_cat.first_cat_id')
+            ->select('second_cat.*', 'first_cat.alias as first_cat_alias')
+            ->where('second_cat.id', $id)
             ->get()
             ->first();
 
@@ -133,8 +136,8 @@ class SecondCategoryController extends Controller
     {
 
         $validatedData = $request->validate([
-            'name' => 'required|string|between:2,100',
-            'alias' => 'required|string|between:2,100',
+            'name' => 'required|string',
+            'alias' => 'required|string|unique:myway_second_category,alias',
             'first_cat_id' =>'required'
         ]);
 

@@ -7,7 +7,7 @@
             <div class="row">
               <div class="col-sm-12 col-md-10 col-lg-8 col-xl-6">
                 <div class="card">
-                  <div class="card-header"><h4>新增大分類</h4></div>
+                  <div class="card-header"><h4>新增系列</h4></div>
                     <div class="card-body">
                     @if(Session::has('message'))
                         <div class="row">
@@ -28,10 +28,13 @@
                       <form method="POST" action="{{ route('firstCategory.store') }}">
                           @csrf
                           <div class="form-group">
-                              <label>大分類名稱*</label>
-                              <input class="form-control" type="text" placeholder="{{ __('大分類名稱') }}" name="name" required autofocus>
+                              <label>系列名稱*</label>
+                              <input class="form-control" type="text" placeholder="{{ __('系列名稱') }}" name="name" required autofocus>
                           </div>
-
+                          <div class="form-group">
+                              <label>系列代碼*</label>
+                              <input class="form-control" type="text" placeholder="{{ __('系列代碼') }}" name="alias" required>
+                          </div>
                           <div class="form-group">
                               <label>說明</label>
                               <input class="form-control" type="text" placeholder="{{ __('說明') }}" name="description">

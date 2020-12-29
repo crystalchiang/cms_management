@@ -27,29 +27,33 @@
                             </div>
                         @endif
                         <br>
-                        <form method="POST" action="/thirdCategory/{{ $category->id }}">
+                        <form method="POST" action="/thirdCategory/{{ $category->id }}" id="app">
                             @csrf
                             @method('PUT')
-                            <template id="app">
-                              <div>
-                                <div class="form-group">
-                                    <label>大分類*</label>
-                                    <select class="form-control" name="first_cat_id" v-model="first_cat_id" placeholder="請選擇" @change="changeFirstCat" required>
-                                      <option v-for="item in first_categories" :value="item.id">@{{ item.name }}</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>中分類*</label>
-                                    <select class="form-control" name="second_cat_id" v-model="second_cat_id" placeholder="請選擇" required>
-                                      <option v-for="item in second_categories" :value="item.id">@{{ item.name }}</option>
-                                    </select>
-                                </div>
+                            <div>
+                              <div class="form-group">
+                                  <label>系列*</label>
+                                  <select class="form-control" name="first_cat_id" v-model="first_cat_id" placeholder="請選擇" @change="changeFirstCat" required>
+                                    <option v-for="item in first_categories" :value="item.id">@{{ item.name }}</option>
+                                  </select>
                               </div>
-                            </template>
-                            <div class="form-group">
-                                <label>小分類名稱*</label>
-                                <input class="form-control" type="text" placeholder="{{ __('小分類名稱') }}" name="name" value="{{ $category->name }}" required autofocus>
+                              <div class="form-group">
+                                  <label>冊別*</label>
+                                  <select class="form-control" name="second_cat_id" v-model="second_cat_id" placeholder="請選擇" @change="changeSecondCat" required>
+                                    <option v-for="item in second_categories" :value="item.id">@{{ item.name }}</option>
+                                  </select>
+                              </div>
                             </div>
+                            <div class="form-group">
+                                <label>課別代碼*</label>
+                                <input class="form-control" type="text" placeholder="{{ __('課別代碼') }}" :value="genAliasName" disabled required>
+                                <input type="hidden" name="alias" :value="genAliasName">
+                            </div>
+                            <div class="form-group">
+                                <label>課別名稱*</label>
+                                <input class="form-control" type="text" v-model="name" placeholder="{{ __('課別名稱') }}" name="name" required autofocus>
+                            </div>
+
                             <div class="form-group">
                                 <label>說明</label>
                                 <input class="form-control" type="text" placeholder="{{ __('說明') }}" name="description" value="{{ $category->description }}">
@@ -81,35 +85,62 @@
     data: {
       first_cat_id: "",
       second_cat_id: "",
+      second_cat_alias: "",
       first_categories: [],
-      second_categories: []
+      second_categories: [],
+      name: "",
+      alias: ""
     },
     created() {
-      this.first_categories = @json($first_categories);
-      this.first_cat_id = @json($category->first_cat_id);
-      this.second_cat_id = @json($category->second_cat_id);
-
-      const first_cat_id = this.first_cat_id;
+      $this = this;
+      $this.first_categories = @json($first_categories);
+      $this.first_cat_id = @json($category->first_cat_id);
+      $this.second_cat_id = @json($category->second_cat_id);
+      const cagetory = @json($category);
+      const first_cat_id = $this.first_cat_id;
       let second_categories;
       
-      this.first_categories.forEach(function(item){
+      $this.first_categories.forEach(function(item){
         if(item.id == first_cat_id){
           second_categories = item.second_categories;
         }
       });
-      this.second_categories = second_categories;
+      
+      second_categories.forEach(function(item){
+        if(item.id == cagetory.second_cat_id){
+          $this.second_cat_alias = item.alias;
+        }
+      });
+      $this.second_categories = second_categories;
+      $this.name = cagetory.name;
+      $this.alias = cagetory.alias;
+    },
+    computed: {
+      genAliasName: function(){
+        return this.second_cat_alias + '-' + this.name;
+      }
     },
     methods: {
       changeFirstCat(){
-        const first_cat_id = this.first_cat_id;
+        $this = this;
         let second_categories;
-        this.first_categories.forEach(function(item){
-          if(item.id == first_cat_id){
+        $this.first_categories.forEach(function(item){
+          if(item.id == $this.first_cat_id){
             second_categories = item.second_categories;
           }
         });
-        this.second_categories = second_categories;
-        this.second_cat_id = this.second_categories[0].id;
+        $this.second_categories = second_categories;
+        $this.second_cat_id = $this.second_categories[0].id;
+        $this.second_cat_alias = $this.second_categories[0].alias;
+      },
+      changeSecondCat(){
+        $this = this;
+        let second_categories;
+        $this.second_categories.forEach(function(item){
+          if(item.id == $this.second_cat_id){
+            $this.second_cat_alias = item.alias;
+          }
+        });
       }
     },
   });

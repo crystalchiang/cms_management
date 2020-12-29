@@ -7,12 +7,13 @@
               <div class="col-sm-6 col-md-5 col-lg-4 col-xl-3">
                 <div class="card">
                     <div class="card-header">
-                      <h4><i class="fa fa-align-justify"></i> 中分類 {{ $category->name }}</h4>
+                      <h4><i class="fa fa-align-justify"></i> 冊別 {{ $category->name }}</h4>
                     </div>
                     <div class="card-body">
-                        <h6>大分類名稱: {{ $category->first_cat_name }}</h6>
-                        <h6>中分類名稱: {{ $category->name }}</h6>
-                        <h6>簡稱: {{ $category->alias }}</h6>
+                        <h6>系列名稱: {{ $category->first_cat_name }}</h6>
+                        <h6>系列代碼: {{ $category->first_cat_alias }}</h6>
+                        <h6>冊別名稱: {{ $category->name }}</h6>
+                        <h6>冊別代碼: {{ $category->alias }}</h6>
                         <h6>說明: {{ $category->description }}</h6>
                         
                         <h6>建立日期: {{ $category->created_at }}</h6>

@@ -8,7 +8,7 @@
               <div class="col-sm-12 col-md-10 col-lg-8 col-xl-6">
                 <div class="card">
                     <div class="card-header">
-                      <div class="card-header"><h4>編輯大分類</h4></div>
+                      <div class="card-header"><h4>編輯系列</h4></div>
                     <div class="card-body">
                         @if(Session::has('message'))
                             <div class="row">
@@ -31,12 +31,16 @@
                             @csrf
                             @method('PUT')
                             <div class="form-group">
-                                <label>大分類名稱*</label>
-                                <input class="form-control" type="text" placeholder="{{ __('大分類名稱') }}" name="name" value="{{ $category->name }}" required autofocus>
+                                <label>系列名稱*</label>
+                                <input class="form-control" type="text" placeholder="{{ __('系列名稱') }}" name="name" value="{{ $category->name }}" required autofocus>
+                            </div>
+                            <div class="form-group">
+                                <label>系列代碼*</label>
+                                <input class="form-control" type="text" placeholder="{{ __('系列代碼') }}" name="alias" value="{{ $category->alias }}" required>
                             </div>
                             <div class="form-group">
                                 <label>說明</label>
-                                <input class="form-control" type="text" placeholder="{{ __('說明') }}" name="alias" value="{{ $category->description }}">
+                                <input class="form-control" type="text" placeholder="{{ __('說明') }}" name="description" value="{{ $category->description }}">
                             </div>
 
                             <div class="row">

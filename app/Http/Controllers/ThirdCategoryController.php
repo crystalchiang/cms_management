@@ -33,7 +33,8 @@ class ThirdCategoryController extends Controller
         $categories = DB::table('myway_third_category as third_cat')
             ->join('myway_first_category as first_cat', 'first_cat.id', '=', 'third_cat.first_cat_id')
             ->join('myway_second_category as second_cat', 'second_cat.id', '=', 'third_cat.second_cat_id')
-            ->select('third_cat.*', 'first_cat.name as first_cat_name', 'second_cat.name as second_cat_name')
+            ->select('third_cat.*', 'first_cat.name as first_cat_name', 'first_cat.alias as first_cat_alias', 'second_cat.name as second_cat_name', 'second_cat.alias as second_cat_alias')
+            ->orderBy('alias', 'ASC')
             ->paginate(20);
 
         return view('dashboard.categories.thirdCategoryList', compact('categories'));
@@ -69,7 +70,8 @@ class ThirdCategoryController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|string|between:2,100',
+            'name' => 'required|string',
+            'alias' => 'required|string|unique:myway_third_category,alias',
             'first_cat_id' =>'required',
             'second_cat_id' =>'required'
         ]);
@@ -78,13 +80,14 @@ class ThirdCategoryController extends Controller
             DB::beginTransaction();
             
             $category = new ThirdCategory();
-            $category->first_cat_id = $request->input('first_cat_id');
+            $category->first_cat_id  = $request->input('first_cat_id');
             $category->second_cat_id = $request->input('second_cat_id');
-            $category->name         = $request->input('name');
-            $category->description  = $request->input('description');
-            $category->status       = 1;
-            $category->created_at   = date('Y-m-d H:i:s');
-            $category->updated_at   = date('Y-m-d H:i:s');
+            $category->name          = $request->input('name');
+            $category->alias         = $request->input('alias');
+            $category->description   = $request->input('description');
+            $category->status        = 1;
+            $category->created_at    = date('Y-m-d H:i:s');
+            $category->updated_at    = date('Y-m-d H:i:s');
             $category->save();
 
             DB::commit();
@@ -109,7 +112,7 @@ class ThirdCategoryController extends Controller
         $category = DB::table('myway_third_category as third_cat')
             ->join('myway_first_category as first_cat', 'first_cat.id', '=', 'third_cat.first_cat_id')
             ->join('myway_second_category as second_cat', 'second_cat.id', '=', 'third_cat.second_cat_id')
-            ->select('third_cat.*', 'first_cat.name as first_cat_name', 'second_cat.name as second_cat_name')
+            ->select('third_cat.*', 'first_cat.name as first_cat_name', 'first_cat.alias as first_cat_alias', 'second_cat.name as second_cat_name', 'second_cat.alias as second_cat_alias')
             ->where('third_cat.id', $id)
             ->get()
             ->first();
@@ -155,7 +158,8 @@ class ThirdCategoryController extends Controller
     {
 
         $validatedData = $request->validate([
-            'name' => 'required|string|between:2,100',
+            'name' => 'required|string',
+            'alias' => 'required|string|unique:myway_third_category,alias',
             'first_cat_id' =>'required',
             'second_cat_id' =>'required'
         ]);
@@ -167,6 +171,7 @@ class ThirdCategoryController extends Controller
             $category->first_cat_id  = $request->input('first_cat_id');
             $category->second_cat_id = $request->input('second_cat_id');
             $category->name          = $request->input('name');
+            $category->alias         = $request->input('alias');
             $category->description   = $request->input('description');
             $category->updated_at    = date('Y-m-d H:i:s');
             $category->save();
