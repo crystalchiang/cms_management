@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 17);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -146,26 +146,14 @@ document.getElementById("type").onchange = function () {
 
 /***/ }),
 
-/***/ "./resources/sass/style.scss":
-/*!***********************************!*\
-  !*** ./resources/sass/style.scss ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 0:
-/*!******************************************************************************!*\
-  !*** multi ./resources/js/coreui/menu-create.js ./resources/sass/style.scss ***!
-  \******************************************************************************/
+/***/ 17:
+/*!**************************************************!*\
+  !*** multi ./resources/js/coreui/menu-create.js ***!
+  \**************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/crystal/cms_management/resources/js/coreui/menu-create.js */"./resources/js/coreui/menu-create.js");
-module.exports = __webpack_require__(/*! /Users/crystal/cms_management/resources/sass/style.scss */"./resources/sass/style.scss");
+module.exports = __webpack_require__(/*! /Users/crystal/cms_management/resources/js/coreui/menu-create.js */"./resources/js/coreui/menu-create.js");
 
 
 /***/ })
