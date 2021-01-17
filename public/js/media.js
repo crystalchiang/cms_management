@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 19);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -256,14 +256,14 @@ self.showCard('file-info-card');
 
 /***/ }),
 
-/***/ 19:
+/***/ 2:
 /*!********************************************!*\
   !*** multi ./resources/js/coreui/media.js ***!
   \********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/crystal/cms_system/resources/js/coreui/media.js */"./resources/js/coreui/media.js");
+module.exports = __webpack_require__(/*! /Users/crystal/cms_management/resources/js/coreui/media.js */"./resources/js/coreui/media.js");
 
 
 /***/ })

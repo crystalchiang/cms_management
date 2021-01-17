@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 18);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -154,14 +154,14 @@ document.getElementById("type").onchange = function () {
 
 /***/ }),
 
-/***/ 18:
+/***/ 1:
 /*!************************************************!*\
   !*** multi ./resources/js/coreui/menu-edit.js ***!
   \************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/crystal/cms_system/resources/js/coreui/menu-edit.js */"./resources/js/coreui/menu-edit.js");
+module.exports = __webpack_require__(/*! /Users/crystal/cms_management/resources/js/coreui/menu-edit.js */"./resources/js/coreui/menu-edit.js");
 
 
 /***/ })
