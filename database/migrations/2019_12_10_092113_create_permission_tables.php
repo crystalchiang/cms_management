@@ -23,12 +23,12 @@ class CreatePermissionTables extends Migration
             $table->timestamps();
         });
 
-        Schema::create($tableNames['roles'], function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('guard_name');
-            $table->timestamps();
-        });
+//         Schema::create($tableNames['roles'], function (Blueprint $table) {
+//             $table->bigIncrements('id');
+//             $table->string('name');
+//             $table->string('guard_name');
+//             $table->timestamps();
+//         });
 
         Schema::create($tableNames['model_has_permissions'], function (Blueprint $table) use ($tableNames, $columnNames) {
             $table->unsignedBigInteger('permission_id');
@@ -96,7 +96,7 @@ class CreatePermissionTables extends Migration
         Schema::drop($tableNames['role_has_permissions']);
         Schema::drop($tableNames['model_has_roles']);
         Schema::drop($tableNames['model_has_permissions']);
-        Schema::drop($tableNames['roles']);
+//         Schema::drop($tableNames['roles']);
         Schema::drop($tableNames['permissions']);
     }
 }
