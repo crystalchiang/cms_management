@@ -6,8 +6,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Topics;
+use App\Models\FirstCategory;
+use App\Models\SecondCategory;
+use App\Models\ThirdCategory;
 use App\Models\TopicTypes;
-use App\Models\TopicLevels;
 
 class TopicsController extends Controller
 {
@@ -31,12 +33,10 @@ class TopicsController extends Controller
     public function index()
     {
         $topics = DB::table('myway_topics')
-            ->join('myway_topic_levels', 'myway_topic_levels.id', '=', 'myway_topics.level_id')
-            ->join('myway_topic_types', 'myway_topic_types.id', '=', 'myway_topics.type_id')
-            ->select('myway_topics.*', 'myway_topic_levels.name as level_name', 'myway_topic_types.name as type_name')
+            ->join('myway_first_category', 'myway_first_category.id', '=', 'myway_topics.first_cat_id')
+            ->select('myway_topics.*', 'myway_first_category.name as first_cat_name')
             ->orderBy('alias', 'ASC')
             ->paginate(20);
-
         return view('dashboard.topics.topicList', compact('topics'));
     }
 
@@ -48,8 +48,26 @@ class TopicsController extends Controller
     public function create()
     {
         $topicTypes = TopicTypes::all();
-        $topicLevels = TopicLevels::all();
-        return view('dashboard.topics.topicCreate', compact('topicLevels','topicTypes'));
+
+        $first_categories = DB::table('myway_first_category')
+                    ->get()
+                    ->toArray();
+        foreach($first_categories as $key => $value){
+            $second_categories = DB::table('myway_second_category')
+                                    ->where('first_cat_id', $value->id)
+                                    ->get()
+                                    ->toArray();
+            $first_categories[$key]->second_categories = $second_categories;
+            foreach($second_categories as $key2 => $value2){
+                $third_categories = DB::table('myway_third_category')
+                                        ->where('first_cat_id', $value->id)
+                                        ->where('second_cat_id', $value2->id)
+                                        ->get()
+                                        ->toArray();
+                $first_categories[$key]->second_categories[$key2]->third_categories = $third_categories;
+            }
+        }
+        return view('dashboard.topics.topicCreate', compact('topicTypes', 'first_categories'));
     }
 
     /**
@@ -60,20 +78,23 @@ class TopicsController extends Controller
      */
     public function store(Request $request)
     {
+        
         $validatedData = $request->validate([
             'name' => 'required|string',
-            'alias' => 'required|string|unique:myway_second_category,alias',
-            'first_cat_id' =>'required'
+            'first_cat_id' => 'required',
+            'contents' => 'required',
         ]);
 
         try {
             DB::beginTransaction();
             
-            $category = new SecondCategory();
+            $category = new Topics();
             $category->first_cat_id = $request->input('first_cat_id');
+            $category->second_cat_id = $request->input('second_cat_id');
+            $category->third_cat_id = $request->input('third_cat_id');
             $category->name         = $request->input('name');
             $category->alias        = $request->input('alias');
-            $category->description  = $request->input('description');
+            $category->contents        = $request->input('contents');
             $category->status       = 1;
             $category->created_at   = date('Y-m-d H:i:s');
             $category->updated_at   = date('Y-m-d H:i:s');
@@ -87,7 +108,7 @@ class TopicsController extends Controller
 
         $request->session()->flash('message', '成功新增');
 
-        return redirect()->route('secondCategory.index');
+        return redirect()->route('topics.index');
     }
 
     /**

@@ -7,7 +7,7 @@
             <div class="row">
               <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <div class="card">
-                    <div class="card-header"><h4>題庫列表</h4></div>
+                    <div class="card-header"><h4>考券列表</h4></div>
                     <div class="card-body">
                         @if(Session::has('message'))
                             <div class="row">
@@ -26,15 +26,14 @@
                             </div>
                         @endif
                         <div class="col-12">
-                          <a href="{{ route('topics.create') }}" class="btn btn-primary mb-3">{{ __('建立題庫') }}</a>
+                          <a href="{{ route('topics.create') }}" class="btn btn-primary mb-3">{{ __('建立考券') }}</a>
                         </div>
                         <table class="table table-responsive-sm table-striped">
                         <thead>
                           <tr>
                             <th>編號</th>
                             <th>名稱</th>
-                            <th>分級</th>
-                            <th>類型</th>
+                            <th>系列</th>
                             <th>建立日期</th>
                             <th>最後更新時間</th>
                             <th></th>
@@ -45,10 +44,9 @@
                         <tbody>
                           @foreach($topics as $topic)
                             <tr>
-                              <td>{{ $topic->id }}</td>
+                              <td>{{ $topic->alias }}</td>
                               <td>{{ $topic->name }}</td>
-                              <td>{{ $topic->level }}</td>
-                              <td>{{ $topic->type }}</td>
+                              <td>{{ $topic->first_cat_name }}</td>
                               <td>{{ $topic->created_at }}</td>
                               <td>{{ $topic->updated_at }}</td>
                               <td>
