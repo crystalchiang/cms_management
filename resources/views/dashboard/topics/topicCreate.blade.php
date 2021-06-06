@@ -106,6 +106,7 @@
                       </div>
                       <div class="form-group">
                         <label>文字題目</label>
+                        <span class="f-info">(如為填空，請用_取代，例如: apple 為填空答案，請填寫五個下底線_____)</span>
                         <input class="form-control" type="text" placeholder="{{ __('文字題目') }}" v-model="contents[index].text" autofocus>
                       </div>
                       <div class="form-group">
@@ -130,6 +131,7 @@
                           </div>
                           <div class="form-group">
                             <label>文字題目</label>
+                            <span class="f-info">(如為填空，請用_取代，例如: apple 為填空答案，請填寫五個下底線_____)</span>
                             <input class="form-control" type="text" placeholder="{{ __('文字題目') }}" v-model="contents[index].children[index2].text" autofocus>
                           </div>
                           <div class="form-group">
@@ -150,10 +152,12 @@
                           </div>
                           <div class="form-group" v-if="contents[index].children[index2].qType == 1">
                             <label>選項</label>
+                            <span class="f-info">(選項請用+分隔，例如：happy+glad+joyful+excited，則會顯示A:happy B:glad C:joyful D:excited)</span>
                             <input class="form-control" type="text" placeholder="{{ __('選項') }}" v-model="contents[index].children[index2].options" autofocus>
                           </div>
                           <div class="form-group">
                             <label>答案</label>
+                            <span class="f-info">(請填寫實際答案，例如：happy)</span>
                             <input class="form-control" type="text" placeholder="{{ __('答案') }}" v-model="contents[index].children[index2].answer" autofocus>
                           </div>
                         </div>
@@ -168,10 +172,12 @@
                       </div>
                       <div v-if="item.type == 2 && item.qType == 1" class="form-group">
                         <label>選項</label>
+                        <span class="f-info">(選項請用+分隔，例如：happy+glad+joyful+excited，則會顯示A:happy B:glad C:joyful D:excited)</span>
                         <input class="form-control" type="text" placeholder="{{ __('選項') }}" v-model="contents[index].options" autofocus>
                       </div>
                       <div v-if="item.type == 2" class="form-group">
                         <label>答案</label>
+                        <span class="f-info">(請填寫實際答案，例如：happy)</span>
                         <input class="form-control" type="text" placeholder="{{ __('答案') }}" v-model="contents[index].answer" autofocus>
                       </div>
                     </div>
@@ -308,4 +314,18 @@
     },
   });
 </script>
+@endsection
+
+@section('css')
+<style>
+  .f-danger {
+    color: red;
+  }
+  .f-warning {
+    color: orange;
+  }
+  .f-info {
+    color: #39f;
+  }
+</style>
 @endsection
