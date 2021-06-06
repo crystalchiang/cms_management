@@ -63,15 +63,6 @@
                               <input class="form-control" type="text" placeholder="{{ __('考券名稱') }}" v-model="name" name="name" required autofocus>
                           </div>
 
-                          <div class="form-group">
-                              <label>考券類型</label>
-                              <select class="form-control" name="type_id" placeholder="請選擇">
-                                  @foreach($topicTypes as $type)
-                                    <option value="{{ $type->id }}">{{ $type->type_name }}</option>
-                                  @endforeach
-                              </select>
-                          </div>
-
                           <input type="hidden" name="contents" v-model="contentStringify"/>
 
                           <div class="row">
@@ -79,7 +70,7 @@
                               <button class="btn btn-block btn-success" type="submit">{{ __('儲存考券') }}</button>
                             </div>
                             <div class="col-6">
-                              <a href="{{ route('secondCategory.index') }}" class="btn btn-block btn-primary">{{ __('返回') }}</a> 
+                              <a href="{{ route('topics.index') }}" class="btn btn-block btn-primary">{{ __('返回') }}</a> 
                             </div>
                           </div>
                       </form>
@@ -157,7 +148,7 @@
                                 @endforeach
                             </select>
                           </div>
-                          <div class="form-group">
+                          <div class="form-group" v-if="contents[index].children[index2].qType == 1">
                             <label>選項</label>
                             <input class="form-control" type="text" placeholder="{{ __('選項') }}" v-model="contents[index].children[index2].options" autofocus>
                           </div>
@@ -221,7 +212,13 @@
     },
     computed: {
       genAliasName: function(){
-        let alias = this.first_categories[0].alias
+        let alias = "";
+        const $this = this
+        this.first_categories.forEach(function(item){
+          if(item.id == $this.first_cat_id){
+            alias += item.alias;
+          }
+        });
         if(this.second_categories.length > 0){
           alias += '-' + this.second_categories[0].name
         }

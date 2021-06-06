@@ -38,7 +38,6 @@
                             <th>最後更新時間</th>
                             <th></th>
                             <th></th>
-                            <th></th>
                           </tr>
                         </thead>
                         <tbody>
@@ -49,9 +48,9 @@
                               <td>{{ $topic->first_cat_name }}</td>
                               <td>{{ $topic->created_at }}</td>
                               <td>{{ $topic->updated_at }}</td>
-                              <td>
+                              <!-- <td>
                                 <a href="{{ url('/topics/' . $topic->id) }}" class="btn btn-block btn-primary">檢視</a>
-                              </td>
+                              </td> -->
                               <td>
                                 <a href="{{ url('/topics/' . $topic->id . '/edit') }}" class="btn btn-block btn-primary">編輯</a>
                               </td>

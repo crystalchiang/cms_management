@@ -88,17 +88,17 @@ class TopicsController extends Controller
         try {
             DB::beginTransaction();
             
-            $category = new Topics();
-            $category->first_cat_id = $request->input('first_cat_id');
-            $category->second_cat_id = $request->input('second_cat_id');
-            $category->third_cat_id = $request->input('third_cat_id');
-            $category->name         = $request->input('name');
-            $category->alias        = $request->input('alias');
-            $category->contents        = $request->input('contents');
-            $category->status       = 1;
-            $category->created_at   = date('Y-m-d H:i:s');
-            $category->updated_at   = date('Y-m-d H:i:s');
-            $category->save();
+            $topic = new Topics();
+            $topic->first_cat_id = $request->input('first_cat_id');
+            $topic->second_cat_id = $request->input('second_cat_id');
+            $topic->third_cat_id = $request->input('third_cat_id');
+            $topic->name         = $request->input('name');
+            $topic->alias        = $request->input('alias');
+            $topic->contents        = $request->input('contents');
+            $topic->status       = 1;
+            $topic->created_at   = date('Y-m-d H:i:s');
+            $topic->updated_at   = date('Y-m-d H:i:s');
+            $topic->save();
 
             DB::commit();
 
@@ -112,24 +112,6 @@ class TopicsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $category = DB::table('myway_second_category as second_cat')
-            ->join('myway_first_category as first_cat', 'first_cat.id', '=', 'second_cat.first_cat_id')
-            ->select('second_cat.*', 'first_cat.name as first_cat_name', 'first_cat.alias as first_cat_alias')
-            ->where('second_cat.id', $id)
-            ->get()
-            ->first();
-
-        return view('dashboard.categories.secondCategoryShow', compact( 'category' ));
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -137,16 +119,29 @@ class TopicsController extends Controller
      */
     public function edit($id)
     {
-        $first_categories = FirstCategory::all();
+        $topicTypes = TopicTypes::all();
+        $topic = Topics::find($id);
 
-        $category = DB::table('myway_second_category as second_cat')
-            ->join('myway_first_category as first_cat', 'first_cat.id', '=', 'second_cat.first_cat_id')
-            ->select('second_cat.*', 'first_cat.alias as first_cat_alias')
-            ->where('second_cat.id', $id)
-            ->get()
-            ->first();
+        $first_categories = DB::table('myway_first_category')
+                    ->get()
+                    ->toArray();
+        foreach($first_categories as $key => $value){
+            $second_categories = DB::table('myway_second_category')
+                                    ->where('first_cat_id', $value->id)
+                                    ->get()
+                                    ->toArray();
+            $first_categories[$key]->second_categories = $second_categories;
+            foreach($second_categories as $key2 => $value2){
+                $third_categories = DB::table('myway_third_category')
+                                        ->where('first_cat_id', $value->id)
+                                        ->where('second_cat_id', $value2->id)
+                                        ->get()
+                                        ->toArray();
+                $first_categories[$key]->second_categories[$key2]->third_categories = $third_categories;
+            }
+        }
 
-        return view('dashboard.categories.secondCategoryEditForm', compact('category', 'first_categories'));
+        return view('dashboard.topics.topicEditForm', compact('topicTypes','first_categories','topic'));
     }
 
     /**
@@ -161,29 +156,32 @@ class TopicsController extends Controller
 
         $validatedData = $request->validate([
             'name' => 'required|string',
-            'alias' => 'required|string|unique:myway_second_category,alias',
-            'first_cat_id' =>'required'
+            'first_cat_id' => 'required',
+            'contents' => 'required',
         ]);
-
-        $category = SecondCategory::find($id);
+            // print_r($request->input('second_cat_id'));
         try {
             DB::beginTransaction();
-    
-            $category->first_cat_id = $request->input('first_cat_id');
-            $category->name         = $request->input('name');
-            $category->alias        = $request->input('alias');
-            $category->description = $request->input('description');
-            $category->updated_at  = date('Y-m-d H:i:s');
-            $category->save();
+            
+            $topic = Topics::find($id);
+            $topic->first_cat_id = $request->input('first_cat_id');
+            $topic->second_cat_id = $request->input('second_cat_id');
+            $topic->third_cat_id = $request->input('third_cat_id');
+            $topic->name         = $request->input('name');
+            $topic->alias        = $request->input('alias');
+            $topic->contents        = $request->input('contents');
+            $topic->updated_at   = date('Y-m-d H:i:s');
+            $topic->save();
 
             DB::commit();
-            $request->session()->flash('message', '成功修改');
-            
+
         } catch(\Exception $e) {
             DB::rollBack();
         }
 
-        return redirect()->route('secondCategory.index');
+        $request->session()->flash('message', '成功修改');
+
+        return redirect()->route('topics.index');
     }
 
     /**
@@ -194,11 +192,11 @@ class TopicsController extends Controller
      */
     public function destroy($id)
     {
-        $category = SecondCategory::find($id);
+        $topic = Topics::find($id);
 
-        if($category){
-            $category->delete();
+        if($topic){
+            $topic->delete();
         }
-        return redirect()->route('secondCategory.index');
+        return redirect()->route('topics.index');
     }
 }
