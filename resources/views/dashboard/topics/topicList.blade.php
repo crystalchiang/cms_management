@@ -34,6 +34,7 @@
                             <th>編號</th>
                             <th>名稱</th>
                             <th>系列</th>
+                            <th>類型</th>
                             <th>建立日期</th>
                             <th>最後更新時間</th>
                             <th></th>
@@ -46,6 +47,7 @@
                               <td>{{ $topic->alias }}</td>
                               <td>{{ $topic->name }}</td>
                               <td>{{ $topic->first_cat_name }}</td>
+                              <td>{{ $type[$topic->type] }}</td>
                               <td>{{ $topic->created_at }}</td>
                               <td>{{ $topic->updated_at }}</td>
                               <!-- <td>

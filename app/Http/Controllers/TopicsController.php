@@ -10,6 +10,8 @@ use App\Models\FirstCategory;
 use App\Models\SecondCategory;
 use App\Models\ThirdCategory;
 use App\Models\TopicTypes;
+use Storage;
+use Image;
 
 class TopicsController extends Controller
 {
@@ -37,7 +39,9 @@ class TopicsController extends Controller
             ->select('myway_topics.*', 'myway_first_category.name as first_cat_name')
             ->orderBy('alias', 'ASC')
             ->paginate(20);
-        return view('dashboard.topics.topicList', compact('topics'));
+        $type = ['T0 - 未分類','T1 - 檢定用','T2 - 比賽用','T3 - 期中考或期末考','T4 - 段考或複習考','T5 - 小考'];
+        
+        return view('dashboard.topics.topicList', compact('topics','type'));
     }
 
     /**
@@ -94,7 +98,8 @@ class TopicsController extends Controller
             $topic->third_cat_id = $request->input('third_cat_id');
             $topic->name         = $request->input('name');
             $topic->alias        = $request->input('alias');
-            $topic->contents        = $request->input('contents');
+            $topic->contents     = $request->input('contents');
+            $topic->type         = $request->input('type');
             $topic->status       = 1;
             $topic->created_at   = date('Y-m-d H:i:s');
             $topic->updated_at   = date('Y-m-d H:i:s');
@@ -159,7 +164,13 @@ class TopicsController extends Controller
             'first_cat_id' => 'required',
             'contents' => 'required',
         ]);
-            // print_r($request->input('second_cat_id'));
+
+        // $request->file('file')->store('/public/topics', 'local');
+        // // print_r($request->file->hashName());
+        // print_r($request->all());
+
+        // exit;
+
         try {
             DB::beginTransaction();
             
@@ -169,7 +180,8 @@ class TopicsController extends Controller
             $topic->third_cat_id = $request->input('third_cat_id');
             $topic->name         = $request->input('name');
             $topic->alias        = $request->input('alias');
-            $topic->contents        = $request->input('contents');
+            $topic->type         = $request->input('type');
+            $topic->contents     = $request->input('contents');
             $topic->updated_at   = date('Y-m-d H:i:s');
             $topic->save();
 

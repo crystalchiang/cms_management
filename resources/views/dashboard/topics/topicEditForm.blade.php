@@ -25,7 +25,7 @@
                             </ul>
                         </div>
                     @endif
-                      <form method="POST" action="{{ route('topics.update',$topic->id) }}">
+                      <form method="POST" action="{{ route('topics.update',$topic->id) }}" enctype="multipart/form-data">
                           @csrf
                           @method('PUT')
                           <!-- <div class="form-group">
@@ -64,6 +64,12 @@
                               <input class="form-control" type="text" placeholder="{{ __('考券名稱') }}" v-model="name" name="name" required autofocus>
                           </div>
 
+                          <div class="form-group">
+                              <label>考卷類型*</label>
+                              <select class="form-control" name="type" v-model="type" placeholder="請選擇" required>
+                                <option v-for="(item,key) in types" :value="key">@{{ item }}</option>
+                              </select>
+                          </div>
                           <input type="hidden" name="contents" v-model="contentStringify"/>
 
                           <div class="row">
@@ -81,12 +87,21 @@
               <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
                 <div class="card">
                   <div class="card-header">
-                    <div class="row d-flex justify-content-end">
-                      <div class="col-2">
-                        <button class="btn btn-block btn-info" @click="insertQ(1)">{{ __('新增題組') }}</button>
+                    <div class="row d-flex">
+                      <div class="col-8 justify-content-start">
+                        <div>
+                          <h4>【考卷總分：@{{ getScores ? getScores: 0 }}】</h4>
+                        </div>
                       </div>
-                      <div class="col-2">
-                        <button class="btn btn-block btn-info" @click="insertQ(2)">{{ __('新增題目') }}</button>
+                      <div class="col-4 justify-content-end">
+                        <div class="row">
+                          <div class="col-6">
+                            <button class="btn btn-block btn-info" @click="insertQ(1)">{{ __('新增題組') }}</button>
+                          </div>
+                          <div class="col-6">
+                            <button class="btn btn-block btn-info" @click="insertQ(2)">{{ __('新增題目') }}</button>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -108,16 +123,17 @@
                       <div class="form-group">
                         <label>文字題目</label>
                         <span class="f-info">(如為填空，請用_取代，例如: apple 為填空答案，請填寫五個下底線_____)</span>
-                        <input class="form-control" type="text" placeholder="{{ __('文字題目') }}" v-model="contents[index].text" autofocus>
+                        <input class="form-control" type="text" placeholder="{{ __('文字題目') }}" :name="'content[' + index + '][text]'" v-model="contents[index].text" autofocus>
                       </div>
                       <div class="form-group">
                         <label>音檔</label>
-                        <input class="form-control" type="text" placeholder="{{ __('音檔') }}" v-model="contents[index].media" autofocus>
+                        <input class="form-control" type="text" placeholder="{{ __('音檔') }}" :name="'content[' + index + '][media]'" v-model="contents[index].media" autofocus>
                       </div>
                       <div class="form-group">
                         <label>圖片</label>
-                        <input class="form-control" type="text" placeholder="{{ __('圖片') }}" v-model="contents[index].image" autofocus>
+                        <input class="form-control" type="file" placeholder="{{ __('圖片') }}" :name="'content[' + index + '][image]'" v-model="contents[index].image" autofocus @change="onFileChange">
                       </div>
+                      
                       <div v-if="item.type == 1 && item.children.length > 0">
                         <div v-for="(item2, index2) in item.children">
                           <div class="d-flex justify-content-between">
@@ -161,6 +177,11 @@
                             <span class="f-info">(請填寫實際答案，例如：happy)</span>
                             <input class="form-control" type="text" placeholder="{{ __('答案') }}" v-model="contents[index].children[index2].answer" autofocus>
                           </div>
+                          <div class="form-group">
+                            <label style="color: lightcoral; font-weight: bold;">配分</label>
+                            <span class="f-info">(請填寫正數或小數點配分)</span>
+                            <input class="form-control" type="text" placeholder="{{ __('配分') }}" v-model="contents[index].children[index2].score" onkeyup="value=value.replace(/[^\d.]/g,'')" autofocus>
+                          </div>
                         </div>
                       </div>
                       <div v-if="item.type == 2" class="form-group">
@@ -180,6 +201,11 @@
                         <label>答案</label>
                         <span class="f-info">(請填寫實際答案，例如：happy)</span>
                         <input class="form-control" type="text" placeholder="{{ __('答案') }}" v-model="contents[index].answer" autofocus>
+                      </div>
+                      <div v-if="item.type == 2" class="form-group">
+                        <label style="color: lightcoral; font-weight: bold;">配分</label>
+                        <span class="f-info">(請填寫正數或小數點配分)</span>
+                        <input class="form-control" type="text" placeholder="{{ __('配分') }}" v-model="contents[index].score" onkeyup="value=value.replace(/[^\d.]/g,'')" autofocus>
                       </div>
                     </div>
                   </div>
@@ -203,15 +229,19 @@
       first_categories: [],
       second_categories: [],
       third_categories: [],
+      type: 0,
       name: "",
       contents: [],
-      topic: []
+      topic: [],
+      image: '',
+      types: ['T0 - 未分類','T1 - 檢定用','T2 - 比賽用','T3 - 期中考或期末考','T4 - 段考或複習考','T5 - 小考']
     },
     created() {
       this.first_categories = @json($first_categories);
       this.topic = @json($topic);
       this.contents = JSON.parse(this.topic.contents);
       this.name = this.topic.name
+      this.type = this.topic.type
       this.first_cat_id = this.topic.first_cat_id;
       this.changeFirstCat(true);
     },
@@ -243,6 +273,21 @@
       },
       contentStringify: function(){
         return JSON.stringify(this.contents)
+      },
+      getScores: function(){
+        let scores = 0
+        this.contents.forEach(function(item){
+          if(item.score){
+            scores += parseFloat(item.score)
+          }
+          if(item.children){
+            item.children.forEach(function(item2){
+              scores += parseFloat(item2.score)
+            })
+          }
+        });
+        
+        return scores
       }
     },
     methods: {
@@ -301,6 +346,7 @@
           object.type = 2
           object.options = ''
           object.answer = ''
+          object.score = 0
         }
         this.contents.push(object)
       },
@@ -311,7 +357,6 @@
         if(type == 2){
           this.contents[index].children.splice(child_index, 1);
         }
-        console.log(this.contents)
       },
       insertChildQ(index){
         this.contents[index].children.push({
@@ -320,8 +365,26 @@
           image: '',
           qType: 1,
           options: '',
-          answer: ''
+          answer: '',
+          score: 0
         })
+      },
+      onFileChange(e) {
+        var files = e.target.files || e.dataTransfer.files;
+        if (!files.length)
+          return;
+        this.createImage(files[0]);
+        console.log(files[0])
+      },
+      createImage(file) {
+        var image = new Image();
+        var reader = new FileReader();
+        var vm = this;
+
+        reader.onload = (e) => {
+          vm.image = e.target.result;
+        };
+        reader.readAsDataURL(file);
       }
     },
   });

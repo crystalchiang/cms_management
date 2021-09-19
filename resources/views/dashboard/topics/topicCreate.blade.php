@@ -53,16 +53,22 @@
                           </div>
 
                           <div class="form-group">
-                              <label>考券代碼*</label>
+                              <label>考卷代碼*</label>
                               <input class="form-control" type="text" placeholder="{{ __('考券代碼') }}" :value="genAliasName" disabled required>
                               <input type="hidden" name="alias" :value="genAliasName">
                           </div>
 
                           <div class="form-group">
-                              <label>考券名稱*</label>
+                              <label>考卷名稱*</label>
                               <input class="form-control" type="text" placeholder="{{ __('考券名稱') }}" v-model="name" name="name" required autofocus>
                           </div>
 
+                          <div class="form-group">
+                              <label>考卷類型*</label>
+                              <select class="form-control" name="type" v-model="type" placeholder="請選擇" required>
+                                <option v-for="(item,key) in types" :value="key">@{{ item }}</option>
+                              </select>
+                          </div>
                           <input type="hidden" name="contents" v-model="contentStringify"/>
 
                           <div class="row">
@@ -111,11 +117,11 @@
                       </div>
                       <div class="form-group">
                         <label>音檔</label>
-                        <input class="form-control" type="text" placeholder="{{ __('音檔') }}" v-model="contents[index].media" autofocus>
+                        <input type="file" placeholder="{{ __('音檔') }}" accept="audio/*" v-model="contents[index].media" autofocus>
                       </div>
                       <div class="form-group">
                         <label>圖片</label>
-                        <input class="form-control" type="text" placeholder="{{ __('圖片') }}" v-model="contents[index].image" autofocus>
+                        <input type="file" placeholder="{{ __('圖片') }}" accept="image/*" v-model="contents[index].image" autofocus>
                       </div>
                       <div v-if="item.type == 1 && item.children.length > 0">
                         <div v-for="(item2, index2) in item.children">
@@ -136,11 +142,11 @@
                           </div>
                           <div class="form-group">
                             <label>音檔</label>
-                            <input class="form-control" type="text" placeholder="{{ __('音檔') }}" v-model="contents[index].children[index2].media" autofocus>
+                            <input type="file" placeholder="{{ __('音檔') }}" accept="audio/*" v-model="contents[index].children[index2].media" autofocus>
                           </div>
                           <div class="form-group">
                             <label>圖片</label>
-                            <input class="form-control" type="text" placeholder="{{ __('圖片') }}" v-model="contents[index].children[index2].image" autofocus>
+                            <input type="file" placeholder="{{ __('圖片') }}" accept="image/*" v-model="contents[index].children[index2].image" autofocus>
                           </div>
                           <div class="form-group">
                             <label>題目類型</label>
@@ -159,6 +165,11 @@
                             <label>答案</label>
                             <span class="f-info">(請填寫實際答案，例如：happy)</span>
                             <input class="form-control" type="text" placeholder="{{ __('答案') }}" v-model="contents[index].children[index2].answer" autofocus>
+                          </div>
+                          <div class="form-group">
+                            <label style="color: lightcoral; font-weight: bold;">配分</label>
+                            <span class="f-info">(請填寫正數或小數點配分)</span>
+                            <input class="form-control" type="text" placeholder="{{ __('配分') }}" v-model="contents[index].children[index2].score" onkeyup="value=value.replace(/[^\d.]/g,'')" autofocus>
                           </div>
                         </div>
                       </div>
@@ -180,6 +191,11 @@
                         <span class="f-info">(請填寫實際答案，例如：happy)</span>
                         <input class="form-control" type="text" placeholder="{{ __('答案') }}" v-model="contents[index].answer" autofocus>
                       </div>
+                      <div v-if="item.type == 2" class="form-group">
+                        <label style="color: lightcoral; font-weight: bold;">配分</label>
+                        <span class="f-info">(請填寫正數或小數點配分)</span>
+                        <input class="form-control" type="text" placeholder="{{ __('配分') }}" v-model="contents[index].score" onkeyup="value=value.replace(/[^\d.]/g,'')" autofocus>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -199,11 +215,13 @@
       second_cat_id: "",
       third_cat_id: "",
       third_cat_alias: "",
+      type: 0,
       first_categories: [],
       second_categories: [],
       third_categories: [],
       name: "",
-      contents: []
+      contents: [],
+      types: ['T0 - 未分類','T1 - 檢定用','T2 - 比賽用','T3 - 期中考或期末考','T4 - 段考或複習考','T5 - 小考']
     },
     created() {
       this.first_categories = @json($first_categories);
@@ -289,6 +307,7 @@
           object.type = 2
           object.options = ''
           object.answer = ''
+          object.score = 0
         }
         this.contents.push(object)
       },
@@ -299,7 +318,6 @@
         if(type == 2){
           this.contents[index].children.splice(child_index, 1);
         }
-        console.log(this.contents)
       },
       insertChildQ(index){
         this.contents[index].children.push({
@@ -308,7 +326,8 @@
           image: '',
           qType: 1,
           options: '',
-          answer: ''
+          answer: '',
+          score: 0
         })
       }
     },
