@@ -1,7 +1,9 @@
 @extends('dashboard.base')
 
 @section('content')
-
+<form method="POST" action="{{ route('topics.update',$topic->id) }}" enctype="multipart/form-data">
+                          @csrf
+                          @method('PUT')
         <div class="container-fluid">
           <div class="animated fadeIn" id="app">
             <div class="row">
@@ -25,9 +27,6 @@
                             </ul>
                         </div>
                     @endif
-                      <form method="POST" action="{{ route('topics.update',$topic->id) }}" enctype="multipart/form-data">
-                          @csrf
-                          @method('PUT')
                           <!-- <div class="form-group">
                               <label>考券名稱*</label>
                               <input class="form-control" type="text" placeholder="{{ __('考券名稱') }}" name="name" required autofocus>
@@ -80,7 +79,7 @@
                               <a href="{{ route('topics.index') }}" class="btn btn-block btn-primary">{{ __('返回') }}</a> 
                             </div>
                           </div>
-                      </form>
+                      <!-- </form> -->
                     </div>
                 </div>
               </div>
@@ -96,10 +95,10 @@
                       <div class="col-4 justify-content-end">
                         <div class="row">
                           <div class="col-6">
-                            <button class="btn btn-block btn-info" @click="insertQ(1)">{{ __('新增題組') }}</button>
+                            <a class="btn btn-block btn-info" style="color:#FFF;" @click="insertQ(1)">{{ __('新增題組') }}</a>
                           </div>
                           <div class="col-6">
-                            <button class="btn btn-block btn-info" @click="insertQ(2)">{{ __('新增題目') }}</button>
+                            <a class="btn btn-block btn-info" style="color:#FFF;" @click="insertQ(2)">{{ __('新增題目') }}</a>
                           </div>
                         </div>
                       </div>
@@ -123,15 +122,23 @@
                       <div class="form-group">
                         <label>文字題目</label>
                         <span class="f-info">(如為填空，請用_取代，例如: apple 為填空答案，請填寫五個下底線_____)</span>
-                        <input class="form-control" type="text" placeholder="{{ __('文字題目') }}" :name="'content[' + index + '][text]'" v-model="contents[index].text" autofocus>
+                        <input class="form-control" type="text" placeholder="{{ __('文字題目') }}" v-model="contents[index].text" autofocus>
                       </div>
                       <div class="form-group">
                         <label>音檔</label>
-                        <input class="form-control" type="text" placeholder="{{ __('音檔') }}" :name="'content[' + index + '][media]'" v-model="contents[index].media" autofocus>
+                        <input class="form-control" type="file" accept="audio/*" placeholder="{{ __('音檔') }}" name="'media[]'" :keyindex="index" keyname="media" autofocus @change="onFileChange">
+                        <div class="d-flex" v-if="contents[index].media">
+                          <a :href="'/public/topics/'+contents[index].media" target="_blank">@{{contents[index].media}}</a>
+                          <p style="margin-left: 10px; color: red; cursor: pointer;" @click="removeFile(index, 'media')">移除</p>
+                        </div>
                       </div>
                       <div class="form-group">
                         <label>圖片</label>
-                        <input class="form-control" type="file" placeholder="{{ __('圖片') }}" :name="'content[' + index + '][image]'" v-model="contents[index].image" autofocus @change="onFileChange">
+                        <input class="form-control" type="file" accept="image/*" placeholder="{{ __('圖片') }}" name="'image[]" :keyindex="index" keyname="image" autofocus @change="onFileChange">
+                        <div class="d-flex" v-if="contents[index].image">
+                          <a :href="'/public/topics/'+contents[index].image" target="_blank">@{{contents[index].image}}</a>
+                          <p style="margin-left: 10px; color: red; cursor: pointer;" @click="removeFile(index, 'image')">移除</p>
+                        </div>
                       </div>
                       
                       <div v-if="item.type == 1 && item.children.length > 0">
@@ -153,11 +160,19 @@
                           </div>
                           <div class="form-group">
                             <label>音檔</label>
-                            <input class="form-control" type="text" placeholder="{{ __('音檔') }}" v-model="contents[index].children[index2].media" autofocus>
+                            <input class="form-control" type="file" accept="audio/*" placeholder="{{ __('音檔') }}" name="'media[]" :keyindex="index" :keyindex2="index2" keyname="media" autofocus @change="onFileChange">
+                            <div class="d-flex" v-if="contents[index].children[index2].media">
+                              <a :href="'/public/topics/'+contents[index].children[index2].media" target="_blank">@{{contents[index].children[index2].media}}</a>
+                              <p style="margin-left: 10px; color: red; cursor: pointer;" @click="removeFile(index, 'media', index2)">移除</p>
+                            </div>
                           </div>
                           <div class="form-group">
                             <label>圖片</label>
-                            <input class="form-control" type="text" placeholder="{{ __('圖片') }}" v-model="contents[index].children[index2].image" autofocus>
+                            <input class="form-control" type="file" accept="image/*" placeholder="{{ __('圖片') }}" name="'image[]" :keyindex="index" :keyindex2="index2" keyname="image" autofocus @change="onFileChange">
+                            <div class="d-flex" v-if="contents[index].children[index2].image">
+                              <a :href="'/public/topics/'+contents[index].children[index2].image" target="_blank">@{{contents[index].children[index2].image}}</a>
+                              <p style="margin-left: 10px; color: red; cursor: pointer;" @click="removeFile(index, 'image', index2)">移除</p>
+                            </div>
                           </div>
                           <div class="form-group">
                             <label>題目類型</label>
@@ -214,6 +229,7 @@
             </div>
           </div>
         </div>
+        </form>
 @endsection
 
 @section('javascript')
@@ -240,6 +256,7 @@
       this.first_categories = @json($first_categories);
       this.topic = @json($topic);
       this.contents = JSON.parse(this.topic.contents);
+      console.log(this.contents)
       this.name = this.topic.name
       this.type = this.topic.type
       this.first_cat_id = this.topic.first_cat_id;
@@ -291,6 +308,14 @@
       }
     },
     methods: {
+      removeFile(index, type, index2 = null) {
+        if(index2 != null){
+          this.contents[index].children[index2][type] = '';
+        }else{
+          console.log(2342342342)
+          this.contents[index][type] = '';
+        }
+      },
       changeFirstCat(init = false){
         const first_cat_id = this.first_cat_id;
         let second_categories = [];
@@ -374,7 +399,15 @@
         if (!files.length)
           return;
         this.createImage(files[0]);
-        console.log(files[0])
+        var index = parseInt(e.target.getAttribute("keyindex"));
+        var index2 = parseInt(e.target.getAttribute("keyindex2"));
+        var name = e.target.getAttribute("keyname");
+
+        if(index2 >= 0){
+          this.contents[index].children[index2][name] = files[0].name;
+        }else{
+          this.contents[index][name] = files[0].name;
+        }
       },
       createImage(file) {
         var image = new Image();
@@ -385,6 +418,7 @@
           vm.image = e.target.result;
         };
         reader.readAsDataURL(file);
+        // console.log(vm.image)
       }
     },
   });

@@ -40,7 +40,7 @@ class TopicsController extends Controller
             ->orderBy('alias', 'ASC')
             ->paginate(20);
         $type = ['T0 - 未分類','T1 - 檢定用','T2 - 比賽用','T3 - 期中考或期末考','T4 - 段考或複習考','T5 - 小考'];
-        
+
         return view('dashboard.topics.topicList', compact('topics','type'));
     }
 
@@ -165,11 +165,20 @@ class TopicsController extends Controller
             'contents' => 'required',
         ]);
 
-        // $request->file('file')->store('/public/topics', 'local');
-        // // print_r($request->file->hashName());
-        // print_r($request->all());
-
-        // exit;
+        $images = $request->file('image');
+        $media = $request->file('media');
+        if($request->hasFile('image')){
+            foreach ($images as $image) {
+                $fname = $image->getClientOriginalName();
+                $image->storeAs('topics/', $fname,'public');
+            }
+        }
+        if($request->hasFile('media')){
+            foreach ($media as $file) {
+                $fname = $file->getClientOriginalName();
+                $file->storeAs('topics/', $fname,'public');
+            }
+        }
 
         try {
             DB::beginTransaction();

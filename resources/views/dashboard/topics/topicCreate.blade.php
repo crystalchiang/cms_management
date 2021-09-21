@@ -1,7 +1,8 @@
 @extends('dashboard.base')
 
 @section('content')
-
+<form method="POST" action="{{ route('topics.store') }}">
+    @csrf
         <div class="container-fluid">
           <div class="animated fadeIn" id="app">
             <div class="row">
@@ -25,8 +26,6 @@
                             </ul>
                         </div>
                     @endif
-                      <form method="POST" action="{{ route('topics.store') }}">
-                          @csrf
                           <!-- <div class="form-group">
                               <label>考券名稱*</label>
                               <input class="form-control" type="text" placeholder="{{ __('考券名稱') }}" name="name" required autofocus>
@@ -79,7 +78,6 @@
                               <a href="{{ route('topics.index') }}" class="btn btn-block btn-primary">{{ __('返回') }}</a> 
                             </div>
                           </div>
-                      </form>
                     </div>
                 </div>
               </div>
@@ -88,10 +86,10 @@
                   <div class="card-header">
                     <div class="row d-flex justify-content-end">
                       <div class="col-2">
-                        <button class="btn btn-block btn-info" @click="insertQ(1)">{{ __('新增題組') }}</button>
+                        <a class="btn btn-block btn-info" style="color:#FFF;" @click="insertQ(1)">{{ __('新增題組') }}</a>
                       </div>
                       <div class="col-2">
-                        <button class="btn btn-block btn-info" @click="insertQ(2)">{{ __('新增題目') }}</button>
+                        <a class="btn btn-block btn-info" style="color:#FFF;" @click="insertQ(2)">{{ __('新增題目') }}</a>
                       </div>
                     </div>
                   </div>
@@ -117,11 +115,11 @@
                       </div>
                       <div class="form-group">
                         <label>音檔</label>
-                        <input type="file" placeholder="{{ __('音檔') }}" accept="audio/*" v-model="contents[index].media" autofocus>
+                        <input class="form-control" type="file" accept="audio/*" placeholder="{{ __('音檔') }}" name="'media[]'" :keyindex="index" keyname="media" autofocus @change="onFileChange">
                       </div>
                       <div class="form-group">
                         <label>圖片</label>
-                        <input type="file" placeholder="{{ __('圖片') }}" accept="image/*" v-model="contents[index].image" autofocus>
+                        <input class="form-control" type="file" accept="image/*" placeholder="{{ __('圖片') }}" name="'image[]" :keyindex="index" keyname="image" autofocus @change="onFileChange">
                       </div>
                       <div v-if="item.type == 1 && item.children.length > 0">
                         <div v-for="(item2, index2) in item.children">
@@ -142,11 +140,11 @@
                           </div>
                           <div class="form-group">
                             <label>音檔</label>
-                            <input type="file" placeholder="{{ __('音檔') }}" accept="audio/*" v-model="contents[index].children[index2].media" autofocus>
+                            <input class="form-control" type="file" accept="audio/*" placeholder="{{ __('音檔') }}" name="'media[]" :keyindex="index" :keyindex2="index2" keyname="media" autofocus @change="onFileChange">
                           </div>
                           <div class="form-group">
                             <label>圖片</label>
-                            <input type="file" placeholder="{{ __('圖片') }}" accept="image/*" v-model="contents[index].children[index2].image" autofocus>
+                            <input class="form-control" type="file" accept="image/*" placeholder="{{ __('圖片') }}" name="'image[]" :keyindex="index" :keyindex2="index2" keyname="image" autofocus @change="onFileChange">
                           </div>
                           <div class="form-group">
                             <label>題目類型</label>
@@ -203,6 +201,7 @@
             </div>
           </div>
         </div>
+</form>
 @endsection
 
 @section('javascript')
@@ -329,6 +328,32 @@
           answer: '',
           score: 0
         })
+      },
+      onFileChange(e) {
+        var files = e.target.files || e.dataTransfer.files;
+        if (!files.length)
+          return;
+        this.createImage(files[0]);
+        var index = parseInt(e.target.getAttribute("keyindex"));
+        var index2 = parseInt(e.target.getAttribute("keyindex2"));
+        var name = e.target.getAttribute("keyname");
+
+        if(index2 >= 0){
+          this.contents[index].children[index2][name] = files[0].name;
+        }else{
+          this.contents[index][name] = files[0].name;
+        }
+      },
+      createImage(file) {
+        var image = new Image();
+        var reader = new FileReader();
+        var vm = this;
+
+        reader.onload = (e) => {
+          vm.image = e.target.result;
+        };
+        reader.readAsDataURL(file);
+        // console.log(vm.image)
       }
     },
   });
