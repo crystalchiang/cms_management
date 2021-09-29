@@ -7,8 +7,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\School;
+use App\Models\SchoolBranch;
+use Log;
 
-class SchoolsController extends Controller
+class SchoolsBranchController extends Controller
 {
 
     /**
@@ -30,14 +32,15 @@ class SchoolsController extends Controller
      */
     public function index()
     {
-        $schools = DB::table('schools_main_info')
+        $schools = DB::table('schools_branch_info')
+            ->join('schools_main_info', 'schools_branch_info.main_school_id', '=', 'schools_main_info.id')
             ->join('school_category', 'schools_main_info.category_id', '=', 'school_category.id')
-            ->join('users', 'schools_main_info.principal_id', '=', 'users.id')
-            ->select('school_category.name as category_name', 'schools_main_info.*', 
-            'users.name as principal_name', 'users.telephone as principal_telephone', 'users.email as principal_email')
+            ->join('users', 'schools_branch_info.principal_id', '=', 'users.id')
+            ->select('school_category.name as category_name', 'schools_branch_info.*','schools_main_info.name as main_name', 
+            'users.name as principal_name')
             ->paginate(15);
 // dd($schools);
-        return view('dashboard.school.schoolList', compact('schools'));
+        return view('dashboard.school.schoolBranchList', compact('schools'));
     }
 
     /**
@@ -47,11 +50,11 @@ class SchoolsController extends Controller
      */
     public function create()
     {
-        $categories = DB::table('school_category')
-                    ->get()
-                    ->toArray();
+        $mainSchools = DB::table('schools_main_info')
+                        ->get()
+                        ->toArray();
 
-        return view('dashboard.school.schoolCreate', [ 'categories' => $categories ]);
+        return view('dashboard.school.schoolBranchCreate', [ 'mainSchools' => $mainSchools ]);
     }
 
     /**
@@ -63,10 +66,9 @@ class SchoolsController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
+            'main_school_id' => 'required',
             'name' => 'required|string|between:2,100',
             'alias' => 'required|string|between:2,100',
-            'category_id' => 'required',
-            'identity_id' => 'required',
             'telephone' => 'required',
             'address' => 'required|string|between:2,100',
             'principal_name' => 'required|string|between:2,100',
@@ -90,22 +92,20 @@ class SchoolsController extends Controller
             $user->save();
             $principal_id = $user->id;
 
-            $school = DB::table('schools_main_info')->insert([
+            $school = DB::table('schools_branch_info')->insert([
+                'main_school_id' => $request->input('main_school_id'),
                 'name' => $request->input('name'),
                 'alias' => $request->input('alias'),
-                'category_id' => $request->input('category_id'),
-                'identity_id' => $request->input('identity_id'),
-                'code' => '1' . $this->getRandomCode(10),
+                'code' => '2' . $this->getRandomCode(10),
                 'telephone' => $request->input('telephone'),
                 'address' => $request->input('address'),
-                'website' => $request->input('website') ? $request->input('website') : '',
                 'principal_id' => $principal_id,
                 'created_at' => date('Y-m-d H:i:s'),
                 'expired_at' => $request->input('expired_at'),
                 'updated_at' => date('Y-m-d H:i:s'),
-                'status' => 1,
-
+                'status' => 1
             ]);
+
             DB::commit();
 
         } catch(\Exception $e) {
@@ -114,7 +114,7 @@ class SchoolsController extends Controller
 
         $request->session()->flash('message', '成功新增');
 
-        return redirect()->route('schools.index');
+        return redirect()->route('schoolsBranch.index');
     }
 
     /**
@@ -125,16 +125,17 @@ class SchoolsController extends Controller
      */
     public function show($id)
     {
-        $school = DB::table('schools_main_info')
+        $school = DB::table('schools_branch_info')
+            ->join('schools_main_info', 'schools_branch_info.main_school_id', '=', 'schools_main_info.id')
             ->join('school_category', 'schools_main_info.category_id', '=', 'school_category.id')
-            ->join('users', 'schools_main_info.principal_id', '=', 'users.id')
-            ->select('school_category.name as category_name', 'schools_main_info.*', 
+            ->join('users', 'schools_branch_info.principal_id', '=', 'users.id')
+            ->select('school_category.name as category_name', 'schools_branch_info.*','schools_main_info.name as main_name', 
             'users.name as p_name', 'users.telephone as p_telephone', 'users.email as p_email', 'users.line as p_line')
-            ->where('schools_main_info.id', $id)
+            ->where('schools_branch_info.id', $id)
             ->get()
             ->first();
-
-        return view('dashboard.school.schoolShow', compact( 'school' ));
+            
+        return view('dashboard.school.schoolBranchShow', compact( 'school' ));
     }
 
     /**
@@ -145,21 +146,22 @@ class SchoolsController extends Controller
      */
     public function edit($id)
     {
-        $school = DB::table('schools_main_info')
+        $school = DB::table('schools_branch_info')
+            ->join('schools_main_info', 'schools_branch_info.main_school_id', '=', 'schools_main_info.id')
             ->join('school_category', 'schools_main_info.category_id', '=', 'school_category.id')
-            ->join('users', 'schools_main_info.principal_id', '=', 'users.id')
-            ->select('schools_main_info.*', 
+            ->join('users', 'schools_branch_info.principal_id', '=', 'users.id')
+            ->select('school_category.name as category_name', 'schools_branch_info.*','schools_main_info.name as main_name', 
             'users.name as p_name', 'users.telephone as p_telephone', 'users.email as p_email', 'users.line as p_line')
-            ->where('schools_main_info.id', $id)
+            ->where('schools_branch_info.id', $id)
             ->get()
             ->first();
 
 
-        $categories = DB::table('school_category')
-                    ->get()
-                    ->toArray();
+        $mainSchools = DB::table('schools_main_info')
+            ->get()
+            ->toArray();
 // dd($school);
-        return view('dashboard.school.schoolEditForm', compact('school', 'categories'));
+        return view('dashboard.school.schoolBranchEditForm', compact('school', 'mainSchools'));
     }
 
     /**
@@ -173,15 +175,14 @@ class SchoolsController extends Controller
     {
 
         $validatedData = $request->validate([
+            'main_school_id' => 'required',
             'name' => 'required|string|between:2,100',
             'alias' => 'required|string|between:2,100',
-            'category_id' => 'required',
-            'identity_id' => 'required',
             'telephone' => 'required',
             'address' => 'required|string|between:2,100',
             'principal_name' => 'required|string|between:2,100',
             'principal_telephone' => 'required',
-            'principal_email' => 'required|string|email|max:100',
+            'principal_email' => 'required|string|email|max:100'
         ]);
         
         $school = School::find($id);
@@ -206,26 +207,24 @@ class SchoolsController extends Controller
             $user->updated_at  = date('Y-m-d H:i:s');
             $user->save();
 
-            //更新總校資料
+            //更新分校資料
             $school->name       = $request->input('name');
             $school->alias       = $request->input('alias');
-            $school->category_id      = $request->input('category_id');
-            $school->identity_id      = $request->input('identity_id');
+            $school->code      = $request->input('code');
             $school->telephone      = $request->input('telephone');
             $school->address      = $request->input('address');
-            $school->website      = $request->input('website') ? $request->input('website') : '';
             $school->expired_at      = $request->input('expired_at');
             $school->updated_at  = date('Y-m-d H:i:s');
             $school->save();
-
+                
             DB::commit();
-            $request->session()->flash('message', '成功修改總校');
+            $request->session()->flash('message', '成功修改分校');
             
         } catch(\Exception $e) {
             DB::rollBack();
         }
 
-        return redirect()->route('schools.index');
+        return redirect()->route('schoolsBranch.index');
     }
 
     /**
@@ -243,7 +242,7 @@ class SchoolsController extends Controller
             $school->delete();
             $user->delete();
         }
-        return redirect()->route('schools.index');
+        return redirect()->route('schoolsBranch.index');
     }
 
     public function getRandomCode($qty)

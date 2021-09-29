@@ -4,7 +4,7 @@
 -- https://tableplus.com/
 --
 -- Database: cms_dev
--- Generation Time: 2021-09-19 20:12:16.4360
+-- Generation Time: 2021-09-29 22:56:31.4370
 -- -------------------------------------------------------------
 
 
@@ -136,7 +136,7 @@ CREATE TABLE `menu_role` (
   `role_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `menus_id` int unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=193 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=205 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `menulist`;
 CREATE TABLE `menulist` (
@@ -156,7 +156,7 @@ CREATE TABLE `menus` (
   `menu_id` int unsigned NOT NULL,
   `sequence` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE `migrations` (
@@ -298,7 +298,7 @@ CREATE TABLE `role_hierarchy` (
   `role_id` int unsigned NOT NULL,
   `hierarchy` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles` (
@@ -308,7 +308,7 @@ CREATE TABLE `roles` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `school_category`;
 CREATE TABLE `school_category` (
@@ -325,29 +325,33 @@ CREATE TABLE `schools_branch_info` (
   `id` int NOT NULL AUTO_INCREMENT,
   `main_school_id` int DEFAULT NULL COMMENT '主校',
   `name` varchar(255) DEFAULT NULL COMMENT '學校名稱',
+  `alias` varchar(255) DEFAULT NULL COMMENT '簡稱',
+  `code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '學校編號',
+  `city` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '縣市',
+  `area` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '鄉鎮市區',
   `address` varchar(255) DEFAULT NULL COMMENT '學校地址',
   `telephone` varchar(255) DEFAULT NULL COMMENT '學校電話',
-  `principal` int DEFAULT NULL COMMENT '校長',
+  `principal_id` int DEFAULT NULL COMMENT '校長',
   `created_at` timestamp NULL DEFAULT NULL COMMENT '建立日期',
   `expired_at` timestamp NULL DEFAULT NULL COMMENT '到期日期',
-  `update_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '最後更新日期',
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '最後更新日期',
   `status` int DEFAULT '1' COMMENT '狀態:1啟用2關閉',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `schools_main_info`;
 CREATE TABLE `schools_main_info` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '總校名稱',
   `alias` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '總校簡稱',
+  `code` varchar(255) DEFAULT NULL COMMENT '總校編號',
+  `city` varchar(255) DEFAULT NULL COMMENT '總校縣市',
+  `area` varchar(255) DEFAULT NULL COMMENT '總校鄉鎮市區',
   `address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '總校地址',
   `telephone` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '總校電話',
   `website` varchar(255) DEFAULT NULL COMMENT '總校網址',
   `identity_id` varchar(255) DEFAULT NULL COMMENT '立案字號',
   `category_id` int DEFAULT NULL COMMENT '總校分類',
-  `code` varchar(255) DEFAULT NULL COMMENT '總校編號',
-  `city` varchar(255) DEFAULT NULL COMMENT '總校縣市',
-  `area` varchar(255) DEFAULT NULL COMMENT '總校鄉鎮市區',
   `principal_id` int DEFAULT NULL COMMENT '總校負責人',
   `created_at` timestamp NOT NULL COMMENT '建立日期',
   `expired_at` date DEFAULT NULL COMMENT '到期日期',
@@ -392,7 +396,7 @@ CREATE TABLE `users` (
   `status` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `users_student_infos`;
 CREATE TABLE `users_student_infos` (
@@ -574,7 +578,13 @@ INSERT INTO `menu_role` (`id`, `role_name`, `menus_id`) VALUES
 (189, 'admin', 76),
 (190, 'mywayAdmin', 76),
 (191, 'admin', 79),
-(192, 'mywayAdmin', 79);
+(192, 'mywayAdmin', 79),
+(199, 'admin', 85),
+(200, 'mywayAdmin', 85),
+(201, 'schoolAdmin', 85),
+(202, 'admin', 86),
+(203, 'mywayAdmin', 86),
+(204, 'schoolAdmin', 86);
 
 INSERT INTO `menulist` (`id`, `name`) VALUES
 (1, 'sidebar menu'),
@@ -646,17 +656,19 @@ INSERT INTO `menus` (`id`, `name`, `href`, `icon`, `slug`, `parent_id`, `menu_id
 (68, '使用者列表', '/users', NULL, 'link', 66, 3, 3),
 (69, '總校設定', NULL, 'cil-school', 'dropdown', NULL, 3, 4),
 (70, '屬性分類建置', '/resource/3/resource', NULL, 'link', 69, 3, 5),
-(71, '總校列表', '/schools', NULL, 'link', 69, 3, 6),
-(72, '教材分類設定', NULL, 'cil-folder', 'dropdown', NULL, 3, 7),
-(73, '系列設定', '/firstCategory', NULL, 'link', 72, 3, 8),
-(74, '冊別設定', '/secondCategory', NULL, 'link', 72, 3, 9),
-(75, '課別設定', '/thirdCategory', NULL, 'link', 72, 3, 10),
-(76, '考券設定', NULL, 'cil-book', 'dropdown', NULL, 3, 11),
-(78, '題目類型列表', '/resource/8/resource', NULL, 'link', 76, 3, 13),
-(79, '考券列表', '/topics', NULL, 'link', 76, 3, 14),
+(71, '總校列表', '/schools', NULL, 'link', 69, 3, 7),
+(72, '教材分類設定', NULL, 'cil-folder', 'dropdown', NULL, 3, 8),
+(73, '系列設定', '/firstCategory', NULL, 'link', 72, 3, 9),
+(74, '冊別設定', '/secondCategory', NULL, 'link', 72, 3, 10),
+(75, '課別設定', '/thirdCategory', NULL, 'link', 72, 3, 11),
+(76, '考券設定', NULL, 'cil-book', 'dropdown', NULL, 3, 13),
+(78, '題目類型列表', '/resource/8/resource', NULL, 'link', 76, 3, 14),
+(79, '考券列表', '/topics', NULL, 'link', 76, 3, 15),
 (80, 'Basic Forms', '/forms/basic-forms', NULL, 'link', 21, 1, 54),
 (81, 'Advanced Forms', '/forms/advanced-forms', NULL, 'link', 21, 1, 55),
-(82, 'Validation Forms', '/forms/validation', NULL, 'link', 21, 1, 56);
+(82, 'Validation Forms', '/forms/validation', NULL, 'link', 21, 1, 56),
+(85, '分校設定', NULL, 'cil-school', 'dropdown', NULL, 3, 6),
+(86, '分校列表', '/schoolsBranch', NULL, 'link', 85, 3, 16);
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (8, '2020_11_27_094012_create_user_roles_table', 1),
@@ -701,7 +713,7 @@ INSERT INTO `myway_topic_types` (`id`, `type_name`, `created_at`, `updated_at`) 
 (2, '填空題', '2021-01-16 23:13:48', NULL);
 
 INSERT INTO `myway_topics` (`id`, `first_cat_id`, `second_cat_id`, `third_cat_id`, `alias`, `name`, `contents`, `type`, `status`, `created_at`, `updated_at`) VALUES
-(1, 5, 7, 2, 'HE-1-1-aaa', 'aaa', '[{\"text\": \"aaa\", \"type\": 1, \"image\": \"\", \"media\": \"\", \"qType\": 1, \"children\": [{\"text\": \"ccc\", \"image\": \"\", \"media\": \"\", \"qType\": 1, \"score\": \"\", \"answer\": \"\", \"options\": \"\"}]}]', 2, 1, '2021-05-31 21:23:49', '2021-09-19 11:27:54');
+(1, 5, 7, 2, 'HE-1-1-aaa', 'aaa', '[{\"text\": \"aaa\", \"type\": 1, \"image\": \"82c4cb60946c76c82b4a9ce78f214bc3.jpeg\", \"media\": \"\", \"qType\": 1, \"children\": [{\"text\": \"ccc\", \"image\": \"\", \"media\": \"\", \"qType\": 1, \"score\": \"\", \"answer\": \"\", \"options\": \"\"}]}]', 2, 1, '2021-05-31 21:23:49', '2021-09-21 18:56:00');
 
 INSERT INTO `notes` (`id`, `title`, `content`, `note_type`, `applies_to_date`, `users_id`, `status_id`, `created_at`, `updated_at`) VALUES
 (1, 'Et perspiciatis dolorum.', 'Sapiente pariatur hic numquam. Autem sed exercitationem voluptatem culpa quae. Voluptatibus neque error quos.', 'voluptatibus est', '1999-06-16', 2, 1, NULL, NULL),
@@ -836,7 +848,9 @@ INSERT INTO `role_hierarchy` (`id`, `role_id`, `hierarchy`) VALUES
 (7, 7, 7),
 (8, 8, 8),
 (9, 9, 9),
-(10, 10, 10);
+(10, 10, 10),
+(11, 11, 11),
+(12, 12, 12);
 
 INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
 (1, 'admin', 'web', '2020-12-15 03:38:21', '2020-12-15 03:38:21'),
@@ -848,13 +862,15 @@ INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VAL
 (7, 'parent', 'web', '2020-12-15 03:38:21', '2020-12-15 03:38:21'),
 (8, 'student', 'web', '2020-12-15 03:38:21', '2020-12-15 03:38:21'),
 (9, 'user', 'web', '2020-12-15 03:38:21', '2020-12-15 03:38:21'),
-(10, 'guest', 'web', '2020-12-15 03:38:21', '2020-12-15 03:38:21');
+(10, 'guest', 'web', '2020-12-15 03:38:21', '2020-12-15 03:38:21'),
+(11, 'contactPerson', 'web', '2021-09-29 12:45:48', '2021-09-29 12:45:48'),
+(12, 'agent', 'web', '2021-09-29 12:46:17', '2021-09-29 12:46:17');
 
 INSERT INTO `school_category` (`id`, `name`, `description`, `created_at`, `updated_at`) VALUES
 (3, '分類1測試', '這是分類說明', '2020-12-21 21:43:29', '2020-12-21 21:43:29');
 
-INSERT INTO `schools_main_info` (`id`, `name`, `alias`, `address`, `telephone`, `website`, `identity_id`, `category_id`, `code`, `city`, `area`, `principal_id`, `created_at`, `expired_at`, `updated_at`, `status`) VALUES
-(1, '狀元補習班', '狀元', '南陽街', '0212345678', '', 'AE12345678', 3, '19WQR1OXWB4', NULL, NULL, 37, '2020-12-28 01:41:42', '2020-12-31', '2020-12-27 17:42:13', 1);
+INSERT INTO `schools_branch_info` (`id`, `main_school_id`, `name`, `alias`, `code`, `city`, `area`, `address`, `telephone`, `principal_id`, `created_at`, `expired_at`, `updated_at`, `status`) VALUES
+(1, 1, '信義分校', 'SY', '2OU6GPBEMF3', NULL, NULL, '逸仙路', '0212345678', 47, '2021-09-29 14:25:20', '2022-08-29 00:00:00', '2021-09-29 14:25:20', 1);
 
 INSERT INTO `status` (`id`, `name`, `class`) VALUES
 (1, 'ongoing', 'badge badge-pill badge-primary'),
@@ -882,7 +898,8 @@ INSERT INTO `users` (`id`, `name`, `english_name`, `telephone`, `line`, `address
 (26, 'Q爸', NULL, '0912345678', 'qba', NULL, 'qba@gmail.com', NULL, '$2y$10$r6a55yCQJumWUtyabVMwsO.L6tZir1iHak/DnMIeD6CJBxfKUUlni', 'parent', NULL, '2020-12-21 12:31:53', NULL, NULL, 1),
 (27, 'Q媽', NULL, '0987654321', 'qma', NULL, 'qma@gmail.com', NULL, '$2y$10$jvT43le9mr8zJA3SVONJ1ObVVKR3/bKBcWTf1XNfzf4dKwE38ouQy', 'parent', NULL, '2020-12-21 12:31:53', NULL, NULL, 1),
 (28, 'Q寶', 'QQ', NULL, 'qbo', NULL, 'qbo@gmail.com', NULL, '$2y$10$iAuDWo1ogI9/0lQdcHHvOO3kcajlKNX4RpXaYz/MncaWEqf0AKWpO', 'student', NULL, '2020-12-21 12:31:53', NULL, NULL, 1),
-(37, '林總校長', NULL, '0912222332', 'linprincipal', NULL, 'admin@testschool.com', NULL, '$2y$10$Oyg0ib6u9m5lYgKYzbx/1.Rddm4AzCH3/iBukv8lTrDqDlqy8CPfS', 'schoolAdmin', NULL, '2020-12-27 16:10:39', '2020-12-27 17:42:13', NULL, 1);
+(37, '林總校長', NULL, '0912222332', 'linprincipal', NULL, 'admin@testschool.com', NULL, '$2y$10$Oyg0ib6u9m5lYgKYzbx/1.Rddm4AzCH3/iBukv8lTrDqDlqy8CPfS', 'schoolAdmin', NULL, '2020-12-27 16:10:39', '2021-09-29 14:55:48', '2021-09-29 14:55:48', 1),
+(47, '法蘭西', NULL, '0988111777', 'france123456', NULL, 'france@gmail.com', NULL, '$2y$10$y/5eRmCUevJIzxvnjXWgJ.rtFgWl2kgYGQhIKEWHrDdgcxYVv7J92', 'schoolAdmin', NULL, '2021-09-29 14:25:20', '2021-09-29 14:51:23', NULL, 1);
 
 INSERT INTO `users_student_infos` (`id`, `user_id`, `class_id`, `parent_1_id`, `parent_2_id`, `other`, `start_date`, `expire_date`, `created_at`, `update_at`) VALUES
 (4, 25, NULL, 23, 24, 'otherss', '2020-12-18', '2020-12-31', '2020-12-16 16:26:04', '2020-12-21 20:25:41'),

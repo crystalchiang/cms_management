@@ -109,6 +109,7 @@ Route::group(['middleware' => ['get.menu']], function () {
         Route::resource('bread',  'BreadController');  
         Route::resource('users',  'UsersController'); 
         Route::resource('schools', 'SchoolsController');
+        Route::resource('schoolsBranch', 'SchoolsBranchController');
         Route::resource('firstCategory', 'FirstCategoryController');
         Route::resource('secondCategory', 'SecondCategoryController');
         Route::resource('thirdCategory', 'ThirdCategoryController');
