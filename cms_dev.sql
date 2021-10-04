@@ -4,7 +4,7 @@
 -- https://tableplus.com/
 --
 -- Database: cms_dev
--- Generation Time: 2021-09-29 22:56:31.4370
+-- Generation Time: 2021-10-04 23:45:32.3550
 -- -------------------------------------------------------------
 
 
@@ -18,28 +18,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
-DROP TABLE IF EXISTS `classes_infos`;
-CREATE TABLE `classes_infos` (
+DROP TABLE IF EXISTS `class_infos`;
+CREATE TABLE `class_infos` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `class_id` varchar(32) DEFAULT NULL,
-  `school_id` int DEFAULT NULL COMMENT '學校ID',
+  `branch_school_id` int DEFAULT NULL COMMENT '學校ID',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '班級名稱',
   `teacher_id` int DEFAULT NULL COMMENT '帶班教師ID',
-  `teacher_assistant_id` int DEFAULT NULL COMMENT '助教ID',
-  `substitute_teacher_id` int DEFAULT NULL COMMENT '代課教師ID',
+  `assistant_id` int DEFAULT NULL COMMENT '助教ID',
+  `supply_teacher_id` int DEFAULT NULL COMMENT '代課教師ID',
   `teaching_material_1` int DEFAULT NULL COMMENT '教材1_ID',
   `teaching_material_2` int DEFAULT NULL COMMENT '教材2_ID',
   `teaching_material_3` int DEFAULT NULL COMMENT '教材3_ID',
   `teaching_material_4` int DEFAULT NULL COMMENT '教材4_ID',
   `period_start_date` date DEFAULT NULL COMMENT '本期開始日',
   `period_end_date` date DEFAULT NULL COMMENT '本期結束日',
-  `calss_start_date` date DEFAULT NULL COMMENT '上課開始日',
-  `class_schedule` varchar(255) DEFAULT NULL COMMENT '上課時段',
+  `class_day` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '上課日',
+  `class_schedule` int DEFAULT '0' COMMENT '上課時段: 0-上午 1-下午 2-晚上',
   `created_at` timestamp NULL DEFAULT NULL COMMENT '建立日期',
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '最後更新日期',
   `status` int DEFAULT '1' COMMENT '狀態:1啟用2關閉',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `email_template`;
 CREATE TABLE `email_template` (
@@ -136,7 +135,7 @@ CREATE TABLE `menu_role` (
   `role_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `menus_id` int unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=205 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=217 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `menulist`;
 CREATE TABLE `menulist` (
@@ -156,7 +155,7 @@ CREATE TABLE `menus` (
   `menu_id` int unsigned NOT NULL,
   `sequence` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE `migrations` (
@@ -298,7 +297,7 @@ CREATE TABLE `role_hierarchy` (
   `role_id` int unsigned NOT NULL,
   `hierarchy` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles` (
@@ -308,7 +307,7 @@ CREATE TABLE `roles` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `school_category`;
 CREATE TABLE `school_category` (
@@ -375,7 +374,7 @@ CREATE TABLE `user_roles` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
@@ -413,9 +412,10 @@ CREATE TABLE `users_student_infos` (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
-INSERT INTO `classes_infos` (`id`, `class_id`, `school_id`, `name`, `teacher_id`, `teacher_assistant_id`, `substitute_teacher_id`, `teaching_material_1`, `teaching_material_2`, `teaching_material_3`, `teaching_material_4`, `period_start_date`, `period_end_date`, `calss_start_date`, `class_schedule`, `created_at`, `updated_at`, `status`) VALUES
-(1, NULL, NULL, 'test1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-12-01', '2020-12-23', '2020-12-09', '早上', '2020-12-13 07:40:32', '2020-12-13 08:47:38', 1),
-(2, NULL, NULL, 'test2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-12-01', '2020-12-08', '2020-12-23', '下午', '2020-12-13 08:34:44', '2020-12-13 08:47:52', 1);
+INSERT INTO `class_infos` (`id`, `branch_school_id`, `name`, `teacher_id`, `assistant_id`, `supply_teacher_id`, `teaching_material_1`, `teaching_material_2`, `teaching_material_3`, `teaching_material_4`, `period_start_date`, `period_end_date`, `class_day`, `class_schedule`, `created_at`, `updated_at`, `status`) VALUES
+(1, 1, 'test1', 19, NULL, NULL, 1, 1, NULL, NULL, '2020-12-01', '2020-12-23', '[\"2\",\"4\"]', 1, '2020-12-13 07:40:32', '2021-10-04 23:45:04', 1),
+(2, 1, 'test2', 19, NULL, NULL, 1, 1, NULL, NULL, '2020-12-01', '2020-12-08', '[\"2\",\"4\"]', 2, '2020-12-13 08:34:44', '2021-10-04 23:43:33', 1),
+(11, 1, 'Fish', 19, NULL, NULL, 1, 1, 1, 1, NULL, NULL, '[\"2\",\"4\"]', 0, '2021-10-04 15:43:07', '2021-10-04 15:43:07', 1);
 
 INSERT INTO `email_template` (`id`, `created_at`, `updated_at`, `content`, `name`, `subject`) VALUES
 (1, NULL, NULL, '<!DOCTYPE html>\n                <html lang=\"en\">\n                <head>\n                    <meta charset=\"utf-8\">\n                    <meta name=\"viewport\" content=\"width=device-width\">\n                    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"> \n                    <meta name=\"x-apple-disable-message-reformatting\">\n                    <title>Example</title>\n                    <style>\n                        body {\n                            background-color:#fff;\n                            color:#222222;\n                            margin: 0px auto;\n                            padding: 0px;\n                            height: 100%;\n                            width: 100%;\n                            font-weight: 400;\n                            font-size: 15px;\n                            line-height: 1.8;\n                        }\n                        .continer{\n                            width:400px;\n                            margin-left:auto;\n                            margin-right:auto;\n                            background-color:#efefef;\n                            padding:30px;\n                        }\n                        .btn{\n                            padding: 5px 15px;\n                            display: inline-block;\n                        }\n                        .btn-primary{\n                            border-radius: 3px;\n                            background: #0b3c7c;\n                            color: #fff;\n                            text-decoration: none;\n                        }\n                        .btn-primary:hover{\n                            border-radius: 3px;\n                            background: #4673ad;\n                            color: #fff;\n                            text-decoration: none;\n                        }\n                    </style>\n                </head>\n                <body>\n                    <div class=\"continer\">\n                        <h1>Lorem ipsum dolor</h1>\n                        <h4>Ipsum dolor cet emit amet</h4>\n                        <p>\n                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea <strong>commodo consequat</strong>. \n                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. \n                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n                        </p>\n                        <h4>Ipsum dolor cet emit amet</h4>\n                        <p>\n                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod <a href=\"#\">tempor incididunt ut labore</a> et dolore magna aliqua.\n                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. \n                        </p>\n                        <h4>Ipsum dolor cet emit amet</h4>\n                        <p>\n                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. \n                        </p>\n                        <a href=\"#\" class=\"btn btn-primary\">Lorem ipsum dolor</a>\n                        <h4>Ipsum dolor cet emit amet</h4>\n                        <p>\n                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n                            Ut enim ad minim veniam, quis nostrud exercitation <a href=\"#\">ullamco</a> laboris nisi ut aliquip ex ea commodo consequat. \n                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. \n                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n                        </p>\n                    </div>\n                </body>\n                </html>', 'Example E-mail', 'Example E-mail');
@@ -584,7 +584,15 @@ INSERT INTO `menu_role` (`id`, `role_name`, `menus_id`) VALUES
 (201, 'schoolAdmin', 85),
 (202, 'admin', 86),
 (203, 'mywayAdmin', 86),
-(204, 'schoolAdmin', 86);
+(204, 'schoolAdmin', 86),
+(209, 'admin', 87),
+(210, 'mywayAdmin', 87),
+(211, 'schoolAdmin', 87),
+(212, 'principal', 87),
+(213, 'admin', 88),
+(214, 'mywayAdmin', 88),
+(215, 'schoolAdmin', 88),
+(216, 'principal', 88);
 
 INSERT INTO `menulist` (`id`, `name`) VALUES
 (1, 'sidebar menu'),
@@ -668,7 +676,9 @@ INSERT INTO `menus` (`id`, `name`, `href`, `icon`, `slug`, `parent_id`, `menu_id
 (81, 'Advanced Forms', '/forms/advanced-forms', NULL, 'link', 21, 1, 55),
 (82, 'Validation Forms', '/forms/validation', NULL, 'link', 21, 1, 56),
 (85, '分校設定', NULL, 'cil-school', 'dropdown', NULL, 3, 6),
-(86, '分校列表', '/schoolsBranch', NULL, 'link', 85, 3, 16);
+(86, '分校列表', '/schoolsBranch', NULL, 'link', 85, 3, 16),
+(87, '班級設定', NULL, 'cil-pencil', 'dropdown', NULL, 1, 57),
+(88, '班級列表', '/classInfo', NULL, 'link', 87, 1, 58);
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (8, '2020_11_27_094012_create_user_roles_table', 1),
@@ -843,14 +853,15 @@ INSERT INTO `role_hierarchy` (`id`, `role_id`, `hierarchy`) VALUES
 (2, 2, 2),
 (3, 3, 3),
 (4, 4, 4),
-(5, 5, 5),
-(6, 6, 6),
-(7, 7, 7),
-(8, 8, 8),
-(9, 9, 9),
-(10, 10, 10),
-(11, 11, 11),
-(12, 12, 12);
+(5, 5, 7),
+(6, 6, 9),
+(7, 7, 10),
+(8, 8, 11),
+(9, 9, 12),
+(10, 10, 13),
+(11, 11, 6),
+(12, 12, 5),
+(13, 14, 8);
 
 INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
 (1, 'admin', 'web', '2020-12-15 03:38:21', '2020-12-15 03:38:21'),
@@ -864,7 +875,8 @@ INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VAL
 (9, 'user', 'web', '2020-12-15 03:38:21', '2020-12-15 03:38:21'),
 (10, 'guest', 'web', '2020-12-15 03:38:21', '2020-12-15 03:38:21'),
 (11, 'contactPerson', 'web', '2021-09-29 12:45:48', '2021-09-29 12:45:48'),
-(12, 'agent', 'web', '2021-09-29 12:46:17', '2021-09-29 12:46:17');
+(12, 'agent', 'web', '2021-09-29 12:46:17', '2021-09-29 12:46:17'),
+(14, 'supplyTeacher', 'web', '2021-10-04 09:25:58', '2021-10-04 09:25:58');
 
 INSERT INTO `school_category` (`id`, `name`, `description`, `created_at`, `updated_at`) VALUES
 (3, '分類1測試', '這是分類說明', '2020-12-21 21:43:29', '2020-12-21 21:43:29');
@@ -886,7 +898,12 @@ INSERT INTO `user_roles` (`id`, `name`, `created_at`, `updated_at`) VALUES
 (5, '教師', NULL, NULL),
 (6, '助教', NULL, NULL),
 (7, '家長', NULL, NULL),
-(8, '學生', NULL, NULL);
+(8, '學生', NULL, NULL),
+(9, '使用者', NULL, NULL),
+(10, '訪客', NULL, NULL),
+(11, '連絡人', NULL, NULL),
+(12, '代理人', NULL, NULL),
+(13, '代理教師', NULL, NULL);
 
 INSERT INTO `users` (`id`, `name`, `english_name`, `telephone`, `line`, `address`, `email`, `email_verified_at`, `password`, `menuroles`, `remember_token`, `created_at`, `updated_at`, `deleted_at`, `status`) VALUES
 (1, 'admin', NULL, NULL, NULL, NULL, 'admin@admin.com', '2020-12-15 03:38:21', '$2y$10$QaE66UT.yLUuEUbG5hagVueWQ51/Nk6gb.p9Abwn33fCgYqHTOvAS', 'admin', 'lEjqG9Y1DLbwuAv5cMyGlyNxvphJ701JDGfzAMOb53pEDmCw72Tf5GhQVJ95', '2020-12-15 03:38:21', '2020-12-15 03:38:21', NULL, 1),

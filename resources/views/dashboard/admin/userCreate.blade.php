@@ -40,7 +40,7 @@
                                 <label>角色</label>
                                 <select class="form-control" name="menuroles" v-model="role" placeholder="請選擇">
                                     @foreach($roles as $role)
-                                      <option value="{{ $role->name }}">{{ __('auth.roles.'.$role->name) }}</option>
+                                      <option value="{{ $role->name }}">{{ __($role->name) }}</option>
                                     @endforeach
                                 </select>
                             </div>
