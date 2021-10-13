@@ -130,7 +130,7 @@ class ClassInfoController extends Controller
         try {
             DB::beginTransaction();
 
-            $class = DB::table('class_infos')->insert([
+            $classID = DB::table('class_infos')->insertGetId([
                 'branch_school_id' => $request->input('branch_school_id'),
                 'name' => $request->input('name'),
                 'teacher_id' => $request->input('teacher_id'),
@@ -141,13 +141,21 @@ class ClassInfoController extends Controller
                 'teaching_material_3' => $request->input('teaching_material_3'),
                 'teaching_material_4' => $request->input('teaching_material_4'),
                 'period_start_date' => $request->input('period_start_date'),
-                'period_end_date' => $request->input('period_end_date'),
+                // 'period_end_date' => $request->input('period_end_date'),
                 'class_day' => json_encode($request->input('class_day')),
                 'class_schedule' => $request->input('class_schedule'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
                 'status' => 1,
             ]);
+
+            DB::table('class_price')->insert([
+                'class_id' => $classID,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+                'status' => 1,
+            ]);
+
             DB::commit();
 
         } catch(\Exception $e) {
@@ -276,7 +284,7 @@ class ClassInfoController extends Controller
             $class->teaching_material_3 = $request->input('teaching_material_3');
             $class->teaching_material_4 = $request->input('teaching_material_4');
             $class->period_start_date   = $request->input('period_start_date');
-            $class->period_end_date     = $request->input('period_end_date');
+            // $class->period_end_date     = $request->input('period_end_date');
             $class->class_day           = json_encode($request->input('class_day'));
             $class->class_schedule      = $request->input('class_schedule');
             $class->status              = 1;
@@ -299,7 +307,7 @@ class ClassInfoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $class = ClassInfo::find($id);
 

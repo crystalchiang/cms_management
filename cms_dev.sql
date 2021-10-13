@@ -4,7 +4,7 @@
 -- https://tableplus.com/
 --
 -- Database: cms_dev
--- Generation Time: 2021-10-04 23:45:32.3550
+-- Generation Time: 2021-10-13 17:02:59.3410
 -- -------------------------------------------------------------
 
 
@@ -31,14 +31,27 @@ CREATE TABLE `class_infos` (
   `teaching_material_3` int DEFAULT NULL COMMENT '教材3_ID',
   `teaching_material_4` int DEFAULT NULL COMMENT '教材4_ID',
   `period_start_date` date DEFAULT NULL COMMENT '本期開始日',
-  `period_end_date` date DEFAULT NULL COMMENT '本期結束日',
   `class_day` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '上課日',
   `class_schedule` int DEFAULT '0' COMMENT '上課時段: 0-上午 1-下午 2-晚上',
   `created_at` timestamp NULL DEFAULT NULL COMMENT '建立日期',
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '最後更新日期',
   `status` int DEFAULT '1' COMMENT '狀態:1啟用2關閉',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `class_price`;
+CREATE TABLE `class_price` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `class_id` int DEFAULT NULL COMMENT '班級ID',
+  `period_end_date` date DEFAULT NULL COMMENT '本期結束日',
+  `pay_start_date` date DEFAULT NULL COMMENT '收費開始日',
+  `pay_end_date` date DEFAULT NULL COMMENT '收費結束日',
+  `created_at` timestamp NULL DEFAULT NULL COMMENT '建立日期',
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '最後更新日期',
+  `status` int DEFAULT '1' COMMENT '狀態:1啟用2關閉',
+  `price` int DEFAULT '0' COMMENT '課程價格',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `email_template`;
 CREATE TABLE `email_template` (
@@ -135,7 +148,7 @@ CREATE TABLE `menu_role` (
   `role_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `menus_id` int unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=217 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=237 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `menulist`;
 CREATE TABLE `menulist` (
@@ -155,7 +168,7 @@ CREATE TABLE `menus` (
   `menu_id` int unsigned NOT NULL,
   `sequence` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE `migrations` (
@@ -412,10 +425,11 @@ CREATE TABLE `users_student_infos` (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
-INSERT INTO `class_infos` (`id`, `branch_school_id`, `name`, `teacher_id`, `assistant_id`, `supply_teacher_id`, `teaching_material_1`, `teaching_material_2`, `teaching_material_3`, `teaching_material_4`, `period_start_date`, `period_end_date`, `class_day`, `class_schedule`, `created_at`, `updated_at`, `status`) VALUES
-(1, 1, 'test1', 19, NULL, NULL, 1, 1, NULL, NULL, '2020-12-01', '2020-12-23', '[\"2\",\"4\"]', 1, '2020-12-13 07:40:32', '2021-10-04 23:45:04', 1),
-(2, 1, 'test2', 19, NULL, NULL, 1, 1, NULL, NULL, '2020-12-01', '2020-12-08', '[\"2\",\"4\"]', 2, '2020-12-13 08:34:44', '2021-10-04 23:43:33', 1),
-(11, 1, 'Fish', 19, NULL, NULL, 1, 1, 1, 1, NULL, NULL, '[\"2\",\"4\"]', 0, '2021-10-04 15:43:07', '2021-10-04 15:43:07', 1);
+INSERT INTO `class_infos` (`id`, `branch_school_id`, `name`, `teacher_id`, `assistant_id`, `supply_teacher_id`, `teaching_material_1`, `teaching_material_2`, `teaching_material_3`, `teaching_material_4`, `period_start_date`, `class_day`, `class_schedule`, `created_at`, `updated_at`, `status`) VALUES
+(15, 1, 'Fish', 19, NULL, NULL, 1, 1, 1, 1, '2021-11-01', '[\"2\",\"4\"]', 1, '2021-10-13 08:19:23', '2021-10-13 08:19:23', 1);
+
+INSERT INTO `class_price` (`id`, `class_id`, `period_end_date`, `pay_start_date`, `pay_end_date`, `created_at`, `updated_at`, `status`, `price`) VALUES
+(1, 15, NULL, NULL, NULL, '2021-10-13 08:19:23', '2021-10-13 17:02:27', 1, 200);
 
 INSERT INTO `email_template` (`id`, `created_at`, `updated_at`, `content`, `name`, `subject`) VALUES
 (1, NULL, NULL, '<!DOCTYPE html>\n                <html lang=\"en\">\n                <head>\n                    <meta charset=\"utf-8\">\n                    <meta name=\"viewport\" content=\"width=device-width\">\n                    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"> \n                    <meta name=\"x-apple-disable-message-reformatting\">\n                    <title>Example</title>\n                    <style>\n                        body {\n                            background-color:#fff;\n                            color:#222222;\n                            margin: 0px auto;\n                            padding: 0px;\n                            height: 100%;\n                            width: 100%;\n                            font-weight: 400;\n                            font-size: 15px;\n                            line-height: 1.8;\n                        }\n                        .continer{\n                            width:400px;\n                            margin-left:auto;\n                            margin-right:auto;\n                            background-color:#efefef;\n                            padding:30px;\n                        }\n                        .btn{\n                            padding: 5px 15px;\n                            display: inline-block;\n                        }\n                        .btn-primary{\n                            border-radius: 3px;\n                            background: #0b3c7c;\n                            color: #fff;\n                            text-decoration: none;\n                        }\n                        .btn-primary:hover{\n                            border-radius: 3px;\n                            background: #4673ad;\n                            color: #fff;\n                            text-decoration: none;\n                        }\n                    </style>\n                </head>\n                <body>\n                    <div class=\"continer\">\n                        <h1>Lorem ipsum dolor</h1>\n                        <h4>Ipsum dolor cet emit amet</h4>\n                        <p>\n                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea <strong>commodo consequat</strong>. \n                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. \n                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n                        </p>\n                        <h4>Ipsum dolor cet emit amet</h4>\n                        <p>\n                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod <a href=\"#\">tempor incididunt ut labore</a> et dolore magna aliqua.\n                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. \n                        </p>\n                        <h4>Ipsum dolor cet emit amet</h4>\n                        <p>\n                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. \n                        </p>\n                        <a href=\"#\" class=\"btn btn-primary\">Lorem ipsum dolor</a>\n                        <h4>Ipsum dolor cet emit amet</h4>\n                        <p>\n                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n                            Ut enim ad minim veniam, quis nostrud exercitation <a href=\"#\">ullamco</a> laboris nisi ut aliquip ex ea commodo consequat. \n                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. \n                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n                        </p>\n                    </div>\n                </body>\n                </html>', 'Example E-mail', 'Example E-mail');
@@ -585,14 +599,20 @@ INSERT INTO `menu_role` (`id`, `role_name`, `menus_id`) VALUES
 (202, 'admin', 86),
 (203, 'mywayAdmin', 86),
 (204, 'schoolAdmin', 86),
-(209, 'admin', 87),
-(210, 'mywayAdmin', 87),
-(211, 'schoolAdmin', 87),
-(212, 'principal', 87),
-(213, 'admin', 88),
-(214, 'mywayAdmin', 88),
-(215, 'schoolAdmin', 88),
-(216, 'principal', 88);
+(223, 'admin', 87),
+(224, 'mywayAdmin', 87),
+(225, 'schoolAdmin', 87),
+(226, 'principal', 87),
+(227, 'admin', 88),
+(228, 'mywayAdmin', 88),
+(229, 'schoolAdmin', 88),
+(230, 'principal', 88),
+(231, 'admin', 89),
+(232, 'mywayAdmin', 89),
+(233, 'schoolAdmin', 89),
+(234, 'principal', 89),
+(235, 'contactPerson', 89),
+(236, 'agent', 89);
 
 INSERT INTO `menulist` (`id`, `name`) VALUES
 (1, 'sidebar menu'),
@@ -665,20 +685,21 @@ INSERT INTO `menus` (`id`, `name`, `href`, `icon`, `slug`, `parent_id`, `menu_id
 (69, '總校設定', NULL, 'cil-school', 'dropdown', NULL, 3, 4),
 (70, '屬性分類建置', '/resource/3/resource', NULL, 'link', 69, 3, 5),
 (71, '總校列表', '/schools', NULL, 'link', 69, 3, 7),
-(72, '教材分類設定', NULL, 'cil-folder', 'dropdown', NULL, 3, 8),
-(73, '系列設定', '/firstCategory', NULL, 'link', 72, 3, 9),
-(74, '冊別設定', '/secondCategory', NULL, 'link', 72, 3, 10),
-(75, '課別設定', '/thirdCategory', NULL, 'link', 72, 3, 11),
-(76, '考券設定', NULL, 'cil-book', 'dropdown', NULL, 3, 13),
-(78, '題目類型列表', '/resource/8/resource', NULL, 'link', 76, 3, 14),
-(79, '考券列表', '/topics', NULL, 'link', 76, 3, 15),
+(72, '教材分類設定', NULL, 'cil-folder', 'dropdown', NULL, 3, 9),
+(73, '系列設定', '/firstCategory', NULL, 'link', 72, 3, 10),
+(74, '冊別設定', '/secondCategory', NULL, 'link', 72, 3, 11),
+(75, '課別設定', '/thirdCategory', NULL, 'link', 72, 3, 13),
+(76, '考券設定', NULL, 'cil-book', 'dropdown', NULL, 3, 14),
+(78, '題目類型列表', '/resource/8/resource', NULL, 'link', 76, 3, 15),
+(79, '考券列表', '/topics', NULL, 'link', 76, 3, 16),
 (80, 'Basic Forms', '/forms/basic-forms', NULL, 'link', 21, 1, 54),
 (81, 'Advanced Forms', '/forms/advanced-forms', NULL, 'link', 21, 1, 55),
 (82, 'Validation Forms', '/forms/validation', NULL, 'link', 21, 1, 56),
 (85, '分校設定', NULL, 'cil-school', 'dropdown', NULL, 3, 6),
-(86, '分校列表', '/schoolsBranch', NULL, 'link', 85, 3, 16),
-(87, '班級設定', NULL, 'cil-pencil', 'dropdown', NULL, 1, 57),
-(88, '班級列表', '/classInfo', NULL, 'link', 87, 1, 58);
+(86, '分校列表', '/schoolsBranch', NULL, 'link', 85, 3, 17),
+(87, '班級設定', NULL, 'cil-pencil', 'dropdown', NULL, 3, 8),
+(88, '班級列表', '/classInfo', NULL, 'link', 87, 3, 57),
+(89, '班級課程設定', '/classPrice', NULL, 'link', 87, 3, 58);
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (8, '2020_11_27_094012_create_user_roles_table', 1),

@@ -7,7 +7,7 @@
             <div class="row">
               <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <div class="card">
-                    <div class="card-header"><h4>班級列表</h4></div>
+                    <div class="card-header"><h4>班級課程設定</h4></div>
                     <div class="card-body">
                         @if(Session::has('message'))
                             <div class="row">
@@ -25,25 +25,17 @@
                                 </ul>
                             </div>
                         @endif
-                        <div class="col-12">
-                          <a href="{{ route('classInfo.create') }}" class="btn btn-primary mb-3">{{ __('建立班級') }}</a>
-                        </div>
                         <table class="table table-responsive-sm table-striped">
                         <thead>
                           <tr>
                             <th>分校名稱</th>
                             <th>班級名稱</th>
-                            <th>帶班教師</th>
-                            <th>助教</th>
-                            <th>代課教師</th>
-                            <th>使用教材1</th>
-                            <th>使用教材2</th>
-                            <th>使用教材3</th>
-                            <th>使用教材4</th>
-                            <th>本期起始日</th>
-                            <th>上課日</th>
-                            <th>上課時段</th>
-                            <th></th>
+                            <th>使用系列</th>
+                            <th>開課日</th>
+                            <th>課程預計結束日</th>
+                            <th>課程付費起算日</th>
+                            <th>課程付費截止日</th>
+                            <th>課程應繳費用</th>
                             <th></th>
                             <th></th>
                           </tr>
@@ -52,29 +44,18 @@
                           @foreach($classes as $class)
                             <tr>
                               <td>{{ $class->school_name }}</td>
-                              <td>{{ $class->name }}</td>
-                              <td>{{ $class->teacher }}</td>
-                              <td>{{ $class->assistant }}</td>
-                              <td>{{ $class->supply_teacher }}</td>
-                              <td>{{ $class->material_1 }}</td>
-                              <td>{{ $class->material_2 }}</td>
-                              <td>{{ $class->material_3 }}</td>
-                              <td>{{ $class->material_4 }}</td>
+                              <td>{{ $class->class_name }}</td>
+                              <td>{{ $class->material }}</td>
                               <td>{{ $class->period_start_date }}</td>
-                              <td>{{ $class->class_day_text }}</td>
-                              <td>{{ $class->class_schedule_name }}</td>
+                              <td>{{ $class->period_end_date }}</td>
+                              <td>{{ $class->pay_start_date }}</td>
+                              <td>{{ $class->pay_end_date }}</td>
+                              <td>${{ $class->price }}</td>
                               <td>
-                                <a href="{{ url('/classInfo/' . $class->id) }}" class="btn btn-block btn-primary">檢視</a>
+                                <a href="{{ url('/classPrice/' . $class->id) }}" class="btn btn-block btn-primary">檢視</a>
                               </td>
                               <td>
-                                <a href="{{ url('/classInfo/' . $class->id . '/edit') }}" class="btn btn-block btn-primary">編輯</a>
-                              </td>
-                              <td>
-                                <form action="{{ route('classInfo.destroy', $class->id ) }}" method="POST">
-                                    @method('DELETE')
-                                    @csrf
-                                    <button class="btn btn-block btn-danger">刪除</button>
-                                </form>
+                                <a href="{{ url('/classPrice/' . $class->id . '/edit') }}" class="btn btn-block btn-primary">編輯</a>
                               </td>
                             </tr>
                           @endforeach

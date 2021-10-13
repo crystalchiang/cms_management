@@ -22,7 +22,6 @@
                         <h6>使用教材4: {{ $class->material_4 }}</h6>
 
                         <h6>本期起始日: {{ $class->period_start_date }}</h6>
-                        <h6>本期結束日: {{ $class->period_end_date }}</h6>
                         <h6>上課日: {{ $class->class_day_text }}</h6>
                         <h6>上課時段: {{ $class->class_schedule_name }}</h6>
                         <h6>建立日期: {{ $class->created_at }}</h6>

@@ -115,6 +115,11 @@
                               <input class="form-control" type="date" placeholder="{{ __('本期起始日') }}" name="period_start_date">
                           </div>
 
+                          <!-- <div class="form-group">
+                              <label>本期結束日</label>
+                              <input class="form-control" type="date" placeholder="{{ __('本期結束日') }}" name="period_end_date">
+                          </div> -->
+
                           <div class="form-group">
                             <label>上課日</label>
                             <div class="col-md-12 col-form-label row">
