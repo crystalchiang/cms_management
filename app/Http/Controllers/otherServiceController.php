@@ -179,7 +179,7 @@ class OtherServiceController extends Controller
             'price'       => 'int'
         ]);
 
-        $service = otherService::find($id);
+        $service = OtherService::find($id);
 
         try {
             DB::beginTransaction();
@@ -214,7 +214,7 @@ class OtherServiceController extends Controller
      */
     public function destroy($id)
     {
-        $service = otherService::find($id);
+        $service = OtherService::find($id);
         if($service){
             $service->delete();
         }
