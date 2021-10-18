@@ -22,7 +22,7 @@
                         <h6>最後更新日期: {{ $service->updated_at }}</h6>
                         <div class="row mt-3">
                           <div class="col-6">
-                            <a href="{{ route('otherService.index') }}" class="btn btn-block btn-primary">{{ __('返回') }}</a> 
+                            <a href="{{ route('service.index') }}" class="btn btn-block btn-primary">{{ __('返回') }}</a> 
                           </div>
                         </div>
                     </div>

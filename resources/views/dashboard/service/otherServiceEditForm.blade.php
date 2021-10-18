@@ -31,7 +31,7 @@
                             </div>
                         @endif
                         <br>
-                        <form method="POST" action="/otherService/{{ $service->id }}" id="app">
+                        <form method="POST" action="/service/{{ $service->id }}" id="app">
                             @csrf
                             @method('PUT')
                             <div class="form-group">
@@ -80,7 +80,7 @@
                                 <button class="btn btn-block btn-success" type="submit">{{ __('儲存') }}</button>
                               </div>
                               <div class="col-6">
-                                <a href="{{ route('otherService.index') }}" class="btn btn-block btn-primary">{{ __('返回') }}</a> 
+                                <a href="{{ route('service.index') }}" class="btn btn-block btn-primary">{{ __('返回') }}</a> 
                               </div>
                             </div>
                         </form>

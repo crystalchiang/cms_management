@@ -5,10 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use App\Models\User;
 use App\Models\OtherService;
 
-class OtherServiceController extends Controller
+class ServiceController extends Controller
 {
 
     /**
@@ -104,7 +103,7 @@ class OtherServiceController extends Controller
 
         $request->session()->flash('message', '成功新增');
 
-        return redirect()->route('otherService.index');
+        return redirect()->route('service.index');
     }
 
     /**
@@ -203,7 +202,7 @@ class OtherServiceController extends Controller
             DB::rollBack();
         }
 
-        return redirect()->route('otherService.index');
+        return redirect()->route('service.index');
     }
 
     /**
@@ -218,6 +217,6 @@ class OtherServiceController extends Controller
         if($service){
             $service->delete();
         }
-        return redirect()->route('otherService.index');
+        return redirect()->route('service.index');
     }
 }

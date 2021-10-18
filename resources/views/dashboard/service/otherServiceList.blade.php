@@ -26,7 +26,7 @@
                             </div>
                         @endif
                         <div class="col-12">
-                          <a href="{{ route('otherService.create') }}" class="btn btn-primary mb-3">{{ __('建立服務') }}</a>
+                          <a href="{{ route('service.create') }}" class="btn btn-primary mb-3">{{ __('建立服務') }}</a>
                         </div>
                         <table class="table table-responsive-sm table-striped">
                         <thead>
@@ -58,13 +58,13 @@
                               @endif
                               <td>{{ $service->remark }}</td>
                               <td>
-                                <a href="{{ url('/otherService/' . $service->id) }}" class="btn btn-block btn-primary">檢視</a>
+                                <a href="{{ url('/service/' . $service->id) }}" class="btn btn-block btn-primary">檢視</a>
                               </td>
                               <td>
-                                <a href="{{ url('/otherService/' . $service->id . '/edit') }}" class="btn btn-block btn-primary">編輯</a>
+                                <a href="{{ url('/service/' . $service->id . '/edit') }}" class="btn btn-block btn-primary">編輯</a>
                               </td>
                               <td>
-                                <form action="{{ route('otherService.destroy', $service->id ) }}" method="POST">
+                                <form action="{{ route('service.destroy', $service->id ) }}" method="POST">
                                     @method('DELETE')
                                     @csrf
                                     <button class="btn btn-block btn-danger">刪除</button>

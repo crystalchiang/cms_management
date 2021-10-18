@@ -29,7 +29,7 @@
                             </ul>
                         </div>
                     @endif
-                      <form method="POST" action="{{ route('otherService.store') }}">
+                      <form method="POST" action="{{ route('service.store') }}">
                           @csrf
                           <input class="form-control" type="hidden" value="schoolAdmin" name="menuroles">
                           <!-- <input class="form-control" type="hidden" :value="class_day" name="class_day[]"> -->
@@ -81,7 +81,7 @@
                               <button class="btn btn-block btn-success" type="submit">{{ __('新增') }}</button>
                             </div>
                             <div class="col-6">
-                              <a href="{{ route('otherService.index') }}" class="btn btn-block btn-primary">{{ __('返回') }}</a> 
+                              <a href="{{ route('service.index') }}" class="btn btn-block btn-primary">{{ __('返回') }}</a> 
                             </div>
                           </div>
                       </form>
