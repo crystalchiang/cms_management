@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\OtherService;
 
-class otherServiceController extends Controller
+class OtherServiceController extends Controller
 {
 
     /**

@@ -4,7 +4,7 @@
 -- https://tableplus.com/
 --
 -- Database: cms_dev
--- Generation Time: 2021-10-13 17:02:59.3410
+-- Generation Time: 2021-10-19 00:54:52.1980
 -- -------------------------------------------------------------
 
 
@@ -148,7 +148,7 @@ CREATE TABLE `menu_role` (
   `role_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `menus_id` int unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=237 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=241 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `menulist`;
 CREATE TABLE `menulist` (
@@ -168,7 +168,7 @@ CREATE TABLE `menus` (
   `menu_id` int unsigned NOT NULL,
   `sequence` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE `migrations` (
@@ -275,6 +275,22 @@ CREATE TABLE `notes` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `other_service`;
+CREATE TABLE `other_service` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '服務名稱',
+  `level` int DEFAULT '0' COMMENT '分級 0: 初級1:中級2:中高級3:高級',
+  `description` varchar(512) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '服務說明',
+  `type` int DEFAULT NULL COMMENT '計價方式 0:題 1:篇 2:上傳 3:小時5:次',
+  `topic_id` int DEFAULT NULL COMMENT '試卷ID',
+  `price` int DEFAULT NULL COMMENT '收費價格',
+  `remark` text CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '備註',
+  `created_at` timestamp NULL DEFAULT NULL COMMENT '建立日期',
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '最後更新日期',
+  `status` int DEFAULT '1' COMMENT '狀態:1啟用2關閉',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `password_resets`;
 CREATE TABLE `password_resets` (
@@ -612,7 +628,11 @@ INSERT INTO `menu_role` (`id`, `role_name`, `menus_id`) VALUES
 (233, 'schoolAdmin', 89),
 (234, 'principal', 89),
 (235, 'contactPerson', 89),
-(236, 'agent', 89);
+(236, 'agent', 89),
+(237, 'admin', 90),
+(238, 'mywayAdmin', 90),
+(239, 'admin', 91),
+(240, 'mywayAdmin', 91);
 
 INSERT INTO `menulist` (`id`, `name`) VALUES
 (1, 'sidebar menu'),
@@ -699,7 +719,9 @@ INSERT INTO `menus` (`id`, `name`, `href`, `icon`, `slug`, `parent_id`, `menu_id
 (86, '分校列表', '/schoolsBranch', NULL, 'link', 85, 3, 17),
 (87, '班級設定', NULL, 'cil-pencil', 'dropdown', NULL, 3, 8),
 (88, '班級列表', '/classInfo', NULL, 'link', 87, 3, 57),
-(89, '班級課程設定', '/classPrice', NULL, 'link', 87, 3, 58);
+(89, '班級課程設定', '/classPrice', NULL, 'link', 87, 3, 58),
+(90, '其他設定', '/otherService', 'cil-briefcase', 'dropdown', NULL, 3, 59),
+(91, '平台服務', '/otherService', NULL, 'link', 90, 3, 60);
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (8, '2020_11_27_094012_create_user_roles_table', 1),
@@ -752,6 +774,9 @@ INSERT INTO `notes` (`id`, `title`, `content`, `note_type`, `applies_to_date`, `
 (3, 'Qui adipisci ipsam ut.', 'Omnis vitae eos labore voluptatem animi. Quia sunt necessitatibus consequatur sequi iste unde voluptate quia. Assumenda molestiae ut saepe ex rerum rerum omnis.', 'rem sint', '1995-06-27', 2, 4, NULL, NULL),
 (4, 'Saepe commodi consequatur necessitatibus harum.', 'Aspernatur nulla et reiciendis. Officiis aut ipsum voluptate. Omnis cupiditate voluptates sed reprehenderit voluptates sed est. Tempore molestiae incidunt praesentium sint dolor cum.', 'a facilis', '2012-09-03', 2, 4, NULL, NULL),
 (5, 'Consequatur sed quo nemo et molestiae.', 'Distinctio eveniet at veniam totam. Qui dolor voluptatem occaecati sit nulla. Pariatur repellat laborum eos nulla dolor.', 'consequatur', '1978-03-16', 2, 4, NULL, NULL);
+
+INSERT INTO `other_service` (`id`, `name`, `level`, `description`, `type`, `topic_id`, `price`, `remark`, `created_at`, `updated_at`, `status`) VALUES
+(1, '英文造句', 1, '高中英文造句', 2, NULL, NULL, NULL, '2021-10-18 16:12:26', '2021-10-18 16:53:11', 1);
 
 INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
 (1, 'browse bread 1', 'web', '2020-12-15 03:38:22', '2020-12-15 03:38:22'),
