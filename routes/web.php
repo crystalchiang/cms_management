@@ -115,6 +115,7 @@ Route::group(['middleware' => ['get.menu']], function () {
         Route::resource('firstCategory', 'FirstCategoryController');
         Route::resource('secondCategory', 'SecondCategoryController');
         Route::resource('thirdCategory', 'ThirdCategoryController');
+        Route::resource('otherService', 'OtherServiceController');
         Route::resource('topics', 'TopicsController');
         Route::resource('roles',  'RolesController');
         Route::resource('mail',   'MailController');

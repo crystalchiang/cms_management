@@ -157,7 +157,6 @@
                               @endforeach
                             </select>
                           </div>
-                          </template>
                           
                           <div class="row">
                             <div class="col-6">
