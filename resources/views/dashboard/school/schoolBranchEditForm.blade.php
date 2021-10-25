@@ -55,6 +55,16 @@
                             </div>
 
                             <div class="form-group">
+                              <label>分校縣市*</label>
+                              <input class="form-control" type="text" placeholder="{{ __('分校縣市') }}" value="{{ $school->city }}" name="city" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>鄉鎮區域*</label>
+                                <input class="form-control" type="text" placeholder="{{ __('鄉鎮區域') }}" value="{{ $school->area }}" name="area" required>
+                            </div>
+
+                            <div class="form-group">
                                 <label>分校地址*</label>
                                 <input class="form-control" type="text" placeholder="{{ __('分校地址') }}" name="address" value="{{ $school->address }}" required>
                             </div>

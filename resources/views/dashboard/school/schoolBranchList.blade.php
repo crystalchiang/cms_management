@@ -7,7 +7,15 @@
             <div class="row">
               <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <div class="card">
-                    <div class="card-header"><h4>分校列表</h4></div>
+                    <div class="card-header">
+                      <h4>
+                        <?php if($isSelectMain){ ?>
+                                {{ $schools[0]->main_name }} 分校列表
+                        <?php }else{ ?>
+                                全部分校列表
+                        <?php } ?>
+                      </h4>
+                    </div>
                     <div class="card-body">
                         @if(Session::has('message'))
                             <div class="row">
@@ -34,11 +42,14 @@
                             <th>分校名稱</th>
                             <th>簡稱</th>
                             <th>編號</th>
+                            <th>縣市</th>
+                            <th>鄉鎮區域</th>
                             <th>地址</th>
                             <th>電話</th>
                             <th>班級數</th>
+                            <th>教師總數</th>
+                            <th>助教總數</th>
                             <th>學生總數</th>
-                            <th>教室總數</th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -47,14 +58,17 @@
                         <tbody>
                           @foreach($schools as $school)
                             <tr>
-                              <td>{{ $school->name }}</td>
+                              <td><a href="/classInfo?id=<?php echo $school->id; ?>">{{ $school->name }}</a></td>
                               <td>{{ $school->alias }}</td>
                               <td>{{ $school->code }}</td>
+                              <td>{{ $school->city }}</td>
+                              <td>{{ $school->area }}</td>
                               <td>{{ $school->address }}</td>
                               <td>{{ $school->telephone }}</td>
-                              <td>0</td>
-                              <td>0</td>
-                              <td>0</td>
+                              <td>{{ $school->class_total }}</td>
+                              <td>{{ $school->teachers_total }}</td>
+                              <td>{{ $school->assistant_total }}</td>
+                              <td>{{ $school->students_total }}</td>
                               <td>
                                 <a href="{{ url('/schoolsBranch/' . $school->id) }}" class="btn btn-block btn-primary">檢視</a>
                               </td>

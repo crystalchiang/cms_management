@@ -30,17 +30,48 @@ class SchoolsBranchController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $schools = DB::table('schools_branch_info')
+        $id = $request->input('id') ? $request->input('id') : null;
+        $query = DB::table('schools_branch_info')
             ->join('schools_main_info', 'schools_branch_info.main_school_id', '=', 'schools_main_info.id')
             ->join('school_category', 'schools_main_info.category_id', '=', 'school_category.id')
             ->join('users', 'schools_branch_info.principal_id', '=', 'users.id')
             ->select('school_category.name as category_name', 'schools_branch_info.*','schools_main_info.name as main_name', 
-            'users.name as principal_name')
-            ->paginate(15);
+            'users.name as principal_name');
+
+        if(isset($id) && !empty($id)){
+            $query->where('schools_branch_info.main_school_id', $id);
+        }
+        $schools = $query->paginate(15);
+        $isSelectMain = $id;
+
+        foreach($schools as $key => $value){
+            $id = $value->id;
+            $schools[$key]->class_total = DB::table('class_infos')->where('branch_school_id', $id)->count();
+            $schools[$key]->teachers_total = DB::table('users')
+                                                ->join('class_infos', 'class_infos.teacher_id', '=', 'users.id')
+                                                ->join('schools_branch_info', 'schools_branch_info.id', '=', 'class_infos.branch_school_id')
+                                                ->where('schools_branch_info.id', $id)
+                                                ->where('users.menuroles', 'teacher')
+                                                ->groupBy('class_infos.teacher_id')
+                                                ->count();
+            $schools[$key]->assistant_total = DB::table('users')
+                                                ->join('class_infos', 'class_infos.assistant_id', '=', 'users.id')
+                                                ->join('schools_branch_info', 'schools_branch_info.id', '=', 'class_infos.branch_school_id')
+                                                ->where('schools_branch_info.id', $id)
+                                                ->where('users.menuroles', 'assistant')
+                                                ->groupBy('class_infos.teacher_id')
+                                                ->count();
+            $schools[$key]->students_total = DB::table('users_student_infos')
+                                                ->join('class_infos', 'class_infos.id', '=', 'users_student_infos.class_id')
+                                                ->join('schools_branch_info', 'schools_branch_info.id', '=', 'class_infos.branch_school_id')
+                                                ->where('schools_branch_info.id', $id)
+                                                ->count();
+        }
+
 // dd($schools);
-        return view('dashboard.school.schoolBranchList', compact('schools'));
+        return view('dashboard.school.schoolBranchList', compact('schools', 'isSelectMain'));
     }
 
     /**
@@ -70,6 +101,8 @@ class SchoolsBranchController extends Controller
             'name' => 'required|string|between:2,100',
             'alias' => 'required|string|between:2,100',
             'telephone' => 'required',
+            'city' => 'required|string|between:2,100',
+            'area' => 'required|string|between:2,100',
             'address' => 'required|string|between:2,100',
             'principal_name' => 'required|string|between:2,100',
             'principal_telephone' => 'required',
@@ -98,6 +131,8 @@ class SchoolsBranchController extends Controller
                 'alias' => $request->input('alias'),
                 'code' => '2' . $this->getRandomCode(10),
                 'telephone' => $request->input('telephone'),
+                'city' => $request->input('city'),
+                'area' => $request->input('area'),
                 'address' => $request->input('address'),
                 'principal_id' => $principal_id,
                 'created_at' => date('Y-m-d H:i:s'),
@@ -179,6 +214,8 @@ class SchoolsBranchController extends Controller
             'name' => 'required|string|between:2,100',
             'alias' => 'required|string|between:2,100',
             'telephone' => 'required',
+            'city' => 'required|string|between:2,100',
+            'area' => 'required|string|between:2,100',
             'address' => 'required|string|between:2,100',
             'principal_name' => 'required|string|between:2,100',
             'principal_telephone' => 'required',
@@ -212,6 +249,8 @@ class SchoolsBranchController extends Controller
             $school->alias       = $request->input('alias');
             $school->code      = $request->input('code');
             $school->telephone      = $request->input('telephone');
+            $school->city      = $request->input('city');
+            $school->area      = $request->input('area');
             $school->address      = $request->input('address');
             $school->expired_at      = $request->input('expired_at');
             $school->updated_at  = date('Y-m-d H:i:s');

@@ -4,7 +4,7 @@
 -- https://tableplus.com/
 --
 -- Database: cms_dev
--- Generation Time: 2021-10-19 00:54:52.1980
+-- Generation Time: 2021-10-25 20:05:27.3890
 -- -------------------------------------------------------------
 
 
@@ -386,7 +386,7 @@ CREATE TABLE `schools_main_info` (
   `updated_at` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '最後更新日期',
   `status` int DEFAULT '1' COMMENT '狀態:1啟用2關閉',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `status`;
 CREATE TABLE `status` (
@@ -424,7 +424,7 @@ CREATE TABLE `users` (
   `status` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `users_student_infos`;
 CREATE TABLE `users_student_infos` (
@@ -775,9 +775,6 @@ INSERT INTO `notes` (`id`, `title`, `content`, `note_type`, `applies_to_date`, `
 (4, 'Saepe commodi consequatur necessitatibus harum.', 'Aspernatur nulla et reiciendis. Officiis aut ipsum voluptate. Omnis cupiditate voluptates sed reprehenderit voluptates sed est. Tempore molestiae incidunt praesentium sint dolor cum.', 'a facilis', '2012-09-03', 2, 4, NULL, NULL),
 (5, 'Consequatur sed quo nemo et molestiae.', 'Distinctio eveniet at veniam totam. Qui dolor voluptatem occaecati sit nulla. Pariatur repellat laborum eos nulla dolor.', 'consequatur', '1978-03-16', 2, 4, NULL, NULL);
 
-INSERT INTO `other_service` (`id`, `name`, `level`, `description`, `type`, `topic_id`, `price`, `remark`, `created_at`, `updated_at`, `status`) VALUES
-(1, '英文造句', 1, '高中英文造句', 2, NULL, NULL, NULL, '2021-10-18 16:12:26', '2021-10-18 16:53:11', 1);
-
 INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
 (1, 'browse bread 1', 'web', '2020-12-15 03:38:22', '2020-12-15 03:38:22'),
 (2, 'read bread 1', 'web', '2020-12-15 03:38:22', '2020-12-15 03:38:22'),
@@ -930,6 +927,9 @@ INSERT INTO `school_category` (`id`, `name`, `description`, `created_at`, `updat
 INSERT INTO `schools_branch_info` (`id`, `main_school_id`, `name`, `alias`, `code`, `city`, `area`, `address`, `telephone`, `principal_id`, `created_at`, `expired_at`, `updated_at`, `status`) VALUES
 (1, 1, '信義分校', 'SY', '2OU6GPBEMF3', NULL, NULL, '逸仙路', '0212345678', 47, '2021-09-29 14:25:20', '2022-08-29 00:00:00', '2021-09-29 14:25:20', 1);
 
+INSERT INTO `schools_main_info` (`id`, `name`, `alias`, `code`, `city`, `area`, `address`, `telephone`, `website`, `identity_id`, `category_id`, `principal_id`, `created_at`, `expired_at`, `updated_at`, `status`) VALUES
+(1, 'XXX美語', 'GR', '1JJ89QZG4YQ', NULL, NULL, '逸仙路', '0212345678', '', 'admin@admin.com', 3, 37, '2021-10-25 06:53:26', '2022-10-25', '2021-10-25 14:53:54', 1);
+
 INSERT INTO `status` (`id`, `name`, `class`) VALUES
 (1, 'ongoing', 'badge badge-pill badge-primary'),
 (2, 'stopped', 'badge badge-pill badge-secondary'),
@@ -965,8 +965,8 @@ INSERT INTO `users` (`id`, `name`, `english_name`, `telephone`, `line`, `address
 (47, '法蘭西', NULL, '0988111777', 'france123456', NULL, 'france@gmail.com', NULL, '$2y$10$y/5eRmCUevJIzxvnjXWgJ.rtFgWl2kgYGQhIKEWHrDdgcxYVv7J92', 'schoolAdmin', NULL, '2021-09-29 14:25:20', '2021-09-29 14:51:23', NULL, 1);
 
 INSERT INTO `users_student_infos` (`id`, `user_id`, `class_id`, `parent_1_id`, `parent_2_id`, `other`, `start_date`, `expire_date`, `created_at`, `update_at`) VALUES
-(4, 25, NULL, 23, 24, 'otherss', '2020-12-18', '2020-12-31', '2020-12-16 16:26:04', '2020-12-21 20:25:41'),
-(5, 28, NULL, 26, 27, 'p', '2020-12-22', '2020-12-31', '2020-12-21 12:31:53', NULL);
+(4, 25, 15, 23, 24, 'otherss', '2020-12-18', '2020-12-31', '2020-12-16 16:26:04', '2021-10-25 18:08:20'),
+(5, 28, 15, 26, 27, 'p', '2020-12-22', '2020-12-31', '2020-12-21 12:31:53', '2021-10-25 18:08:20');
 
 
 

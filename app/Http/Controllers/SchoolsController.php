@@ -35,8 +35,19 @@ class SchoolsController extends Controller
             ->join('users', 'schools_main_info.principal_id', '=', 'users.id')
             ->select('school_category.name as category_name', 'schools_main_info.*', 
             'users.name as principal_name', 'users.telephone as principal_telephone', 'users.email as principal_email')
-            ->paginate(15);
-// dd($schools);
+            ->get()
+            ->toArray();
+
+        foreach($schools as $key => $value){
+            $id = $value->id;
+            $schools[$key]->branch_schools_total = DB::table('schools_branch_info')->where('id', $id)->count();
+            $schools[$key]->teachers_total = DB::table('users')->whereIn('menuroles', ['teacher', 'assistant'])->count();
+            $schools[$key]->students_total = DB::table('users_student_infos')
+                                                ->join('class_infos', 'class_infos.id', '=', 'users_student_infos.class_id')
+                                                ->join('schools_branch_info', 'schools_branch_info.id', '=', 'class_infos.branch_school_id')
+                                                ->where('schools_branch_info.main_school_id', $id)
+                                                ->count();
+        }
         return view('dashboard.school.schoolList', compact('schools'));
     }
 
@@ -68,6 +79,8 @@ class SchoolsController extends Controller
             'category_id' => 'required',
             'identity_id' => 'required',
             'telephone' => 'required',
+            'city' => 'required|string|between:2,100',
+            'area' => 'required|string|between:2,100',
             'address' => 'required|string|between:2,100',
             'principal_name' => 'required|string|between:2,100',
             'principal_telephone' => 'required',
@@ -97,6 +110,8 @@ class SchoolsController extends Controller
                 'identity_id' => $request->input('identity_id'),
                 'code' => '1' . $this->getRandomCode(10),
                 'telephone' => $request->input('telephone'),
+                'city' => $request->input('city'),
+                'area' => $request->input('area'),
                 'address' => $request->input('address'),
                 'website' => $request->input('website') ? $request->input('website') : '',
                 'principal_id' => $principal_id,
@@ -178,6 +193,8 @@ class SchoolsController extends Controller
             'category_id' => 'required',
             'identity_id' => 'required',
             'telephone' => 'required',
+            'city' => 'required|string|between:2,100',
+            'area' => 'required|string|between:2,100',
             'address' => 'required|string|between:2,100',
             'principal_name' => 'required|string|between:2,100',
             'principal_telephone' => 'required',
@@ -212,6 +229,8 @@ class SchoolsController extends Controller
             $school->category_id      = $request->input('category_id');
             $school->identity_id      = $request->input('identity_id');
             $school->telephone      = $request->input('telephone');
+            $school->city      = $request->input('city');
+            $school->area      = $request->input('area');
             $school->address      = $request->input('address');
             $school->website      = $request->input('website') ? $request->input('website') : '';
             $school->expired_at      = $request->input('expired_at');

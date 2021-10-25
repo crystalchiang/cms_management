@@ -29,13 +29,18 @@ class ClassInfoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $classes = DB::table('class_infos')
+        $id = $request->input('id') ? $request->input('id') : null;
+        $query = DB::table('class_infos')
             ->join('schools_branch_info', 'schools_branch_info.id', '=', 'class_infos.branch_school_id')
-            ->select('schools_branch_info.name as school_name', 'class_infos.*')
-            ->get()
-            ->toArray();
+            ->select('schools_branch_info.name as school_name', 'class_infos.*');
+
+        if(isset($id) && !empty($id)){
+            $query->where('class_infos.branch_school_id', $id);
+        }  
+        $classes = $query->paginate(15);
+        $isSelectMain = $id;
         
         foreach($classes as $key => $item){
             $teacher = DB::table('users')->where('users.id', $item->teacher_id)->value('name');
@@ -69,7 +74,7 @@ class ClassInfoController extends Controller
         }
 
 // dd($schools);
-        return view('dashboard.class.classList', compact('classes'));
+        return view('dashboard.class.classList', compact('classes', 'isSelectMain'));
     }
 
     /**

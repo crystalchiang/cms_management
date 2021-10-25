@@ -7,7 +7,15 @@
             <div class="row">
               <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <div class="card">
-                    <div class="card-header"><h4>班級列表</h4></div>
+                  <div class="card-header">
+                      <h4>
+                        <?php if($isSelectMain){ ?>
+                                {{ $classes[0]->school_name }} 班級列表
+                        <?php }else{ ?>
+                                全部班級列表
+                        <?php } ?>
+                      </h4>
+                    </div>
                     <div class="card-body">
                         @if(Session::has('message'))
                             <div class="row">

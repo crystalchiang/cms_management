@@ -35,12 +35,17 @@
                             <th>簡稱</th>
                             <th>分類</th>
                             <th>編號</th>
+                            <th>縣市</th>
+                            <th>鄉鎮區域</th>
                             <th>地址</th>
                             <th>立案證號</th>
                             <th>電話</th>
-                            <th>負責人</th>
-                            <th>負責人電話</th>
-                            <th>負責人信箱</th>
+                            <th>分校數</th>
+                            <th>教師總數</th>
+                            <th>學生總數</th>
+                            <!-- <th>負責人</th> -->
+                            <!-- <th>負責人電話</th> -->
+                            <!-- <th>負責人信箱</th> -->
                             <th></th>
                             <th></th>
                             <th></th>
@@ -49,16 +54,21 @@
                         <tbody>
                           @foreach($schools as $school)
                             <tr>
-                              <td>{{ $school->name }}</td>
+                              <td><a href="/schoolsBranch?id=<?php echo $school->id; ?>">{{ $school->name }}</a></td>
                               <td>{{ $school->alias }}</td>
                               <td>{{ $school->category_name }}</td>
                               <td>{{ $school->code }}</td>
+                              <td>{{ $school->city }}</td>
+                              <td>{{ $school->area }}</td>
                               <td>{{ $school->address }}</td>
                               <td>{{ $school->identity_id }}</td>
                               <td>{{ $school->telephone }}</td>
-                              <td>{{ $school->principal_name }}</td>
-                              <td>{{ $school->principal_telephone }}</td>
-                              <td>{{ $school->principal_email }}</td>
+                              <td>{{ $school->branch_schools_total }}</td>
+                              <td>{{ $school->teachers_total }}</td>
+                              <td>{{ $school->students_total }}</td>
+                              <!-- <td>{{ $school->principal_name }}</td> -->
+                              <!-- <td>{{ $school->principal_telephone }}</td> -->
+                              <!-- <td>{{ $school->principal_email }}</td> -->
                               <td>
                                 <a href="{{ url('/schools/' . $school->id) }}" class="btn btn-block btn-primary">檢視</a>
                               </td>

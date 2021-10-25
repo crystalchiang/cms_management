@@ -16,7 +16,9 @@
                         <h6>分校簡稱: {{ $school->alias }}</h6>
                         <h6>分校編號: {{ $school->code }}</h6>
                         <h6>分校電話: {{ $school->telephone }}</h6>
-                        <h6>分校地址: {{ $school->address }}</h6>
+                        <h6>分校縣市: {{ $school->city }}</h6>
+                        <h6>鄉鎮區域: {{ $school->area }}</h6>
+                        <h6>地址: {{ $school->address }}</h6>
 
                         <h6>負責人姓名: {{ $school->p_name }}</h6>
                         <h6>負責人電話: {{ $school->p_telephone }}</h6>

@@ -60,8 +60,18 @@
                           </div>
 
                           <div class="form-group">
-                              <label>總校地址*</label>
-                              <input class="form-control" type="tel" placeholder="{{ __('總校地址') }}" name="address" required>
+                              <label>總校縣市*</label>
+                              <input class="form-control" type="text" placeholder="{{ __('總校縣市') }}" name="city" required>
+                          </div>
+
+                          <div class="form-group">
+                              <label>鄉鎮區域*</label>
+                              <input class="form-control" type="text" placeholder="{{ __('鄉鎮區域') }}" name="area" required>
+                          </div>
+
+                          <div class="form-group">
+                              <label>地址*</label>
+                              <input class="form-control" type="text" placeholder="{{ __('地址') }}" name="address" required>
                           </div>
 
                           <div class="form-group">
